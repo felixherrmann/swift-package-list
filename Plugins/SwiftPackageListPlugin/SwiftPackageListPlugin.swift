@@ -38,6 +38,10 @@ struct SwiftPackageListPlugin: Plugin {
             return ["--ignore-package", identity]
         } ?? []
 
+        let includePackageArguments: [String] = targetOptions?.includePackages?.flatMap { identity in
+            return ["--include-package", identity]
+        } ?? []
+
         let customPackagesFilePathArguments: [String] = targetOptions?.customPackagesFilePaths?.flatMap { filePath in
             let url = URL(filePath: filePath, relativeTo: locations.projectDirectory)
             return ["--custom-packages-file-path", url.path(percentEncoded: false)]
@@ -54,7 +58,7 @@ struct SwiftPackageListPlugin: Plugin {
                     "--output-path", outputURL.path(percentEncoded: false),
                     "--package-order", packageOrder.rawValue,
                     requiresLicense ? "--requires-license" : "",
-                ] + ignorePackageArguments + customPackagesFilePathArguments,
+                ] + ignorePackageArguments + includePackageArguments + customPackagesFilePathArguments,
                 outputFiles: [
                     outputURL.appending(path: outputType.filename),
                 ]

@@ -113,6 +113,7 @@ extension SwiftPackageListPlugin.Configuration {
         let packageOrder: PackageOrder?
         let requiresLicense: Bool?
         let ignorePackages: [String]?
+        let includePackages: [String]?
         let customPackagesFilePaths: [String]?
     }
 

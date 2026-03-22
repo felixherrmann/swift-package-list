@@ -44,19 +44,20 @@ Currently supported are:
 
 In addition to that you can specify the following options:
 
-| Option                                                        | Description                                                                                                                                                 |
-| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| --custom-derived-data-path \<custom-derived-data-path\>       | A custom path to your DerivedData-folder.                                                                                                                   |
-| --custom-source-packages-path \<custom-source-packages-path\> | A custom path to the SourcePackages-folder.                                                                                                                 |
-| --custom-packages-file-path \<custom-packages-file-path\>     | A path to a JSON file containing custom packages. (This option may be repeated multiple times)                                                              |
-| --output-type \<output-type\>                                 | The type of output for the package-list. (values: table, csv, json, plist, markdown, html, pdf, settings-bundle; default: table)                            |
-| --output-path \<output-path\>                                 | The path where the file will be written. If omitted, the content is sent to stdout.                                                                         |
-| --custom-file-name \<custom-file-name\>                       | A custom filename to be used instead of the default ones.                                                                                                   |
-| --package-order \<package-order\>                             | The order in which the packages will be listed. (values: source, name-ascending, name-descending, identity-ascending, identity-descending; default: source) |
-| --requires-license                                            | Will skip the packages without a license-file.                                                                                                              |
-| --ignore-package \<package-identity-pattern\>                 | Will skip a package with the specified identity; glob patterns are supported. (This option may be repeated multiple times)                                  |
-| --version                                                     | Show the version.                                                                                                                                           |
-| -h, --help                                                    | Show help information.                                                                                                                                      |
+| Option                                                        | Description                                                                                                                                                  |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| --custom-derived-data-path \<custom-derived-data-path\>       | A custom path to your DerivedData-folder.                                                                                                                    |
+| --custom-source-packages-path \<custom-source-packages-path\> | A custom path to the SourcePackages-folder.                                                                                                                  |
+| --custom-packages-file-path \<custom-packages-file-path\>     | A path to a JSON file containing custom packages. (This option may be repeated multiple times)                                                               |
+| --output-type \<output-type\>                                 | The type of output for the package-list. (values: table, csv, json, plist, markdown, html, pdf, settings-bundle; default: table)                             |
+| --output-path \<output-path\>                                 | The path where the file will be written. If omitted, the content is sent to stdout.                                                                          |
+| --custom-file-name \<custom-file-name\>                       | A custom filename to be used instead of the default ones.                                                                                                    |
+| --package-order \<package-order\>                             | The order in which the packages will be listed. (values: source, name-ascending, name-descending, identity-ascending, identity-descending; default: source)  |
+| --requires-license                                            | Will skip the packages without a license-file.                                                                                                               |
+| --ignore-package \<package-identity-pattern\>                 | Will skip a package with the specified identity; glob patterns are supported. (This option may be repeated multiple times)                                   |
+| --include-package \<package-identity-pattern\>                | Will include a package with the specified identity; glob patterns are supported. It has precedence over ignore. (This option may be repeated multiple times) |
+| --version                                                     | Show the version.                                                                                                                                            |
+| -h, --help                                                    | Show help information.                                                                                                                                       |
 
 ### Build Tool Plugin
 
@@ -93,6 +94,9 @@ Configuration files support JSON and JSON5, including comments, unquoted keys an
                 "swift-package-list",
                 "swift-argument-parser",
                 "swift-openapi-*",
+            ],
+            includePackages: [
+                "swift-openapi-runtime",
             ],
             customPackagesFilePaths: [
                 "custom-packages.json",
