@@ -36,7 +36,7 @@ jobs:
         run: |
           SHA256=($(shasum -a 256 swift-package-list.tar.gz))
           echo "sha256=$SHA256" >> "$GITHUB_OUTPUT"
-  
+
   update-formula:
     name: Update Formula
     runs-on: ubuntu-latest
@@ -45,10 +45,10 @@ jobs:
       TAG: ${{ github.ref_name }}
       SHA256: ${{ needs.release-build.outputs.sha }}
     steps:
-      - name: Checkout FelixHerrmann/homebrew-tap
+      - name: Checkout felixherrmann/homebrew-tap
         uses: actions/checkout@v7
         with:
-          repository: 'FelixHerrmann/homebrew-tap'
+          repository: 'felixherrmann/homebrew-tap'
       - name: Update Formula
         run: |
           sed -i "s|download\/.*\/swift-package-list|download\/$TAG\/swift-package-list|g" Formula/swift-package-list.rb

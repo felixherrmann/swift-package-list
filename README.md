@@ -1,7 +1,7 @@
 # SwiftPackageList
 
-[![Xcode Build](https://github.com/FelixHerrmann/swift-package-list/actions/workflows/xcodebuild.yml/badge.svg)](https://github.com/FelixHerrmann/swift-package-list/actions/workflows/xcodebuild.yml)
-[![SwiftLint](https://github.com/FelixHerrmann/swift-package-list/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/FelixHerrmann/swift-package-list/actions/workflows/swiftlint.yml)
+[![Xcode Build](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml)
+[![SwiftLint](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml)
 
 A command-line tool to get all used Swift Package dependencies.
 
@@ -18,20 +18,20 @@ Additionally there is a Swift Package to read the generated package-list file fr
 #### Using [Homebrew](https://brew.sh)
 
 ```shell
-brew tap FelixHerrmann/tap
+brew tap felixherrmann/tap
 brew install swift-package-list
 ```
 
 #### Using [Mint](https://github.com/yonaskolb/mint):
 
 ```shell
-mint install FelixHerrmann/swift-package-list
+mint install felixherrmann/swift-package-list
 ```
 
 #### Using [Mise](https://mise.jdx.dev/dev-tools/backends/spm.html)
 
 ```shell
-mise use spm:FelixHerrmann/swift-package-list
+mise use spm:felixherrmann/swift-package-list
 ```
 
 #### Installing from source:
@@ -73,7 +73,7 @@ For Xcode projects simply add it under the `Run Build Tool Plug-ins` section in 
 By default this will use the JSON output with `--requires-license` but you can create a `swift-package-list-config.json` in your project's root to configure that behavior, both project and target specific (target configs have precedence over the project one). Everything in the configuration is optional and has the following format:
 ```json5
 // SwiftPackageList configuration file
-// Check out https://github.com/FelixHerrmann/swift-package-list#build-tool-plugin for all possible configuration options.
+// Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
     projectPath: "Project.xcworkspace",
@@ -237,8 +237,8 @@ All optional fields have null values in this example and can be left out, the ot
 
 ## Swift Package
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FFelixHerrmann%2Fswift-package-list%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/FelixHerrmann/swift-package-list)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FFelixHerrmann%2Fswift-package-list%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/FelixHerrmann/swift-package-list)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Ffelixherrmann%2Fswift-package-list%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/felixherrmann/swift-package-list)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Ffelixherrmann%2Fswift-package-list%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/felixherrmann/swift-package-list)
 
 Load the generated package-list file from the bundle or use some pre-build UI components.
 
@@ -323,4 +323,4 @@ The Settings Bundle and the UI-components are currently localized in the followi
 
 ## License
 
-SwiftPackageList is available under the MIT license. See the [LICENSE](https://github.com/FelixHerrmann/swift-package-list/blob/master/LICENSE) file for more info.
+SwiftPackageList is available under the MIT license. See the [LICENSE](https://github.com/felixherrmann/swift-package-list/blob/master/LICENSE) file for more info.

@@ -2,11 +2,11 @@
     "object" : [
         {
             "mirror" : "https://github.com/example/swift-package-list",
-            "original" : "https://github.com/FelixHerrmann/swift-package-list"
+            "original" : "https://github.com/felixherrmann/swift-package-list"
         },
         {
             "mirror" : "/Users/example/test",
-            "original" : "https://github.com/FelixHerrmann/test"
+            "original" : "https://github.com/felixherrmann/test"
         }
     ],
     "version" : 1

@@ -115,8 +115,8 @@ single `SwiftPackageListPlugin`. Open the target's **Build Phase** section, remo
 existing plugin from the **Run Build Tool Plug-ins** section and add the
 `SwiftPackageListPlugin`:
 
-<img width="937" alt="Screenshot 2024-02-11 at 20 13 43" src="https://github.com/FelixHerrmann/swift-package-list/assets/42500484/21772537-4800-4654-9e4e-5efc736f4025">
-<img width="938" alt="Screenshot 2024-02-11 at 20 07 07" src="https://github.com/FelixHerrmann/swift-package-list/assets/42500484/d265efac-bf1c-4965-b240-876ea0131608">
+<img width="937" alt="Screenshot 2024-02-11 at 20 13 43" src="https://github.com/felixherrmann/swift-package-list/assets/42500484/21772537-4800-4654-9e4e-5efc736f4025">
+<img width="938" alt="Screenshot 2024-02-11 at 20 07 07" src="https://github.com/felixherrmann/swift-package-list/assets/42500484/d265efac-bf1c-4965-b240-876ea0131608">
 
 
 By default this new plugin will use the JSON output-type. To configure this, create a

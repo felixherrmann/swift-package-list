@@ -50,7 +50,7 @@ final class MirrorsTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let mirrors = try Mirrors(url: unwrappedURL)
         
-        XCTAssertEqual(mirrors.mirror(for: "https://github.com/FelixHerrmann/swift-package-list"), "https://github.com/example/swift-package-list")
-        XCTAssertEqual(mirrors.mirror(for: "https://github.com/FelixHerrmann/test"), "/Users/example/test")
+        XCTAssertEqual(mirrors.mirror(for: "https://github.com/felixherrmann/swift-package-list"), "https://github.com/example/swift-package-list")
+        XCTAssertEqual(mirrors.mirror(for: "https://github.com/felixherrmann/test"), "/Users/example/test")
     }
 }

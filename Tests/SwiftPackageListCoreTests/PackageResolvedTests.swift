@@ -26,7 +26,7 @@ final class PackageResolvedTests: XCTestCase {
         XCTAssertEqual(storage.version, 1)
         XCTAssertEqual(storage.object.pins.count, 2)
         XCTAssertEqual(storage.object.pins[0].repositoryURL, "/Users/example/swift-package-list")
-        XCTAssertEqual(storage.object.pins[1].repositoryURL, "https://github.com/FelixHerrmann/swift-package-list")
+        XCTAssertEqual(storage.object.pins[1].repositoryURL, "https://github.com/felixherrmann/swift-package-list")
     }
     
     func testVersion2() throws {

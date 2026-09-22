@@ -371,7 +371,7 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		9D2C712F2831A01A000D126A /* XCRemoteSwiftPackageReference "swift-package-list" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/FelixHerrmann/swift-package-list";
+			repositoryURL = "https://github.com/felixherrmann/swift-package-list";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;

@@ -12,7 +12,7 @@
     {
       "identity" : "swift-package-list",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/FelixHerrmann/swift-package-list",
+      "location" : "https://github.com/felixherrmann/swift-package-list",
       "state" : {
         "revision" : "9bd426a8b60799da7b179a123f8ba87a0f24bbea",
         "version" : "1.6.0"
