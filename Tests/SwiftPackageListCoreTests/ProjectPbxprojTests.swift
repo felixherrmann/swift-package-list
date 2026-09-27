@@ -17,10 +17,10 @@ final class ProjectPbxprojTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectPbxproj(url: unwrappedURL)
-        
+
         XCTAssertEqual(projectPbxproj.organizationName, "SwiftPackageList")
     }
-    
+
     func testQuotedOrganizationName() throws {
         let url = Bundle.module.url(
             forResource: "organization_quoted",
@@ -29,10 +29,10 @@ final class ProjectPbxprojTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectPbxproj(url: unwrappedURL)
-        
+
         XCTAssertEqual(projectPbxproj.organizationName, "SwiftPackageList Inc.")
     }
-    
+
     func testEscapedOrganizationName() throws {
         let url = Bundle.module.url(
             forResource: "organization_escaped",
@@ -41,10 +41,10 @@ final class ProjectPbxprojTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectPbxproj(url: unwrappedURL)
-        
+
         XCTAssertEqual(projectPbxproj.organizationName, "SwiftPackageList \"Tools\"")
     }
-    
+
     func testOrganizationNameIgnoresBuildSettings() throws {
         let url = Bundle.module.url(
             forResource: "organization_build_setting",
@@ -53,10 +53,10 @@ final class ProjectPbxprojTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectPbxproj(url: unwrappedURL)
-        
+
         XCTAssertEqual(projectPbxproj.organizationName, "SwiftPackageList")
     }
-    
+
     func testMissingOrganizationName() throws {
         let url = Bundle.module.url(
             forResource: "organization_missing",
@@ -65,7 +65,7 @@ final class ProjectPbxprojTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectPbxproj(url: unwrappedURL)
-        
+
         XCTAssertNil(projectPbxproj.organizationName)
     }
 }

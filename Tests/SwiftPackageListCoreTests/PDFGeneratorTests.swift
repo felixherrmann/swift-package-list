@@ -11,12 +11,12 @@ import SwiftPackageList
 @testable import SwiftPackageListCore
 
 final class PDFGeneratorTests: XCTestCase {
-    
+
     private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Acknowledgements.pdf")
-    
+
     override func setUpWithError() throws {
         try super.setUpWithError()
-        
+
         let url = try XCTUnwrap(
             Bundle.module.url(
                 forResource: "Project",
@@ -36,29 +36,29 @@ final class PDFGeneratorTests: XCTestCase {
             location: "https://github.com/test/test",
             license: "MIT"
         )
-        
+
         let pdfGenerator = PDFGenerator(outputURL: outputURL, packages: [package], project: project)
         try pdfGenerator.generateOutput()
     }
-    
+
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         try FileManager.default.removeItem(at: outputURL)
     }
-    
+
     func testOutput() throws {
         let output = try XCTUnwrap(PDFDocument(url: outputURL))
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM.dd.yyyy"
         let creationDate = dateFormatter.string(from: Date())
-        
+
         let attributes = try XCTUnwrap(output.documentAttributes)
         XCTAssertEqual(attributes["Author"] as? String, "SwiftPackageList")
         XCTAssertEqual(attributes["Subject"] as? String, "Project Acknowledgements")
         XCTAssertEqual(attributes["Title"] as? String, "Project_Acks_File_\(creationDate)")
         XCTAssertEqual(attributes["Creator"] as? String, "swift-package-list")
-        
+
         let expectedOutput: String
         if #available(macOS 15.0, *) {
             expectedOutput = """
@@ -75,7 +75,7 @@ final class PDFGeneratorTests: XCTestCase {
             copyrighted material, the use of which is hereby acknowledged.
             test
             MIT
-            
+
             """
         }
         XCTAssertEqual(output.string, expectedOutput)

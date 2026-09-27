@@ -17,7 +17,7 @@ final class WorkspaceStateTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let workspaceState = try WorkspaceState(url: unwrappedURL)
-        
+
         guard case .v6(let workspaceState_V6) = workspaceState.storage else {
             XCTFail("\(unwrappedURL.path) was not recognized as v6")
             return
@@ -28,7 +28,7 @@ final class WorkspaceStateTests: XCTestCase {
         XCTAssertEqual(workspaceState_V6.object.dependencies[0].packageRef.identity, "collectionconcurrencykit")
         XCTAssertEqual(workspaceState_V6.object.dependencies[0].packageRef.name, "CollectionConcurrencyKit")
     }
-    
+
     func testVersion7() throws {
         let url = Bundle.module.url(
             forResource: "workspace-state_v7",
@@ -37,7 +37,7 @@ final class WorkspaceStateTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let workspaceState = try WorkspaceState(url: unwrappedURL)
-        
+
         guard case .v7(let workspaceState_V7) = workspaceState.storage else {
             XCTFail("\(unwrappedURL.path) was not recognized as v7")
             return
@@ -47,7 +47,7 @@ final class WorkspaceStateTests: XCTestCase {
         XCTAssertEqual(workspaceState_V7.object.dependencies[0].packageRef.identity, "swift-syntax")
         XCTAssertEqual(workspaceState_V7.object.dependencies[0].packageRef.name, "swift-syntax")
     }
-    
+
     func testUnsupportedVersion() throws {
         let url = Bundle.module.url(
             forResource: "workspace-state_v999",
@@ -55,7 +55,7 @@ final class WorkspaceStateTests: XCTestCase {
             subdirectory: "Resources/WorkspaceState"
         )
         let unwrappedURL = try XCTUnwrap(url)
-        
+
         XCTAssertThrowsError(try WorkspaceState(url: unwrappedURL)) { error in
             XCTAssertTrue(error is RuntimeError)
             XCTAssertEqual((error as? RuntimeError)?.description, "Version 999 of workspace-state.json is not supported")

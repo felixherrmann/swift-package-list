@@ -14,7 +14,7 @@ final class CheckoutsTests: XCTestCase {
         let packageSource = checkouts.packageSource(location: "")
         XCTAssertNil(packageSource)
     }
-    
+
     func testPackageSourceValidURL() throws {
         let checkouts = Checkouts(url: URL(fileURLWithPath: "/test/checkouts"))
         let packageSource = try XCTUnwrap(checkouts.packageSource(location: "https://github.com/test/test-Test.git"))

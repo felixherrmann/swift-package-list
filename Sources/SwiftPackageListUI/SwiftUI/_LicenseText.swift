@@ -12,7 +12,7 @@ import SwiftPackageList
 
 internal struct _LicenseText: View {
     internal let _package: Package
-    
+
     internal var body: some View {
         ZStack {
 #if os(iOS)

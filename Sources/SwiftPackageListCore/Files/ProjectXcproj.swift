@@ -21,7 +21,7 @@ extension ProjectXcproj {
     private struct Content: Decodable {
         let organization: String?
     }
-    
+
     private var content: Content {
         get throws {
             let decoder = JSONDecoder()

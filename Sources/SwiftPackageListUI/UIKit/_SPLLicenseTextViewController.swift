@@ -12,18 +12,18 @@ import SafariServices
 import SwiftPackageList
 
 internal final class _SPLLicenseTextViewController: UIViewController {
-    
+
     // MARK: - Properties
-    
+
     private let _package: Package
     private let _repositoryURL: URL?
     private let _backgroundColor: UIColor
     private let _canOpenRepositoryLink: Bool
-    
+
     private let _textView = UITextView()
-    
+
     // MARK: - Initializers
-    
+
     internal init(package: Package, backgroundColor: UIColor, canOpenRepositoryLink: Bool) {
         self._package = package
         self._repositoryURL = URL(string: package.location)
@@ -31,37 +31,37 @@ internal final class _SPLLicenseTextViewController: UIViewController {
         self._canOpenRepositoryLink = canOpenRepositoryLink
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     internal required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - ViewController
-    
+
     override internal func loadView() {
         view = _textView
     }
-    
+
     override internal func viewDidLoad() {
         super.viewDidLoad()
-        
+
         _setupNavigationBar()
         _setupTextView()
     }
-    
+
     override internal func viewLayoutMarginsDidChange() {
         super.viewLayoutMarginsDidChange()
-        
+
         let horizontalInset = _textView.readableContentGuide.layoutFrame.origin.x
         _textView.textContainerInset = UIEdgeInsets(top: 20, left: horizontalInset, bottom: 20, right: horizontalInset)
     }
-    
+
     // MARK: - Setup
-    
+
     private func _setupNavigationBar() {
         navigationItem.title = _package.name
-        
+
         if ["http", "https"].contains(_repositoryURL?.scheme), _canOpenRepositoryLink {
             let image = UIImage(systemName: "safari")
             let repositoryBarButtonItem = UIBarButtonItem(
@@ -73,7 +73,7 @@ internal final class _SPLLicenseTextViewController: UIViewController {
             navigationItem.rightBarButtonItem = repositoryBarButtonItem
         }
     }
-    
+
     private func _setupTextView() {
         _textView.backgroundColor = _backgroundColor
         _textView.font = .preferredFont(forTextStyle: .caption1)
@@ -83,16 +83,16 @@ internal final class _SPLLicenseTextViewController: UIViewController {
         _textView.text = _package.license
         _textView.preservesSuperviewLayoutMargins = true
     }
-    
+
     // MARK: - Selector Methods
-    
+
     @objc
     private func _handleRepositoryBarButtonItemPress() {
         _openRepositoryLink()
     }
-    
+
     // MARK: - Methods
-    
+
     private func _openRepositoryLink() {
         guard let url = _repositoryURL else { return }
         let safariViewController = SFSafariViewController(url: url)

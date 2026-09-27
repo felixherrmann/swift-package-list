@@ -23,7 +23,7 @@ extension Tuist {
         } catch {
             throw RuntimeError("Executing 'tuist dump' failed: \(String(describing: error))")
         }
-        
+
         do {
             let decoder = JSONDecoder()
             let dump = try decoder.decode(Dump.self, from: data)

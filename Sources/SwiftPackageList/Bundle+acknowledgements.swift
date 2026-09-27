@@ -12,7 +12,7 @@ extension Bundle {
     public var acknowledgementsURL: URL? {
         return url(forResource: "Acknowledgements", withExtension: "pdf")
     }
-    
+
     /// The full pathname of the 'Acknowledgements.pdf' file.
     public var acknowledgementsPath: String? {
         return path(forResource: "Acknowledgements", ofType: "pdf")

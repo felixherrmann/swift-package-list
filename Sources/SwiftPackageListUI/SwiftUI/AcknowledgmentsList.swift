@@ -40,14 +40,14 @@ import SwiftPackageList
 public struct AcknowledgmentsList<Provider: PackageProvider>: View {
     private let _packageProvider: Provider
     @State private var _packages: [Package] = []
-    
+
     /// Creates a ``AcknowledgmentsList`` for a package provider.
     /// - Parameters:
     ///   - packageProvider: The package provider object used as the source of data.
     public init(packageProvider: Provider = .json()) {
         self._packageProvider = packageProvider
     }
-    
+
     public var body: some View {
         List {
             Section(
@@ -80,7 +80,7 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
         }
 #endif
     }
-    
+
     private func _loadPackages() {
         do {
             _packages = try _packageProvider.packages()

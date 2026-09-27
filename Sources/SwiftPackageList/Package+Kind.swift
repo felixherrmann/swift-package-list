@@ -9,7 +9,7 @@ extension Package {
     /// The specific kind of a package.
     public struct Kind: Sendable, RawRepresentable {
         public let rawValue: String
-        
+
         public init(rawValue: String) {
             self.rawValue = rawValue
         }
@@ -28,10 +28,10 @@ extension Package.Kind: Encodable { }
 extension Package.Kind {
     /// A local source package.
     public static let localSourceControl = Self(rawValue: "localSourceControl")
-    
+
     /// A remote source package.
     public static let remoteSourceControl = Self(rawValue: "remoteSourceControl")
-    
+
     /// A package from  a registry.
     public static let registry = Self(rawValue: "registry")
 }

@@ -17,7 +17,7 @@ final class ProjectXcprojTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectXcproj(url: unwrappedURL)
-        
+
         XCTAssertEqual(projectPbxproj.organizationName, "SwiftPackageList")
     }
 }

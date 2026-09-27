@@ -14,13 +14,13 @@ final class RegistryDownloadsTests: XCTestCase {
         let packageSource = registryDownloads.packageSource(identity: "", version: nil)
         XCTAssertNil(packageSource)
     }
-    
+
     func testPackageSourceInvalidIdentity() {
         let registryDownloads = RegistryDownloads(url: URL(fileURLWithPath: "/test/registry/downloads"))
         let packageSource = registryDownloads.packageSource(identity: "scope", version: "1.0.0")
         XCTAssertNil(packageSource)
     }
-    
+
     func testPackageSourceValidIdentity() throws {
         let registryDownloads = RegistryDownloads(url: URL(fileURLWithPath: "/test/registry/downloads"))
         let packageSource = try XCTUnwrap(registryDownloads.packageSource(identity: "scope.name", version: "1.0.0"))

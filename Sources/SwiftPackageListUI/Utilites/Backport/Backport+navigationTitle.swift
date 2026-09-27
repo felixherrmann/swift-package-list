@@ -14,7 +14,7 @@ import SwiftUI
 @available(visionOS, deprecated: 1.0, message: "Back-port no longer needed with visionOS 1")
 internal struct NavigationTitleModifier: ViewModifier {
     internal let title: Text
-    
+
     internal func body(content: Content) -> some View {
         if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, visionOS 1.0, *) {
             content.navigationTitle(title)

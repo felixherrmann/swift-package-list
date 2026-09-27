@@ -18,10 +18,10 @@ extension NativeProject {
     var configuration: Configuration? {
         return nil
     }
-    
+
     func packages() throws -> [Package] {
         let packageResolved = try packageResolved
-        
+
         let sourcePackages: SourcePackages
         if let sourcePackagesPath = options.customSourcePackagesPath {
             let sourcePackagesDirectory = URL(fileURLWithPath: sourcePackagesPath)
@@ -40,7 +40,7 @@ extension NativeProject {
             let sourcePackagesDirectory = buildDirectory.appendingPathComponent("SourcePackages")
             sourcePackages = SourcePackages(url: sourcePackagesDirectory)
         }
-        
+
         return try packageResolved.packages(in: sourcePackages, configuration: configuration)
     }
 }

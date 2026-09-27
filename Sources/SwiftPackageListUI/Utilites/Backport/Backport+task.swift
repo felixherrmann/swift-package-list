@@ -15,9 +15,9 @@ import SwiftUI
 internal struct TaskModifier: ViewModifier {
     internal let priority: TaskPriority
     internal let action: @Sendable () async -> Void
-    
+
     @State private var currentTask: Task<Void, Never>?
-    
+
     internal func body(content: Content) -> some View {
         if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, visionOS 1.0, *) {
             content.task(priority: priority) {

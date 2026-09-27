@@ -24,19 +24,19 @@ extension DerivedData {
 extension DerivedData {
     private struct InfoPlist: Decodable {
         let workspacePath: String
-        
+
         enum CodingKeys: String, CodingKey {
             case workspacePath = "WorkspacePath"
         }
     }
-    
+
     func buildDirectory(project: some NativeProject) throws -> URL? {
         let buildDirectories = try FileManager.default.contentsOfDirectory(
             at: url.resolvingSymlinksInPath(),
             includingPropertiesForKeys: [.isDirectoryKey],
             options: [.skipsHiddenFiles]
         )
-        
+
         for buildDirectory in buildDirectories {
             let buildFiles = try FileManager.default.contentsOfDirectory(
                 at: buildDirectory,
@@ -50,7 +50,7 @@ extension DerivedData {
                 return buildDirectory
             }
         }
-        
+
         return nil
     }
 }

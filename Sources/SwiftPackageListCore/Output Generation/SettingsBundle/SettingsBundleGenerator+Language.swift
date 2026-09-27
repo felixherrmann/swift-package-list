@@ -33,7 +33,7 @@ extension SettingsBundleGenerator.Language {
     private enum RootStringsKey: String {
         case acknowledgements = "Acknowledgements"
     }
-    
+
     private var rootStrings: [RootStringsKey: String] {
         switch self {
         case .ar:
@@ -104,7 +104,7 @@ extension SettingsBundleGenerator.Language {
     private enum AcknowledgementsStringsKey: String {
         case licenses = "Licenses"
     }
-    
+
     private var acknowledgementsStrings: [AcknowledgementsStringsKey: String] {
         switch self {
         case .ar:
@@ -179,7 +179,7 @@ extension SettingsBundleGenerator.Language {
             .appending(";")
         return Data(fileString.utf8)
     }
-    
+
     var acknowledgementsFileData: Data {
         let fileString = acknowledgementsStrings
             .map { "\"\($0.key.rawValue)\" = \"\($0.value)\"" }

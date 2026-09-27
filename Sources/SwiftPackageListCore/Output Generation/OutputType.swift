@@ -25,13 +25,13 @@ extension OutputType {
         guard let outputURL = options.outputURL else {
             throw RuntimeError("Output-path is required for output-type \(rawValue)")
         }
-        
+
         let fileName = options.customFileName ?? fileName
         return outputURL
             .appendingPathComponent(fileName)
             .appendingPathExtension(fileExtension)
     }
-    
+
     public func outputGenerator(
         packages: [Package],
         project: some Project,

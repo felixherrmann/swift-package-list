@@ -34,7 +34,7 @@ extension SwiftPackageListPlugin.Configuration {
         case settingsBundle = "settings-bundle"
         case pdf
     }
-    
+
     enum PackageOrder: String, Decodable {
         case source
         case nameAscending = "name-ascending"
@@ -69,14 +69,14 @@ extension SwiftPackageListPlugin.Configuration {
     init?(path: Path) throws {
         guard FileManager.default.fileExists(atPath: path.string) else { return nil }
         let url = URL(filePath: path.string)
-        
+
         let data: Data
         do {
             data = try Data(contentsOf: url)
         } catch {
             throw SwiftPackageListPlugin.Error.configurationUnavailable(path: path, underlyingError: error)
         }
-        
+
         let decoder = JSONDecoder()
         decoder.allowsJSON5 = true
         do {
