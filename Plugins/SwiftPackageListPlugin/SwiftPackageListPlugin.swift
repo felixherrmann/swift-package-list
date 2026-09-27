@@ -11,14 +11,14 @@ import PackagePlugin
 @main
 struct SwiftPackageListPlugin: Plugin {
     func createBuildCommands(
-        executable: Path,
+        executable: URL,
         targetConfiguration: Configuration.TargetConfiguration?,
-        projectPath: Path,
-        pluginWorkDirectory: Path
+        projectURL: URL,
+        pluginWorkDirectoryURL: URL
     ) throws -> [Command] {
-        let sourcePackagesPath = try sourcePackagesDirectory(pluginWorkDirectory: pluginWorkDirectory)
+        let sourcePackagesPath = try sourcePackagesDirectory(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
         let outputType = targetConfiguration?.outputType ?? .json
-        let outputPath = pluginWorkDirectory
+        let outputURL = pluginWorkDirectoryURL
         let packageOrder = targetConfiguration?.packageOrder ?? .source
         let requiresLicense = targetConfiguration?.requiresLicense ?? true
 
@@ -30,9 +30,9 @@ struct SwiftPackageListPlugin: Plugin {
             return ["--custom-packages-file-path", filePath]
         } ?? []
 
-        let outputFiles: [Path]
+        let outputFiles: [URL]
         if let fileName = outputType.fileName {
-            outputFiles = [outputPath.appending(fileName)]
+            outputFiles = [outputURL.appending(path: fileName)]
         } else {
             outputFiles = []
         }
@@ -42,10 +42,10 @@ struct SwiftPackageListPlugin: Plugin {
                 displayName: "SwiftPackageListPlugin",
                 executable: executable,
                 arguments: [
-                    projectPath,
-                    "--custom-source-packages-path", sourcePackagesPath,
+                    projectURL.path,
+                    "--custom-source-packages-path", sourcePackagesPath.path,
                     "--output-type", outputType.rawValue,
-                    "--output-path", outputPath,
+                    "--output-path", outputURL.path,
                     "--package-order", packageOrder.rawValue,
                     requiresLicense ? "--requires-license" : "",
                 ] + ignorePackageArguments + customPackagesFilePathArguments,
@@ -54,15 +54,15 @@ struct SwiftPackageListPlugin: Plugin {
         ]
     }
 
-    private func sourcePackagesDirectory(pluginWorkDirectory: Path) throws -> Path {
-        var path = pluginWorkDirectory
-        while path.string != "/" {
-            let potentialLocation = path.appending(subpath: "SourcePackages")
-            if FileManager.default.fileExists(atPath: potentialLocation.string) {
+    private func sourcePackagesDirectory(pluginWorkDirectoryURL: URL) throws -> URL {
+        var path = pluginWorkDirectoryURL
+        while path.path != "/" {
+            let potentialLocation = path.appending(path: "SourcePackages")
+            if FileManager.default.fileExists(atPath: potentialLocation.path) {
                 return potentialLocation
             }
-            path = path.removingLastComponent()
+            path = path.deletingLastPathComponent()
         }
-        throw SwiftPackageListPlugin.Error.sourcePackagesNotFound(pluginWorkDirectory: pluginWorkDirectory)
+        throw SwiftPackageListPlugin.Error.sourcePackagesNotFound(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
     }
 }

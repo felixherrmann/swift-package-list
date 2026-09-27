@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PackagePlugin
 
 extension SwiftPackageListPlugin {
     struct Configuration: Decodable {
@@ -66,15 +65,14 @@ extension SwiftPackageListPlugin.Configuration {
 }
 
 extension SwiftPackageListPlugin.Configuration {
-    init?(path: Path) throws {
-        guard FileManager.default.fileExists(atPath: path.string) else { return nil }
-        let url = URL(filePath: path.string)
+    init?(url: URL) throws {
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
 
         let data: Data
         do {
             data = try Data(contentsOf: url)
         } catch {
-            throw SwiftPackageListPlugin.Error.configurationUnavailable(path: path, underlyingError: error)
+            throw SwiftPackageListPlugin.Error.configurationUnavailable(url: url, underlyingError: error)
         }
 
         let decoder = JSONDecoder()
@@ -82,7 +80,7 @@ extension SwiftPackageListPlugin.Configuration {
         do {
             self = try decoder.decode(SwiftPackageListPlugin.Configuration.self, from: data)
         } catch {
-            throw SwiftPackageListPlugin.Error.configurationInvalid(path: path, underlyingError: error)
+            throw SwiftPackageListPlugin.Error.configurationInvalid(url: url, underlyingError: error)
         }
     }
 }
