@@ -5,19 +5,21 @@
 //  Created by Felix Herrmann on 09.10.26.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class XcodeWorkspaceTests: XCTestCase {
-    func testOrganizationNameWithPodsFirst() throws {
+struct XcodeWorkspaceTests {
+    @Test func organizationNameWithPodsFirst() throws {
         let url = Bundle.module.url(
             forResource: "Workspace",
             withExtension: "xcworkspace",
             subdirectory: "Resources/XcodeWorkspace/pbxproj"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let workspace = XcodeWorkspace(fileURL: unwrappedURL, options: ProjectOptions())
 
-        XCTAssertEqual(workspace.organizationName, "SwiftPackageList")
+        #expect(workspace.organizationName == "SwiftPackageList")
     }
 }

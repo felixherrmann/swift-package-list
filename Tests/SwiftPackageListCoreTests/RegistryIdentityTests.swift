@@ -5,29 +5,31 @@
 //  Created by Felix Herrmann on 02.03.25.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class RegistryIdentityTests: XCTestCase {
-    func testIdentityInitNoComponents() {
+struct RegistryIdentityTests {
+    @Test func identityInitNoComponents() {
         let identity = RegistryIdentity(identity: "")
-        XCTAssertNil(identity)
+        #expect(identity == nil)
     }
 
-    func testIdentityInitSingleComponent() {
+    @Test func identityInitSingleComponent() {
         let identity = RegistryIdentity(identity: "scope")
-        XCTAssertNil(identity)
+        #expect(identity == nil)
     }
 
-    func testIdentityInitTwoComponents() throws {
-        let identity = try XCTUnwrap(RegistryIdentity(identity: "scope.name"))
-        XCTAssertEqual(identity.scope, "scope")
-        XCTAssertEqual(identity.name, "name")
+    @Test func identityInitTwoComponents() throws {
+        let identity = try #require(RegistryIdentity(identity: "scope.name"))
+        #expect(identity.scope == "scope")
+        #expect(identity.name == "name")
     }
 
-    func testIdentityInitMultipleComponents() throws {
-        let identity = try XCTUnwrap(RegistryIdentity(identity: "scope.name.with.separators"))
-        XCTAssertEqual(identity.scope, "scope")
-        XCTAssertEqual(identity.name, "name.with.separators")
+    @Test func identityInitMultipleComponents() throws {
+        let identity = try #require(RegistryIdentity(identity: "scope.name.with.separators"))
+        #expect(identity.scope == "scope")
+        #expect(identity.name == "name.with.separators")
     }
 }

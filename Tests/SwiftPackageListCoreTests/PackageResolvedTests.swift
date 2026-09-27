@@ -5,116 +5,118 @@
 //  Created by Felix Herrmann on 15.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class PackageResolvedTests: XCTestCase {
-    func testVersion1() throws {
+struct PackageResolvedTests {
+    @Test func version1() throws {
         let url = Bundle.module.url(
             forResource: "Package_v1",
             withExtension: "resolved",
             subdirectory: "Resources/PackageResolved"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let packageResolved = try PackageResolved(url: unwrappedURL)
 
         guard case .v1(let storage) = packageResolved.storage else {
-            XCTFail("\(unwrappedURL.path) was not recognized as v1")
+            Issue.record("\(unwrappedURL.path) was not recognized as v1")
             return
         }
 
-        XCTAssertEqual(storage.version, 1)
-        XCTAssertEqual(storage.object.pins.count, 2)
-        XCTAssertEqual(storage.object.pins[0].repositoryURL, "/Users/example/swift-package-list")
-        XCTAssertEqual(storage.object.pins[1].repositoryURL, "https://github.com/felixherrmann/swift-package-list")
+        #expect(storage.version == 1)
+        #expect(storage.object.pins.count == 2)
+        #expect(storage.object.pins[0].repositoryURL == "/Users/example/swift-package-list")
+        #expect(storage.object.pins[1].repositoryURL == "https://github.com/felixherrmann/swift-package-list")
     }
 
-    func testVersion2() throws {
+    @Test func version2() throws {
         let url = Bundle.module.url(
             forResource: "Package_v2",
             withExtension: "resolved",
             subdirectory: "Resources/PackageResolved"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let packageResolved = try PackageResolved(url: unwrappedURL)
 
         guard case .v2(let storage) = packageResolved.storage else {
-            XCTFail("\(unwrappedURL.path) was not recognized as v2")
+            Issue.record("\(unwrappedURL.path) was not recognized as v2")
             return
         }
 
-        XCTAssertEqual(storage.version, 2)
-        XCTAssertEqual(storage.pins.count, 3)
-        XCTAssertEqual(storage.pins[0].kind, .localSourceControl)
-        XCTAssertEqual(storage.pins[1].kind, .remoteSourceControl)
-        XCTAssertEqual(storage.pins[2].kind, .registry)
+        #expect(storage.version == 2)
+        #expect(storage.pins.count == 3)
+        #expect(storage.pins[0].kind == .localSourceControl)
+        #expect(storage.pins[1].kind == .remoteSourceControl)
+        #expect(storage.pins[2].kind == .registry)
     }
 
-    func testVersion3() throws {
+    @Test func version3() throws {
         let url = Bundle.module.url(
             forResource: "Package_v3",
             withExtension: "resolved",
             subdirectory: "Resources/PackageResolved"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let packageResolved = try PackageResolved(url: unwrappedURL)
 
         guard case .v3(let storage) = packageResolved.storage else {
-            XCTFail("\(unwrappedURL.path) was not recognized as v3")
+            Issue.record("\(unwrappedURL.path) was not recognized as v3")
             return
         }
 
-        XCTAssertEqual(storage.version, 3)
-        XCTAssertEqual(storage.originHash, "0000000000000000000000000000000000000000000000000000000000000000")
-        XCTAssertEqual(storage.pins.count, 3)
-        XCTAssertEqual(storage.pins[0].kind, .localSourceControl)
-        XCTAssertEqual(storage.pins[1].kind, .remoteSourceControl)
-        XCTAssertEqual(storage.pins[2].kind, .registry)
+        #expect(storage.version == 3)
+        #expect(storage.originHash == "0000000000000000000000000000000000000000000000000000000000000000")
+        #expect(storage.pins.count == 3)
+        #expect(storage.pins[0].kind == .localSourceControl)
+        #expect(storage.pins[1].kind == .remoteSourceControl)
+        #expect(storage.pins[2].kind == .registry)
     }
 
-    func testUnsupportedVersion() throws {
+    @Test func unsupportedVersion() throws {
         let url = Bundle.module.url(
             forResource: "Package_v999",
             withExtension: "resolved",
             subdirectory: "Resources/PackageResolved"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        XCTAssertThrowsError(try PackageResolved(url: unwrappedURL)) { error in
-            XCTAssertTrue(error is RuntimeError)
-            XCTAssertEqual((error as? RuntimeError)?.description, "Version 999 of Package.resolved is not supported")
+        let error = #expect(throws: RuntimeError.self) {
+            try PackageResolved(url: unwrappedURL)
         }
+        #expect(error?.description == "Version 999 of Package.resolved is not supported")
     }
 
-    func testVersion1Kind() {
+    @Test func version1Kind() {
         let remotePin = PackageResolved.Storage.V1.Object.Pin(
             package: "",
             repositoryURL: "https://github.com/test/TestRemote.git",
             state: PackageResolved.Storage.V1.Object.Pin.State(branch: nil, revision: "", version: nil)
         )
-        XCTAssertEqual(remotePin.kind, .remoteSourceControl)
+        #expect(remotePin.kind == .remoteSourceControl)
 
         let localPin = PackageResolved.Storage.V1.Object.Pin(
             package: "",
             repositoryURL: "/Users/test/Desktop/TestLocal/",
             state: PackageResolved.Storage.V1.Object.Pin.State(branch: nil, revision: "", version: nil)
         )
-        XCTAssertEqual(localPin.kind, .localSourceControl)
+        #expect(localPin.kind == .localSourceControl)
     }
 
-    func testVersion1Identity() {
+    @Test func version1Identity() {
         let remotePin = PackageResolved.Storage.V1.Object.Pin(
             package: "",
             repositoryURL: "https://github.com/test/TestRemote.git",
             state: PackageResolved.Storage.V1.Object.Pin.State(branch: nil, revision: "", version: nil)
         )
-        XCTAssertEqual(remotePin.identity, "testremote")
+        #expect(remotePin.identity == "testremote")
 
         let localPin = PackageResolved.Storage.V1.Object.Pin(
             package: "",
             repositoryURL: "/Users/test/Desktop/TestLocal/",
             state: PackageResolved.Storage.V1.Object.Pin.State(branch: nil, revision: "", version: nil)
         )
-        XCTAssertEqual(localPin.identity, "testlocal")
+        #expect(localPin.identity == "testlocal")
     }
 }

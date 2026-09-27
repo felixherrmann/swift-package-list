@@ -5,27 +5,29 @@
 //  Created by Felix Herrmann on 17.02.25.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class CustomPackagesTests: XCTestCase {
-    func testPackageParsing() throws {
+struct CustomPackagesTests {
+    @Test func packageParsing() throws {
         let url = Bundle.module.url(
             forResource: "custom-packages",
             withExtension: ".json",
             subdirectory: "Resources/CustomPackages"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let customPackages = CustomPackages(url: unwrappedURL)
-        let package = try XCTUnwrap(try customPackages.packages().first)
+        let package = try #require(try customPackages.packages().first)
 
-        XCTAssertEqual(package.branch, "branch-test")
-        XCTAssertEqual(package.identity, "identity-test")
-        XCTAssertEqual(package.kind, .remoteSourceControl)
-        XCTAssertEqual(package.license, "license-test")
-        XCTAssertEqual(package.location, "location-tes")
-        XCTAssertEqual(package.name, "name-test")
-        XCTAssertEqual(package.revision, "revision-test")
-        XCTAssertEqual(package.version, "version-test")
+        #expect(package.branch == "branch-test")
+        #expect(package.identity == "identity-test")
+        #expect(package.kind == .remoteSourceControl)
+        #expect(package.license == "license-test")
+        #expect(package.location == "location-tes")
+        #expect(package.name == "name-test")
+        #expect(package.revision == "revision-test")
+        #expect(package.version == "version-test")
     }
 }

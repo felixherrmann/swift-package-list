@@ -5,244 +5,171 @@
 //  Created by Felix Herrmann on 15.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class ProjectTests: XCTestCase {
-    func testXcodeProject_pbxproj() throws {
+struct ProjectTests {
+    @Test(arguments: ["pbxproj", "xcproj"])
+    func xcodeProject(format: String) throws {
         // Note: The project and workspace files in the Resources directory get's hidden by Xcode
         let url = Bundle.module.url(
             forResource: "Project",
             withExtension: "xcodeproj",
-            subdirectory: "Resources/XcodeProject/pbxproj"
+            subdirectory: "Resources/XcodeProject/\(format)"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .xcodeProject)
+        let projectType = try ProjectType(fileURL: unwrappedURL)
+        #expect(projectType == .xcodeProject)
 
         let project = try projectType.project(fileURL: unwrappedURL)
-        let xcodeProject = try XCTUnwrap(project as? XcodeProject)
+        let xcodeProject = try #require(project as? XcodeProject)
 
         let expectedPackageResolvedFileURL = unwrappedURL
             .appendingPathComponent("project.xcworkspace")
             .appendingPathComponent("xcshareddata")
             .appendingPathComponent("swiftpm")
             .appendingPathComponent("Package.resolved")
-        XCTAssertEqual(try xcodeProject.packageResolved.url, expectedPackageResolvedFileURL)
+        #expect(try xcodeProject.packageResolved.url == expectedPackageResolvedFileURL)
 
         let expectedConfigurationDirectoryURL = unwrappedURL
             .appendingPathComponent("project.xcworkspace")
             .appendingPathComponent("xcshareddata")
             .appendingPathComponent("swiftpm")
             .appendingPathComponent("configuration")
-        XCTAssertEqual(xcodeProject.configuration?.url, expectedConfigurationDirectoryURL)
+        #expect(xcodeProject.configuration?.url == expectedConfigurationDirectoryURL)
 
-        XCTAssertEqual(xcodeProject.name, "Project")
-        XCTAssertEqual(xcodeProject.organizationName, "SwiftPackageList")
+        #expect(xcodeProject.name == "Project")
+        #expect(xcodeProject.organizationName == "SwiftPackageList")
     }
 
-    func testXcodeProject_xcproj() throws {
-        // Note: The project and workspace files in the Resources directory get's hidden by Xcode
-        let url = Bundle.module.url(
-            forResource: "Project",
-            withExtension: "xcodeproj",
-            subdirectory: "Resources/XcodeProject/xcproj"
-        )
-        let unwrappedURL = try XCTUnwrap(url)
-
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .xcodeProject)
-
-        let project = try projectType.project(fileURL: unwrappedURL)
-        let xcodeProject = try XCTUnwrap(project as? XcodeProject)
-
-        let expectedPackageResolvedFileURL = unwrappedURL
-            .appendingPathComponent("project.xcworkspace")
-            .appendingPathComponent("xcshareddata")
-            .appendingPathComponent("swiftpm")
-            .appendingPathComponent("Package.resolved")
-        XCTAssertEqual(try xcodeProject.packageResolved.url, expectedPackageResolvedFileURL)
-
-        let expectedConfigurationDirectoryURL = unwrappedURL
-            .appendingPathComponent("project.xcworkspace")
-            .appendingPathComponent("xcshareddata")
-            .appendingPathComponent("swiftpm")
-            .appendingPathComponent("configuration")
-        XCTAssertEqual(xcodeProject.configuration?.url, expectedConfigurationDirectoryURL)
-
-        XCTAssertEqual(xcodeProject.name, "Project")
-        XCTAssertEqual(xcodeProject.organizationName, "SwiftPackageList")
-    }
-
-    func testXcodeWorkspace_pbxproj() throws {
+    @Test(arguments: ["pbxproj", "xcproj"])
+    func testXcodeWorkspace(format: String) throws {
         // Note: The project and workspace files in the Resources directory get's hidden by Xcode
         let url = Bundle.module.url(
             forResource: "Workspace",
             withExtension: "xcworkspace",
-            subdirectory: "Resources/XcodeWorkspace/pbxproj"
+            subdirectory: "Resources/XcodeWorkspace/\(format)"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .xcodeWorkspace)
+        let projectType = try ProjectType(fileURL: unwrappedURL)
+        #expect(projectType == .xcodeWorkspace)
 
         let project = try projectType.project(fileURL: unwrappedURL)
-        let xcodeWorkspace = try XCTUnwrap(project as? XcodeWorkspace)
+        let xcodeWorkspace = try #require(project as? XcodeWorkspace)
 
         let expectedPackageResolvedFileURL = unwrappedURL
             .appendingPathComponent("xcshareddata")
             .appendingPathComponent("swiftpm")
             .appendingPathComponent("Package.resolved")
-        XCTAssertEqual(try xcodeWorkspace.packageResolved.url, expectedPackageResolvedFileURL)
+        #expect(try xcodeWorkspace.packageResolved.url == expectedPackageResolvedFileURL)
 
         let expectedConfigurationDirectoryURL = unwrappedURL
             .appendingPathComponent("xcshareddata")
             .appendingPathComponent("swiftpm")
             .appendingPathComponent("configuration")
-        XCTAssertEqual(xcodeWorkspace.configuration?.url, expectedConfigurationDirectoryURL)
+        #expect(xcodeWorkspace.configuration?.url == expectedConfigurationDirectoryURL)
 
-        XCTAssertEqual(xcodeWorkspace.name, "Workspace")
-        XCTAssertEqual(xcodeWorkspace.organizationName, "SwiftPackageList")
+        #expect(xcodeWorkspace.name == "Workspace")
+        #expect(xcodeWorkspace.organizationName == "SwiftPackageList")
     }
 
-    func testXcodeWorkspace_xcproj() throws {
-        // Note: The project and workspace files in the Resources directory get's hidden by Xcode
-        let url = Bundle.module.url(
-            forResource: "Workspace",
-            withExtension: "xcworkspace",
-            subdirectory: "Resources/XcodeWorkspace/xcproj"
-        )
-        let unwrappedURL = try XCTUnwrap(url)
-
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .xcodeWorkspace)
-
-        let project = try projectType.project(fileURL: unwrappedURL)
-        let xcodeWorkspace = try XCTUnwrap(project as? XcodeWorkspace)
-
-        let expectedPackageResolvedFileURL = unwrappedURL
-            .appendingPathComponent("xcshareddata")
-            .appendingPathComponent("swiftpm")
-            .appendingPathComponent("Package.resolved")
-        XCTAssertEqual(try xcodeWorkspace.packageResolved.url, expectedPackageResolvedFileURL)
-
-        let expectedConfigurationDirectoryURL = unwrappedURL
-            .appendingPathComponent("xcshareddata")
-            .appendingPathComponent("swiftpm")
-            .appendingPathComponent("configuration")
-        XCTAssertEqual(xcodeWorkspace.configuration?.url, expectedConfigurationDirectoryURL)
-
-        XCTAssertEqual(xcodeWorkspace.name, "Workspace")
-        XCTAssertEqual(xcodeWorkspace.organizationName, "SwiftPackageList")
-    }
-
-    func testSwiftPackage() throws {
+    @Test func swiftPackage() throws {
         let url = Bundle.module.url(forResource: "Package", withExtension: "swift", subdirectory: "Resources/SwiftPackage")
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .swiftPackage)
+        let projectType = try ProjectType(fileURL: unwrappedURL)
+        #expect(projectType == .swiftPackage)
 
         let project = try projectType.project(fileURL: unwrappedURL)
-        let swiftPackage = try XCTUnwrap(project as? SwiftPackage)
+        let swiftPackage = try #require(project as? SwiftPackage)
 
         let expectedPackageResolvedFileURL = unwrappedURL
             .deletingLastPathComponent()
             .appendingPathComponent("Package.resolved")
-        XCTAssertEqual(try swiftPackage.packageResolved.url, expectedPackageResolvedFileURL)
+        #expect(try swiftPackage.packageResolved.url == expectedPackageResolvedFileURL)
 
         let expectedConfigurationDirectoryURL = unwrappedURL
             .deletingLastPathComponent()
             .appendingPathComponent(".swiftpm")
             .appendingPathComponent("configuration")
-        XCTAssertEqual(swiftPackage.configuration?.url, expectedConfigurationDirectoryURL)
+        #expect(swiftPackage.configuration?.url == expectedConfigurationDirectoryURL)
 
-        XCTAssertEqual(swiftPackage.name, "SwiftPackage")
-        XCTAssertNil(swiftPackage.organizationName)
+        #expect(swiftPackage.name == "SwiftPackage")
+        #expect(swiftPackage.organizationName == nil)
     }
 
-    func testTuist4() throws {
-        let (exitCode, _) = try zsh("which tuist")
-        try XCTSkipIf(exitCode != 0, "Tuist not installed")
-
-        let (_, data) = try zsh("tuist version")
-        let tuistVersion = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
-        try XCTSkipUnless(tuistVersion.hasPrefix("4."), "Installed Tuist version is not 4.*.* (actual: \(tuistVersion))")
-
+    @Test(.enabled(if: hasTuistVersion(4), "Tuist 4 is unavailable"))
+    func tuist4() throws {
         let url = Bundle.module.url(forResource: "Project", withExtension: "swift", subdirectory: "Resources/Tuist4")
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .tuist)
+        let projectType = try ProjectType(fileURL: unwrappedURL)
+        #expect(projectType == .tuist)
 
         let project = try projectType.project(fileURL: unwrappedURL)
-        let tuist = try XCTUnwrap(project as? Tuist)
+        let tuist = try #require(project as? Tuist)
 
         let expectedPackageResolvedFileURL = unwrappedURL
             .deletingLastPathComponent()
             .appendingPathComponent(".package.resolved")
-        XCTAssertEqual(try tuist.packageResolved.url, expectedPackageResolvedFileURL)
+        #expect(try tuist.packageResolved.url == expectedPackageResolvedFileURL)
 
-        XCTAssertEqual(tuist.name, "Tuist")
-        XCTAssertEqual(tuist.organizationName, "Test Inc.")
+        #expect(tuist.name == "Tuist")
+        #expect(tuist.organizationName == "Test Inc.")
     }
 
-    func testTuist3() throws {
-        let (exitCode, _) = try zsh("which tuist")
-        try XCTSkipIf(exitCode != 0, "Tuist not installed")
-
-        let (_, data) = try zsh("tuist version")
-        let tuistVersion = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
-        try XCTSkipUnless(tuistVersion.hasPrefix("3."), "Installed Tuist version is not 3.*.* (actual: \(tuistVersion))")
-
+    @Test(.enabled(if: hasTuistVersion(3), "Tuist 3 is unavailable"))
+    func tuist3() throws {
         let url = Bundle.module.url(forResource: "Project", withExtension: "swift", subdirectory: "Resources/Tuist3")
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .tuist)
+        let projectType = try ProjectType(fileURL: unwrappedURL)
+        #expect(projectType == .tuist)
 
         let project = try projectType.project(fileURL: unwrappedURL)
-        let tuist = try XCTUnwrap(project as? Tuist)
+        let tuist = try #require(project as? Tuist)
 
         let expectedPackageResolvedFileURL = unwrappedURL
             .deletingLastPathComponent()
             .appendingPathComponent(".package.resolved")
-        XCTAssertEqual(try tuist.packageResolved.url, expectedPackageResolvedFileURL)
+        #expect(try tuist.packageResolved.url == expectedPackageResolvedFileURL)
 
-        XCTAssertEqual(tuist.name, "Tuist")
-        XCTAssertEqual(tuist.organizationName, "Test Inc.")
+        #expect(tuist.name == "Tuist")
+        #expect(tuist.organizationName == "Test Inc.")
     }
 
-    func testTuist3Dependencies() throws {
-        let (exitCode, _) = try zsh("which tuist")
-        try XCTSkipIf(exitCode != 0, "Tuist not installed")
-
-        let (_, data) = try zsh("tuist version")
-        let tuistVersion = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
-        try XCTSkipUnless(tuistVersion.hasPrefix("3."), "Installed Tuist version is not 3.*.* (actual: \(tuistVersion))")
-
+    @Test(.enabled(if: hasTuistVersion(3), "Tuist 3 is unavailable"))
+    func tuist3Dependencies() throws {
         let url = Bundle.module.url(
             forResource: "Dependencies",
             withExtension: "swift",
             subdirectory: "Resources/Tuist3Dependencies/Tuist"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
-        XCTAssertEqual(projectType, .tuistDependencies)
+        let projectType = try ProjectType(fileURL: unwrappedURL)
+        #expect(projectType == .tuistDependencies)
 
         let project = try projectType.project(fileURL: unwrappedURL)
-        let tuistDependencies = try XCTUnwrap(project as? TuistDependencies)
+        let tuistDependencies = try #require(project as? TuistDependencies)
 
         let expectedPackageResolvedFileURL = unwrappedURL
             .deletingLastPathComponent()
             .appendingPathComponent("Dependencies")
             .appendingPathComponent("Lockfiles")
             .appendingPathComponent("Package.resolved")
-        XCTAssertEqual(try tuistDependencies.packageResolved.url, expectedPackageResolvedFileURL)
+        #expect(try tuistDependencies.packageResolved.url == expectedPackageResolvedFileURL)
 
-        XCTAssertEqual(tuistDependencies.name, "TuistDependencies")
-        XCTAssertEqual(tuistDependencies.organizationName, "Test Inc.")
+        #expect(tuistDependencies.name == "TuistDependencies")
+        #expect(tuistDependencies.organizationName == "Test Inc.")
+    }
+
+    private static func hasTuistVersion(_ major: Int) -> Bool {
+        guard let (exitCode, data) = try? zsh("tuist version"), exitCode == 0 else { return false }
+        return String(decoding: data, as: UTF8.self).hasPrefix("\(major).")
     }
 }

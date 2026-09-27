@@ -5,25 +5,27 @@
 //  Created by Felix Herrmann on 02.03.25.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class RegistryDownloadsTests: XCTestCase {
-    func testPackageSourceMissingVersion() {
+struct RegistryDownloadsTests {
+    @Test func packageSourceMissingVersion() {
         let registryDownloads = RegistryDownloads(url: URL(fileURLWithPath: "/test/registry/downloads"))
         let packageSource = registryDownloads.packageSource(identity: "", version: nil)
-        XCTAssertNil(packageSource)
+        #expect(packageSource == nil)
     }
 
-    func testPackageSourceInvalidIdentity() {
+    @Test func packageSourceInvalidIdentity() {
         let registryDownloads = RegistryDownloads(url: URL(fileURLWithPath: "/test/registry/downloads"))
         let packageSource = registryDownloads.packageSource(identity: "scope", version: "1.0.0")
-        XCTAssertNil(packageSource)
+        #expect(packageSource == nil)
     }
 
-    func testPackageSourceValidIdentity() throws {
+    @Test func packageSourceValidIdentity() throws {
         let registryDownloads = RegistryDownloads(url: URL(fileURLWithPath: "/test/registry/downloads"))
-        let packageSource = try XCTUnwrap(registryDownloads.packageSource(identity: "scope.name", version: "1.0.0"))
-        XCTAssertEqual(packageSource.url.path(), "/test/registry/downloads/scope/name/1.0.0")
+        let packageSource = try #require(registryDownloads.packageSource(identity: "scope.name", version: "1.0.0"))
+        #expect(packageSource.url.path() == "/test/registry/downloads/scope/name/1.0.0")
     }
 }

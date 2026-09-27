@@ -5,35 +5,37 @@
 //  Created by Felix Herrmann on 14.02.24.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class URLExtensionTests: XCTestCase {
-    func testDeletingGitExtensionNoExtension() throws {
-        let url = try XCTUnwrap(URL(string: "https://github.com/test/test"))
+struct URLExtensionTests {
+    @Test func deletingGitExtensionNoExtension() throws {
+        let url = try #require(URL(string: "https://github.com/test/test"))
             .deletingGitExtension()
             .absoluteString
-        XCTAssertEqual(url, "https://github.com/test/test")
+        #expect(url == "https://github.com/test/test")
     }
 
-    func testDeletingGitExtensionGitExtension() throws {
-        let url = try XCTUnwrap(URL(string: "https://github.com/test/test.git"))
+    @Test func deletingGitExtensionGitExtension() throws {
+        let url = try #require(URL(string: "https://github.com/test/test.git"))
             .deletingGitExtension()
             .absoluteString
-        XCTAssertEqual(url, "https://github.com/test/test")
+        #expect(url == "https://github.com/test/test")
     }
 
-    func testDeletingGitExtensionOtherExtension() throws {
-        let url = try XCTUnwrap(URL(string: "https://github.com/test/Test.swift"))
+    @Test func deletingGitExtensionOtherExtension() throws {
+        let url = try #require(URL(string: "https://github.com/test/Test.swift"))
             .deletingGitExtension()
             .absoluteString
-        XCTAssertEqual(url, "https://github.com/test/Test.swift")
+        #expect(url == "https://github.com/test/Test.swift")
     }
 
-    func testDeletingGitExtensionMixedExtensions() throws {
-        let url = try XCTUnwrap(URL(string: "https://github.com/test/Test.swift.git"))
+    @Test func deletingGitExtensionMixedExtensions() throws {
+        let url = try #require(URL(string: "https://github.com/test/Test.swift.git"))
             .deletingGitExtension()
             .absoluteString
-        XCTAssertEqual(url, "https://github.com/test/Test.swift")
+        #expect(url == "https://github.com/test/Test.swift")
     }
 }

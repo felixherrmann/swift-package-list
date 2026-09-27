@@ -5,19 +5,21 @@
 //  Created by Felix Herrmann on 08.10.26.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class ProjectXcprojTests: XCTestCase {
-    func testOrganizationName() throws {
+struct ProjectXcprojTests {
+    @Test func organizationName() throws {
         let url = Bundle.module.url(
             forResource: "project",
             withExtension: "xcproj",
             subdirectory: "Resources/XcodeProject/xcproj/Project.xcodeproj"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let projectPbxproj = ProjectXcproj(url: unwrappedURL)
 
-        XCTAssertEqual(projectPbxproj.organizationName, "SwiftPackageList")
+        #expect(projectPbxproj.organizationName == "SwiftPackageList")
     }
 }
