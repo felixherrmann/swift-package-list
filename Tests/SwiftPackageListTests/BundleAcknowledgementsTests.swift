@@ -5,26 +5,28 @@
 //  Created by Felix Herrmann on 11.02.24.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageList
 
-final class BundleAcknowledgementsTests: XCTestCase {
-    func testURL() {
+struct BundleAcknowledgementsTests {
+    @Test func url() {
         let expectedURL = Bundle.module.bundleURL
             .appendingPathComponent("Contents")
             .appendingPathComponent("Resources")
             .appendingPathComponent("Acknowledgements")
             .appendingPathExtension("pdf")
 
-        XCTAssertEqual(Bundle.module.acknowledgementsURL, expectedURL)
+        #expect(Bundle.module.acknowledgementsURL == expectedURL)
     }
 
-    func testPath() {
+    @Test func path() {
         let expectedPath = Bundle.module.bundlePath
             .appending("/Contents")
             .appending("/Resources")
             .appending("/Acknowledgements.pdf")
 
-        XCTAssertEqual(Bundle.module.acknowledgementsPath, expectedPath)
+        #expect(Bundle.module.acknowledgementsPath == expectedPath)
     }
 }

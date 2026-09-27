@@ -5,21 +5,23 @@
 //  Created by Felix Herrmann on 02.03.25.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageList
 
-final class PackageKindTests: XCTestCase {
-    func testEquatableConformance() {
-        XCTAssertEqual(Package.Kind.localSourceControl, Package.Kind(rawValue: "localSourceControl"))
-        XCTAssertNotEqual(Package.Kind.remoteSourceControl, Package.Kind.registry)
+struct PackageKindTests {
+    @Test func equatableConformance() {
+        #expect(Package.Kind.localSourceControl == Package.Kind(rawValue: "localSourceControl"))
+        #expect(Package.Kind.remoteSourceControl != Package.Kind.registry)
     }
 
-    func testHashableConformance() {
-        XCTAssertEqual(Package.Kind.localSourceControl.hashValue, Package.Kind(rawValue: "localSourceControl").hashValue)
-        XCTAssertNotEqual(Package.Kind.remoteSourceControl.hashValue, Package.Kind.registry.hashValue)
+    @Test func hashableConformance() {
+        #expect(Package.Kind.localSourceControl.hashValue == Package.Kind(rawValue: "localSourceControl").hashValue)
+        #expect(Package.Kind.remoteSourceControl.hashValue != Package.Kind.registry.hashValue)
     }
 
-    func testDecodableConformance() throws {
+    @Test func decodableConformance() throws {
         struct Example: Decodable {
             let kind: Package.Kind
         }
@@ -28,10 +30,10 @@ final class PackageKindTests: XCTestCase {
         let data = Data("{\"kind\":\"remoteSourceControl\"}".utf8)
         let example = try decoder.decode(Example.self, from: data)
 
-        XCTAssertEqual(example.kind, .remoteSourceControl)
+        #expect(example.kind == .remoteSourceControl)
     }
 
-    func testEncodableConformance() throws {
+    @Test func encodableConformance() throws {
         struct Example: Encodable {
             let kind: Package.Kind
         }
@@ -40,6 +42,6 @@ final class PackageKindTests: XCTestCase {
         let example = Example(kind: .remoteSourceControl)
         let data = try encoder.encode(example)
 
-        XCTAssertEqual(data, Data("{\"kind\":\"remoteSourceControl\"}".utf8))
+        #expect(data == Data("{\"kind\":\"remoteSourceControl\"}".utf8))
     }
 }
