@@ -5,17 +5,18 @@
 //  Created by Felix Herrmann on 18.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
 
-final class ExecutionTests: XCTestCase {
+struct ExecutionTests {
+    private final class BundleMarker { }
+
     private var productsDirectory: URL {
-        for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-            return bundle.bundleURL.deletingLastPathComponent()
-        }
-        fatalError("couldn't find the products directory")
+        let bundle = Bundle(for: BundleMarker.self)
+        return bundle.bundleURL.deletingLastPathComponent()
     }
 
-    func testCommandExecution() throws {
+    @Test func commandExecution() throws {
         let swiftPackageListBinary = productsDirectory.appendingPathComponent("swift-package-list")
 
         let process = Process()
@@ -32,11 +33,7 @@ final class ExecutionTests: XCTestCase {
         let output = String(decoding: data, as: UTF8.self).trimmingCharacters(in: .whitespacesAndNewlines)
 
         let versionNumbers = output.split(separator: ".")
-        let majorVersionNumber = versionNumbers[0]
-        let minorVersionNumber = versionNumbers[1]
-        let patchVersionNumber = versionNumbers[2]
-        XCTAssertNotNil(Int(majorVersionNumber))
-        XCTAssertNotNil(Int(minorVersionNumber))
-        XCTAssertNotNil(Int(patchVersionNumber))
+        #expect(versionNumbers.count == 3)
+        #expect(versionNumbers.allSatisfy { Int($0) != nil })
     }
 }
