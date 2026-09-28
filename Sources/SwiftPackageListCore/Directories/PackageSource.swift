@@ -20,6 +20,7 @@ extension PackageSource {
                     includingPropertiesForKeys: [.isRegularFileKey],
                     options: .skipsHiddenFiles
                 )
+                .filter { (try? $0.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true }
                 .compactMap(License.init(uncheckedURL:))
                 .first
         }

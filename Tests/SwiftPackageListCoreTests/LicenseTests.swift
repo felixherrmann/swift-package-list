@@ -11,14 +11,20 @@ import Testing
 @testable import SwiftPackageListCore
 
 struct LicenseTests {
-    @Test func initUncheckedURLDisallowed() {
-        #expect(License(uncheckedURL: URL(fileURLWithPath: "/test/TEST")) == nil)
+    @Test(arguments: [
+        "TEST", "license.spdx", "license.header", "LICENSED", "LICENSE-MIT.sh", "COPYING-MIT.xml",
+    ])
+    func initUncheckedURLDisallowed(filename: String) {
+        let url = URL(fileURLWithPath: "/test/\(filename)")
+        #expect(License(uncheckedURL: url) == nil)
     }
 
-    @Test func initUncheckedURLAllowed() {
-        #expect(License(uncheckedURL: URL(fileURLWithPath: "/test/LICENSE")) != nil)
-        #expect(License(uncheckedURL: URL(fileURLWithPath: "/test/Licence")) != nil)
-        #expect(License(uncheckedURL: URL(fileURLWithPath: "/test/copying")) != nil)
-        #expect(License(uncheckedURL: URL(fileURLWithPath: "/test/UNLICENSE")) != nil)
+    @Test(arguments: [
+        "LICENSE", "Licence", "copying", "UNLICENSE", "LICENSE-MIT", "MIT-LICENSE.md", "COPYING.txt", "LICENSE.2.0", "OFL.md",
+        "COPYRIGHT", "PATENTS",
+    ])
+    func initUncheckedURLAllowed(filename: String) {
+        let url = URL(fileURLWithPath: "/test/\(filename)")
+        #expect(License(uncheckedURL: url) != nil)
     }
 }
