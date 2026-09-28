@@ -34,10 +34,6 @@ mint install felixherrmann/swift-package-list
 mise use spm:felixherrmann/swift-package-list
 ```
 
-#### Installing from source:
-
-Clone or download this repository and run `make install`, `make update` or `make uninstall`.
-
 ### Usage
 
 Open the terminal and run `swift-package-list <project-path>` with the path to the project file you want to generate the list from.
