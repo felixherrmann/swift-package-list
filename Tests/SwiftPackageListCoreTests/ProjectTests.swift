@@ -102,9 +102,9 @@ struct ProjectTests {
         #expect(swiftPackage.organizationName == nil)
     }
 
-    @Test(.enabled(if: hasTuist4, "Tuist 4 is unavailable"))
-    func tuist4() throws {
-        let url = Bundle.module.url(forResource: "Project", withExtension: "swift", subdirectory: "Resources/Tuist4")
+    @Test(.enabled(if: hasTuist, "Tuist is unavailable"))
+    func tuist() throws {
+        let url = Bundle.module.url(forResource: "Project", withExtension: "swift", subdirectory: "Resources/Tuist")
         let unwrappedURL = try #require(url)
 
         let projectType = try ProjectType(fileURL: unwrappedURL)
@@ -122,8 +122,7 @@ struct ProjectTests {
         #expect(tuist.organizationName == "Test Inc.")
     }
 
-    private static var hasTuist4: Bool {
-        guard let (exitCode, data) = try? zsh("tuist version"), exitCode == 0 else { return false }
-        return String(decoding: data, as: UTF8.self).hasPrefix("4.")
+    private static var hasTuist: Bool {
+        return (try? zsh("tuist version").exitCode) == 0
     }
 }
