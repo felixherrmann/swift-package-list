@@ -58,6 +58,6 @@ jobs:
       - name: Run tests
         run: |
           xcodebuild \
-          -scheme SwiftPackageList-Package \
+          -scheme swift-package-list-Package \
           -destination 'platform=macOS' \
           test

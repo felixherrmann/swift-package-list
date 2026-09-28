@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftPackageList",
+    name: "swift-package-list",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v10_15),
