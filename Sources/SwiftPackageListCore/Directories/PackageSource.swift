@@ -17,7 +17,7 @@ extension PackageSource {
             return try FileManager.default
                 .contentsOfDirectory(
                     at: url.resolvingSymlinksInPath(),
-                    includingPropertiesForKeys: [.isRegularFileKey, .localizedNameKey],
+                    includingPropertiesForKeys: [.isRegularFileKey],
                     options: .skipsHiddenFiles
                 )
                 .compactMap(License.init(uncheckedURL:))
