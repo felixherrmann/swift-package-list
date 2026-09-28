@@ -1,4 +1,4 @@
-# SwiftPackageList
+# Swift Package List
 
 [![Xcode Build](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml)
 [![SwiftLint](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml)
@@ -72,7 +72,7 @@ For Xcode projects simply add it under the `Run Build Tool Plug-ins` section in 
 
 By default this will use the JSON output with `--requires-license` but you can create a `swift-package-list-config.json` in your project's root to configure that behavior, both project and target specific (target configs have precedence over the project one). Everything in the configuration is optional and has the following format:
 ```json5
-// SwiftPackageList configuration file
+// Swift Package List configuration file
 // Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
@@ -318,9 +318,9 @@ The Settings Bundle and the UI-components are currently localized in the followi
 
 ## Known limitations
 
-- SwiftPackageList won't include license files from packages that are located in a registry like Artifactory.
+- Swift Package List won't include license files from packages that are located in a registry like Artifactory.
 
 
 ## License
 
-SwiftPackageList is available under the MIT license. See the [LICENSE](https://github.com/felixherrmann/swift-package-list/blob/master/LICENSE) file for more info.
+Swift Package List is available under the MIT license. See the [LICENSE](https://github.com/felixherrmann/swift-package-list/blob/master/LICENSE) file for more info.

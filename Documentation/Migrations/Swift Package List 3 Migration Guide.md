@@ -1,4 +1,4 @@
-#  SwiftPackageList 3 Migration Guide
+# Swift Package List 3 Migration Guide
 
 This guide eases the transition of the existing apps that use SwiftPackageList 2.x to
 version 3 of the tool.

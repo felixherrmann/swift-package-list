@@ -42,7 +42,7 @@ struct ProjectTests {
         #expect(xcodeProject.configuration?.url == expectedConfigurationDirectoryURL)
 
         #expect(xcodeProject.name == "Project")
-        #expect(xcodeProject.organizationName == "SwiftPackageList")
+        #expect(xcodeProject.organizationName == "Swift Package List")
     }
 
     @Test(arguments: ["pbxproj", "xcproj"])
@@ -74,7 +74,7 @@ struct ProjectTests {
         #expect(xcodeWorkspace.configuration?.url == expectedConfigurationDirectoryURL)
 
         #expect(xcodeWorkspace.name == "Workspace")
-        #expect(xcodeWorkspace.organizationName == "SwiftPackageList")
+        #expect(xcodeWorkspace.organizationName == "Swift Package List")
     }
 
     @Test func swiftPackage() throws {

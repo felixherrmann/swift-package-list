@@ -20,6 +20,6 @@ struct XcodeWorkspaceTests {
         let unwrappedURL = try #require(url)
         let workspace = XcodeWorkspace(fileURL: unwrappedURL, options: ProjectOptions())
 
-        #expect(workspace.organizationName == "SwiftPackageList")
+        #expect(workspace.organizationName == "Swift Package List")
     }
 }

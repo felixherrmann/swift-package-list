@@ -1,5 +1,5 @@
 {
-  "organization": "SwiftPackageList",
+  "organization": "Swift Package List",
   "default-configuration": "Release",
   "configurations": [
     "Debug",
