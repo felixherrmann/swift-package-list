@@ -42,7 +42,6 @@ Currently supported are:
 - `*.xcworkspace` for Xcode workspaces
 - `Package.swift` for Swift packages
 - `Project.swift` for Tuist projects
-- `Dependencies.swift` for Tuist 3 projects with external dependencies (deprecated)
 
 In addition to that you can specify the following options:
 
@@ -169,7 +168,6 @@ This tool supports the following [Tuist external dependency](https://docs.tuist.
 | [XcodeProj-based](https://docs.tuist.dev/en/guides/features/projects/dependencies#tuists-xcodeprojbased-integration) at root   | `swift-package-list Package.swift --custom-source-packages-path .build`             |
 | [XcodeProj-based](https://docs.tuist.dev/en/guides/features/projects/dependencies#tuists-xcodeprojbased-integration) at /Tuist | `swift-package-list Tuist/Package.swift --custom-source-packages-path Tuist/.build` |
 | [Xcode's default](https://docs.tuist.dev/en/guides/features/projects/dependencies#xcodes-default-integration)                  | `swift-package-list Project.swift`                                                  |
-| Tuist 3 with external dependencies (deprecated)                                                                                | `swift-package-list Dependencies.swift`                                             |
 
 ### Settings Bundle
 

@@ -102,7 +102,7 @@ struct ProjectTests {
         #expect(swiftPackage.organizationName == nil)
     }
 
-    @Test(.enabled(if: hasTuistVersion(4), "Tuist 4 is unavailable"))
+    @Test(.enabled(if: hasTuist4, "Tuist 4 is unavailable"))
     func tuist4() throws {
         let url = Bundle.module.url(forResource: "Project", withExtension: "swift", subdirectory: "Resources/Tuist4")
         let unwrappedURL = try #require(url)
@@ -122,54 +122,8 @@ struct ProjectTests {
         #expect(tuist.organizationName == "Test Inc.")
     }
 
-    @Test(.enabled(if: hasTuistVersion(3), "Tuist 3 is unavailable"))
-    func tuist3() throws {
-        let url = Bundle.module.url(forResource: "Project", withExtension: "swift", subdirectory: "Resources/Tuist3")
-        let unwrappedURL = try #require(url)
-
-        let projectType = try ProjectType(fileURL: unwrappedURL)
-        #expect(projectType == .tuist)
-
-        let project = try projectType.project(fileURL: unwrappedURL)
-        let tuist = try #require(project as? Tuist)
-
-        let expectedPackageResolvedFileURL = unwrappedURL
-            .deletingLastPathComponent()
-            .appendingPathComponent(".package.resolved")
-        #expect(try tuist.packageResolved.url == expectedPackageResolvedFileURL)
-
-        #expect(tuist.name == "Tuist")
-        #expect(tuist.organizationName == "Test Inc.")
-    }
-
-    @Test(.enabled(if: hasTuistVersion(3), "Tuist 3 is unavailable"))
-    func tuist3Dependencies() throws {
-        let url = Bundle.module.url(
-            forResource: "Dependencies",
-            withExtension: "swift",
-            subdirectory: "Resources/Tuist3Dependencies/Tuist"
-        )
-        let unwrappedURL = try #require(url)
-
-        let projectType = try ProjectType(fileURL: unwrappedURL)
-        #expect(projectType == .tuistDependencies)
-
-        let project = try projectType.project(fileURL: unwrappedURL)
-        let tuistDependencies = try #require(project as? TuistDependencies)
-
-        let expectedPackageResolvedFileURL = unwrappedURL
-            .deletingLastPathComponent()
-            .appendingPathComponent("Dependencies")
-            .appendingPathComponent("Lockfiles")
-            .appendingPathComponent("Package.resolved")
-        #expect(try tuistDependencies.packageResolved.url == expectedPackageResolvedFileURL)
-
-        #expect(tuistDependencies.name == "TuistDependencies")
-        #expect(tuistDependencies.organizationName == "Test Inc.")
-    }
-
-    private static func hasTuistVersion(_ major: Int) -> Bool {
+    private static var hasTuist4: Bool {
         guard let (exitCode, data) = try? zsh("tuist version"), exitCode == 0 else { return false }
-        return String(decoding: data, as: UTF8.self).hasPrefix("\(major).")
+        return String(decoding: data, as: UTF8.self).hasPrefix("4.")
     }
 }

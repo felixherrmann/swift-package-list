@@ -12,7 +12,7 @@ import SwiftPackageListCore
 extension SwiftPackageList {
     struct InputOptions: ParsableArguments {
         @Argument(
-            help: "The path to your *.xcodeproj, *.xcworkspace, Package.swift, Project.swift or Dependencies.swift file.",
+            help: "The path to your *.xcodeproj, *.xcworkspace, Package.swift or Project.swift file.",
             completion: .file(extensions: ["xcodeproj", "xcworkspace", "swift"])
         )
         var projectPath: String
