@@ -51,6 +51,19 @@ extension License {
     }
 }
 
+extension License: Comparable {
+    private var rank: Int {
+        let index = Self.filenamePatterns.firstIndex { Self.checkFilename(url.lastPathComponent, for: $0) }
+        return index ?? Self.filenamePatterns.count
+    }
+
+    static func < (lhs: License, rhs: License) -> Bool {
+        let lhsValues = (lhs.rank, lhs.url.lastPathComponent.lowercased(), lhs.url.path)
+        let rhsValues = (rhs.rank, rhs.url.lastPathComponent.lowercased(), rhs.url.path)
+        return lhsValues < rhsValues
+    }
+}
+
 extension License {
     var content: String {
         get throws {

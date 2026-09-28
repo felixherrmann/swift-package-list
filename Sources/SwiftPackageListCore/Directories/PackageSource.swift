@@ -22,7 +22,7 @@ extension PackageSource {
                 )
                 .filter { (try? $0.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile) == true }
                 .compactMap(License.init(uncheckedURL:))
-                .first
+                .min()
         }
     }
 }
