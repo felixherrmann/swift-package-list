@@ -71,6 +71,7 @@ By default this will use the JSON output with `--requires-license` but you can c
 // Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
+    version: 1,
     projectPath: "Project.xcworkspace",
     project: {
         outputType: "plist",

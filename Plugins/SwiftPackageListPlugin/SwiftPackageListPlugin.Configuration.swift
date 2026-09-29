@@ -7,13 +7,81 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name type_name
+
 extension SwiftPackageListPlugin {
-    struct Configuration: Decodable {
-        let projectPath: String?
-        let project: TargetConfiguration?
-        let targets: [String: TargetConfiguration]? // swiftlint:disable:this discouraged_optional_collection
+    struct Configuration {
+        let url: URL
+        let storage: Storage
+
+        init?(url: URL) throws(SwiftPackageListPlugin.Error) {
+            guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+
+            let data: Data
+            do {
+                data = try Data(contentsOf: url)
+            } catch {
+                throw .configurationUnavailable(url: url, underlyingError: error)
+            }
+
+            let decoder = JSONDecoder()
+            decoder.allowsJSON5 = true
+
+            let storage: Storage
+            do {
+                storage = try decoder.decode(Storage.self, from: data)
+            } catch {
+                throw .configurationInvalid(url: url, underlyingError: error)
+            }
+
+            self.url = url
+            self.storage = storage
+        }
     }
 }
+
+// MARK: - Storage
+
+extension SwiftPackageListPlugin.Configuration {
+    enum Storage {
+        case v1(V1)
+    }
+}
+
+extension SwiftPackageListPlugin.Configuration.Storage: Decodable {
+    private enum VersionKeys: CodingKey {
+        case version
+    }
+
+    init(from decoder: any Decoder) throws {
+        let versionContainer = try decoder.container(keyedBy: VersionKeys.self)
+        let version = try versionContainer.decodeIfPresent(Int.self, forKey: .version) ?? 1
+
+        switch version {
+        case 1:
+            self = .v1(try V1(from: decoder))
+        case let version:
+            throw DecodingError.dataCorruptedError(
+                forKey: .version,
+                in: versionContainer,
+                debugDescription: "Unsupported configuration version: \(version)"
+            )
+        }
+    }
+}
+
+// MARK: - V1
+
+extension SwiftPackageListPlugin.Configuration.Storage {
+    struct V1: Decodable {
+        let projectPath: String?
+        let project: SwiftPackageListPlugin.Configuration.TargetConfiguration?
+        // swiftlint:disable:next discouraged_optional_collection
+        let targets: [String: SwiftPackageListPlugin.Configuration.TargetConfiguration]?
+    }
+}
+
+// MARK: - Target Configuration
 
 extension SwiftPackageListPlugin.Configuration {
     struct TargetConfiguration: Decodable {
@@ -64,23 +132,22 @@ extension SwiftPackageListPlugin.Configuration {
     static let fileName = "swift-package-list-config.json"
 }
 
+// MARK: - Normalization
+
 extension SwiftPackageListPlugin.Configuration {
-    init?(url: URL) throws {
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
-
-        let data: Data
-        do {
-            data = try Data(contentsOf: url)
-        } catch {
-            throw SwiftPackageListPlugin.Error.configurationUnavailable(url: url, underlyingError: error)
+    var projectPath: String? {
+        switch storage {
+        case .v1(let v1):
+            return v1.projectPath
         }
+    }
 
-        let decoder = JSONDecoder()
-        decoder.allowsJSON5 = true
-        do {
-            self = try decoder.decode(SwiftPackageListPlugin.Configuration.self, from: data)
-        } catch {
-            throw SwiftPackageListPlugin.Error.configurationInvalid(url: url, underlyingError: error)
+    func targetConfiguration(for targetName: String) -> TargetConfiguration? {
+        switch storage {
+        case .v1(let v1):
+            return v1.targets?[targetName] ?? v1.project
         }
     }
 }
+
+// swiftlint:enable identifier_name type_name

@@ -13,7 +13,7 @@ extension SwiftPackageListPlugin: BuildToolPlugin {
 
         let configurationURL = context.package.directoryURL.appending(path: Configuration.fileName)
         let configuration = try Configuration(url: configurationURL)
-        let targetConfiguration = configuration?.targets?[target.name] ?? configuration?.project
+        let targetConfiguration = configuration?.targetConfiguration(for: target.name)
 
         let relativeProjectPath = configuration?.projectPath ?? "Package.swift"
         let projectURL = context.package.directoryURL.appending(path: relativeProjectPath)
