@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SwiftPackage: NativeProject {
+struct SwiftPackage: DerivedDataProject {
     let fileURL: URL
     let options: ProjectOptions
 

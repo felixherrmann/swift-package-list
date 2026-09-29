@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct XcodeWorkspace: NativeProject {
+struct XcodeWorkspace: DerivedDataProject {
     let fileURL: URL
     let options: ProjectOptions
 

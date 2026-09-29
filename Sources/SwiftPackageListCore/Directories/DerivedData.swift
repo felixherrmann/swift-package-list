@@ -30,7 +30,7 @@ extension DerivedData {
         }
     }
 
-    func buildDirectory(project: some NativeProject) throws -> URL? {
+    func buildDirectory(project: some DerivedDataProject) throws -> URL? {
         let buildDirectories = try FileManager.default.contentsOfDirectory(
             at: url.resolvingSymlinksInPath(),
             includingPropertiesForKeys: [.isDirectoryKey],
