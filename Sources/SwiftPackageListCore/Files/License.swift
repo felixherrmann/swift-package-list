@@ -16,6 +16,7 @@ extension License {
         "license",
         "licence",
         "copying",
+        "unlicense",
     ]
     
     init?(uncheckedURL url: URL) {

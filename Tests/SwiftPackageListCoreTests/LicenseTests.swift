@@ -17,5 +17,6 @@ final class LicenseTests: XCTestCase {
         XCTAssertNotNil(License(uncheckedURL: URL(fileURLWithPath: "/test/LICENSE")))
         XCTAssertNotNil(License(uncheckedURL: URL(fileURLWithPath: "/test/Licence")))
         XCTAssertNotNil(License(uncheckedURL: URL(fileURLWithPath: "/test/copying")))
+        XCTAssertNotNil(License(uncheckedURL: URL(fileURLWithPath: "/test/UNLICENSE")))
     }
 }
