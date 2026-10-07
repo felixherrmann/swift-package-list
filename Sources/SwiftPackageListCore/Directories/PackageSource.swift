@@ -16,7 +16,7 @@ extension PackageSource {
         get throws {
             return try FileManager.default
                 .contentsOfDirectory(
-                    at: url,
+                    at: url.resolvingSymlinksInPath(),
                     includingPropertiesForKeys: [.isRegularFileKey, .localizedNameKey],
                     options: .skipsHiddenFiles
                 )
