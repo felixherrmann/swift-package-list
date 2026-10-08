@@ -9,9 +9,9 @@ import XCTest
 @testable import SwiftPackageListCore
 
 final class ProjectTests: XCTestCase {
-    func testXcodeProject() throws {
+    func testXcodeProject_pbxproj() throws {
         // Note: The project and workspace files in the Resources directory get's hidden by Xcode
-        let url = Bundle.module.url(forResource: "Project", withExtension: "xcodeproj", subdirectory: "Resources/XcodeProject")
+        let url = Bundle.module.url(forResource: "Project", withExtension: "xcodeproj", subdirectory: "Resources/XcodeProject/pbxproj")
         let unwrappedURL = try XCTUnwrap(url)
         
         let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
@@ -38,12 +38,12 @@ final class ProjectTests: XCTestCase {
         XCTAssertEqual(xcodeProject.organizationName, "SwiftPackageList")
     }
     
-    func testXcodeWorkspace() throws {
+    func testXcodeWorkspace_pbxproj() throws {
         // Note: The project and workspace files in the Resources directory get's hidden by Xcode
         let url = Bundle.module.url(
             forResource: "Workspace",
             withExtension: "xcworkspace",
-            subdirectory: "Resources/XcodeWorkspace"
+            subdirectory: "Resources/XcodeWorkspace/pbxproj"
         )
         let unwrappedURL = try XCTUnwrap(url)
         

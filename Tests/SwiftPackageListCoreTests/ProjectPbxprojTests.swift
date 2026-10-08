@@ -13,7 +13,7 @@ final class ProjectPbxprojTests: XCTestCase {
         let url = Bundle.module.url(
             forResource: "project",
             withExtension: "pbxproj",
-            subdirectory: "Resources/XcodeProject/Project.xcodeproj"
+            subdirectory: "Resources/XcodeProject/pbxproj/Project.xcodeproj"
         )
         let unwrappedURL = try XCTUnwrap(url)
         let projectPbxproj = ProjectPbxproj(url: unwrappedURL)
