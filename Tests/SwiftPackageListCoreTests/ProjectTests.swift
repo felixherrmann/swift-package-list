@@ -11,7 +11,44 @@ import XCTest
 final class ProjectTests: XCTestCase {
     func testXcodeProject_pbxproj() throws {
         // Note: The project and workspace files in the Resources directory get's hidden by Xcode
-        let url = Bundle.module.url(forResource: "Project", withExtension: "xcodeproj", subdirectory: "Resources/XcodeProject/pbxproj")
+        let url = Bundle.module.url(
+            forResource: "Project",
+            withExtension: "xcodeproj",
+            subdirectory: "Resources/XcodeProject/pbxproj"
+        )
+        let unwrappedURL = try XCTUnwrap(url)
+        
+        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
+        XCTAssertEqual(projectType, .xcodeProject)
+        
+        let project = try projectType.project(fileURL: unwrappedURL)
+        let xcodeProject = try XCTUnwrap(project as? XcodeProject)
+        
+        let expectedPackageResolvedFileURL = unwrappedURL
+            .appendingPathComponent("project.xcworkspace")
+            .appendingPathComponent("xcshareddata")
+            .appendingPathComponent("swiftpm")
+            .appendingPathComponent("Package.resolved")
+        XCTAssertEqual(try xcodeProject.packageResolved.url, expectedPackageResolvedFileURL)
+        
+        let expectedConfigurationDirectoryURL = unwrappedURL
+            .appendingPathComponent("project.xcworkspace")
+            .appendingPathComponent("xcshareddata")
+            .appendingPathComponent("swiftpm")
+            .appendingPathComponent("configuration")
+        XCTAssertEqual(xcodeProject.configuration?.url, expectedConfigurationDirectoryURL)
+        
+        XCTAssertEqual(xcodeProject.name, "Project")
+        XCTAssertEqual(xcodeProject.organizationName, "SwiftPackageList")
+    }
+    
+    func testXcodeProject_xcproj() throws {
+        // Note: The project and workspace files in the Resources directory get's hidden by Xcode
+        let url = Bundle.module.url(
+            forResource: "Project",
+            withExtension: "xcodeproj",
+            subdirectory: "Resources/XcodeProject/xcproj"
+        )
         let unwrappedURL = try XCTUnwrap(url)
         
         let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
@@ -44,6 +81,37 @@ final class ProjectTests: XCTestCase {
             forResource: "Workspace",
             withExtension: "xcworkspace",
             subdirectory: "Resources/XcodeWorkspace/pbxproj"
+        )
+        let unwrappedURL = try XCTUnwrap(url)
+        
+        let projectType = try XCTUnwrap(ProjectType(fileURL: unwrappedURL))
+        XCTAssertEqual(projectType, .xcodeWorkspace)
+        
+        let project = try projectType.project(fileURL: unwrappedURL)
+        let xcodeWorkspace = try XCTUnwrap(project as? XcodeWorkspace)
+        
+        let expectedPackageResolvedFileURL = unwrappedURL
+            .appendingPathComponent("xcshareddata")
+            .appendingPathComponent("swiftpm")
+            .appendingPathComponent("Package.resolved")
+        XCTAssertEqual(try xcodeWorkspace.packageResolved.url, expectedPackageResolvedFileURL)
+        
+        let expectedConfigurationDirectoryURL = unwrappedURL
+            .appendingPathComponent("xcshareddata")
+            .appendingPathComponent("swiftpm")
+            .appendingPathComponent("configuration")
+        XCTAssertEqual(xcodeWorkspace.configuration?.url, expectedConfigurationDirectoryURL)
+        
+        XCTAssertEqual(xcodeWorkspace.name, "Workspace")
+        XCTAssertEqual(xcodeWorkspace.organizationName, "SwiftPackageList")
+    }
+    
+    func testXcodeWorkspace_xcproj() throws {
+        // Note: The project and workspace files in the Resources directory get's hidden by Xcode
+        let url = Bundle.module.url(
+            forResource: "Workspace",
+            withExtension: "xcworkspace",
+            subdirectory: "Resources/XcodeWorkspace/xcproj"
         )
         let unwrappedURL = try XCTUnwrap(url)
         
