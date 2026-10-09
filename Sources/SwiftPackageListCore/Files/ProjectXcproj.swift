@@ -12,11 +12,17 @@ struct ProjectXcproj: File {
 }
 
 extension ProjectXcproj {
-    struct Content: Decodable {
+    var organizationName: String? {
+        return try? content.organization
+    }
+}
+
+extension ProjectXcproj {
+    private struct Content: Decodable {
         let organization: String?
     }
     
-    var content: Content {
+    private var content: Content {
         get throws {
             let decoder = JSONDecoder()
             let data = try Data(contentsOf: url)
