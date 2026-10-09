@@ -19,20 +19,9 @@ struct XcodeWorkspace: NativeProject {
     
     var organizationName: String? {
         let contentsURL = fileURL.appendingPathComponent("contents.xcworkspacedata")
-        let locations: [String]
-        do {
-            let contents = try String(contentsOf: contentsURL)
-            locations = try regex("(?<=location = \"group:).*(?=\")", on: contents)
-        } catch {
-            return nil
-        }
-        
-        guard let firstNonPodsLocation = locations.first(where: { !$0.contains("Pods.xcodeproj") }) else {
-            return nil
-        }
-        let projectURL = fileURL
-            .deletingLastPathComponent()
-            .appendingPathComponent(firstNonPodsLocation)
+        let contentsXcworkspacedata = ContentsXcworkspacedata(url: contentsURL)
+        guard let projectURLs = try? contentsXcworkspacedata.projectURLs else { return nil }
+        guard let projectURL = projectURLs.first(where: { $0.lastPathComponent != "Pods.xcodeproj" }) else { return nil }
         
         let projectXcprojURL = projectURL.appendingPathComponent("project.xcproj")
         let projectXcproj = ProjectXcproj(url: projectXcprojURL)
