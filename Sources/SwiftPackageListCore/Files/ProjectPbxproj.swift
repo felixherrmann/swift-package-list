@@ -13,17 +13,30 @@ struct ProjectPbxproj: File {
 
 extension ProjectPbxproj {
     var organizationName: String? {
-        do {
-            let contents = try String(contentsOf: url)
-            let organizationNames = try regex("(?<=ORGANIZATIONNAME = \").*(?=\";)", on: contents)
-            if organizationNames.isEmpty {
-                let organizationNamesWithoutQuotes = try regex("(?<=ORGANIZATIONNAME = ).*(?=;)", on: contents)
-                return organizationNamesWithoutQuotes.first
-            } else {
-                return organizationNames.first
+        guard let content = try? content else { return nil }
+        return content.objects[content.rootObject]?.attributes?.ORGANIZATIONNAME
+    }
+}
+
+extension ProjectPbxproj {
+    private struct Content: Decodable {
+        struct Object: Decodable {
+            struct Attributes: Decodable {
+                let ORGANIZATIONNAME: String?
             }
-        } catch {
-            return nil
+            
+            let attributes: Attributes?
+        }
+        
+        let rootObject: String
+        let objects: [String: Object]
+    }
+    
+    private var content: Content {
+        get throws {
+            let decoder = PropertyListDecoder()
+            let data = try Data(contentsOf: url)
+            return try decoder.decode(Content.self, from: data)
         }
     }
 }
