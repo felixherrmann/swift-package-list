@@ -20,7 +20,7 @@ struct XcodeProject: NativeProject {
     var organizationName: String? {
         let projectXcprojURL = fileURL.appendingPathComponent("project.xcproj")
         let projectXcproj = ProjectXcproj(url: projectXcprojURL)
-        if let organizationName = try? projectXcproj.content.organization {
+        if let organizationName = projectXcproj.organizationName {
             return organizationName
         }
         

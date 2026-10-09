@@ -25,7 +25,7 @@ struct XcodeWorkspace: NativeProject {
         
         let projectXcprojURL = projectURL.appendingPathComponent("project.xcproj")
         let projectXcproj = ProjectXcproj(url: projectXcprojURL)
-        if let organizationName = try? projectXcproj.content.organization {
+        if let organizationName = projectXcproj.organizationName {
             return organizationName
         }
         
