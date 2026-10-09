@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "absolute:/Users/example/Projects/App.xcodeproj">
+   </FileRef>
+   <Group
+      location = "absolute:/Users/example/Projects/Libraries"
+      name = "Libraries">
+      <FileRef
+         location = "group:Library.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
