@@ -30,13 +30,23 @@ struct XcodeWorkspace: NativeProject {
         guard let firstNonPodsLocation = locations.first(where: { !$0.contains("Pods.xcodeproj") }) else {
             return nil
         }
-        let url = fileURL
+        let projectURL = fileURL
             .deletingLastPathComponent()
             .appendingPathComponent(firstNonPodsLocation)
-            .appendingPathComponent("project.pbxproj")
-        let projectPbxproj = ProjectPbxproj(url: url)
         
-        return projectPbxproj.organizationName
+        let projectXcprojURL = projectURL.appendingPathComponent("project.xcproj")
+        let projectXcproj = ProjectXcproj(url: projectXcprojURL)
+        if let organizationName = try? projectXcproj.content.organization {
+            return organizationName
+        }
+        
+        let projectPbxprojURL = projectURL.appendingPathComponent("project.pbxproj")
+        let projectPbxproj = ProjectPbxproj(url: projectPbxprojURL)
+        if let organizationName = projectPbxproj.organizationName {
+            return organizationName
+        }
+        
+        return nil
     }
     
     var workspaceURL: URL {

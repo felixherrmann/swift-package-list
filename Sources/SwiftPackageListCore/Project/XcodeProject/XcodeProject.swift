@@ -18,9 +18,19 @@ struct XcodeProject: NativeProject {
     }
     
     var organizationName: String? {
-        let url = fileURL.appendingPathComponent("project.pbxproj")
-        let projectPbxproj = ProjectPbxproj(url: url)
-        return projectPbxproj.organizationName
+        let projectXcprojURL = fileURL.appendingPathComponent("project.xcproj")
+        let projectXcproj = ProjectXcproj(url: projectXcprojURL)
+        if let organizationName = try? projectXcproj.content.organization {
+            return organizationName
+        }
+        
+        let projectPbxprojURL = fileURL.appendingPathComponent("project.pbxproj")
+        let projectPbxproj = ProjectPbxproj(url: projectPbxprojURL)
+        if let organizationName = projectPbxproj.organizationName {
+            return organizationName
+        }
+        
+        return nil
     }
     
     var workspaceURL: URL {

@@ -21,7 +21,7 @@ final class PDFGeneratorTests: XCTestCase {
             Bundle.module.url(
                 forResource: "Project",
                 withExtension: "xcodeproj",
-                subdirectory: "Resources/XcodeProject"
+                subdirectory: "Resources/XcodeProject/pbxproj"
             )
         )
         let projectType = try XCTUnwrap(ProjectType(fileURL: url))
