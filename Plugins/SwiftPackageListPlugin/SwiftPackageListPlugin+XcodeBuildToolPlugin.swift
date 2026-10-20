@@ -13,8 +13,7 @@ extension SwiftPackageListPlugin: XcodeBuildToolPlugin {
     func createBuildCommands(context: XcodePluginContext, target: XcodeTarget) throws -> [Command] {
         let executable = try context.tool(named: "swift-package-list").url
 
-        let configurationURL = context.xcodeProject.directoryURL.appending(path: Configuration.fileName)
-        let configuration = try Configuration(url: configurationURL)
+        let configuration = try Configuration(in: context.xcodeProject.directoryURL)
         let targetOptions = configuration?.targetOptions(for: target.displayName)
 
         let relativeProjectPath = configuration?.projectPath ?? "\(context.xcodeProject.displayName).xcodeproj"

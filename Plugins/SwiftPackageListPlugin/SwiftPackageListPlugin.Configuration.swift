@@ -11,10 +11,13 @@ import Foundation
 
 extension SwiftPackageListPlugin {
     struct Configuration {
+        private static let fileName = "swift-package-list-config.json"
+
         let url: URL
         let storage: Storage
 
-        init?(url: URL) throws(SwiftPackageListPlugin.Error) {
+        init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
+            let url = directory.appending(path: Self.fileName)
             guard FileManager.default.fileExists(atPath: url.path) else { return nil }
 
             let data: Data
@@ -126,10 +129,6 @@ extension SwiftPackageListPlugin.Configuration.OutputType {
             return "Acknowledgements.pdf"
         }
     }
-}
-
-extension SwiftPackageListPlugin.Configuration {
-    static let fileName = "swift-package-list-config.json"
 }
 
 // MARK: - Normalization
