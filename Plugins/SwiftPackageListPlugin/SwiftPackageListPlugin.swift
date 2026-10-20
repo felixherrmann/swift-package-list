@@ -12,21 +12,21 @@ import PackagePlugin
 struct SwiftPackageListPlugin: Plugin {
     func createBuildCommands(
         executable: URL,
-        targetConfiguration: Configuration.TargetConfiguration?,
+        targetOptions: Configuration.TargetOptions?,
         projectURL: URL,
         pluginWorkDirectoryURL: URL
     ) throws -> [Command] {
         let sourcePackagesPath = try sourcePackagesDirectory(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
-        let outputType = targetConfiguration?.outputType ?? .json
+        let outputType = targetOptions?.outputType ?? .json
         let outputURL = pluginWorkDirectoryURL
-        let packageOrder = targetConfiguration?.packageOrder ?? .source
-        let requiresLicense = targetConfiguration?.requiresLicense ?? true
+        let packageOrder = targetOptions?.packageOrder ?? .source
+        let requiresLicense = targetOptions?.requiresLicense ?? true
 
-        let ignorePackageArguments: [String] = targetConfiguration?.ignorePackages?.flatMap { identity in
+        let ignorePackageArguments: [String] = targetOptions?.ignorePackages?.flatMap { identity in
             return ["--ignore-package", identity]
         } ?? []
 
-        let customPackagesFilePathArguments: [String] = targetConfiguration?.customPackagesFilePaths?.flatMap { filePath in
+        let customPackagesFilePathArguments: [String] = targetOptions?.customPackagesFilePaths?.flatMap { filePath in
             return ["--custom-packages-file-path", filePath]
         } ?? []
 

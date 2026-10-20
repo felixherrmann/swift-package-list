@@ -15,14 +15,14 @@ extension SwiftPackageListPlugin: XcodeBuildToolPlugin {
 
         let configurationURL = context.xcodeProject.directoryURL.appending(path: Configuration.fileName)
         let configuration = try Configuration(url: configurationURL)
-        let targetConfiguration = configuration?.targetConfiguration(for: target.displayName)
+        let targetOptions = configuration?.targetOptions(for: target.displayName)
 
         let relativeProjectPath = configuration?.projectPath ?? "\(context.xcodeProject.displayName).xcodeproj"
         let projectURL = context.xcodeProject.directoryURL.appending(path: relativeProjectPath)
 
         return try createBuildCommands(
             executable: executable,
-            targetConfiguration: targetConfiguration,
+            targetOptions: targetOptions,
             projectURL: projectURL,
             pluginWorkDirectoryURL: context.pluginWorkDirectoryURL
         )

@@ -75,16 +75,16 @@ extension SwiftPackageListPlugin.Configuration.Storage: Decodable {
 extension SwiftPackageListPlugin.Configuration.Storage {
     struct V1: Decodable {
         let projectPath: String?
-        let project: SwiftPackageListPlugin.Configuration.TargetConfiguration?
+        let project: SwiftPackageListPlugin.Configuration.TargetOptions?
         // swiftlint:disable:next discouraged_optional_collection
-        let targets: [String: SwiftPackageListPlugin.Configuration.TargetConfiguration]?
+        let targets: [String: SwiftPackageListPlugin.Configuration.TargetOptions]?
     }
 }
 
-// MARK: - Target Configuration
+// MARK: - TargetOptions
 
 extension SwiftPackageListPlugin.Configuration {
-    struct TargetConfiguration: Decodable {
+    struct TargetOptions: Decodable {
         let outputType: OutputType?
         let packageOrder: PackageOrder?
         let requiresLicense: Bool? // swiftlint:disable:this discouraged_optional_boolean
@@ -142,7 +142,7 @@ extension SwiftPackageListPlugin.Configuration {
         }
     }
 
-    func targetConfiguration(for targetName: String) -> TargetConfiguration? {
+    func targetOptions(for targetName: String) -> TargetOptions? {
         switch storage {
         case .v1(let v1):
             return v1.targets?[targetName] ?? v1.project
