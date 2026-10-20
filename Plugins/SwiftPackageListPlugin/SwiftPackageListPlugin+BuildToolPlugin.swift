@@ -5,6 +5,7 @@
 //  Created by Felix Herrmann on 03.02.24.
 //
 
+import Foundation
 import PackagePlugin
 
 extension SwiftPackageListPlugin: BuildToolPlugin {
@@ -14,13 +15,14 @@ extension SwiftPackageListPlugin: BuildToolPlugin {
         let configuration = try Configuration(in: context.package.directoryURL)
         let targetOptions = configuration?.targetOptions(for: target.name)
 
-        let relativeProjectPath = configuration?.projectPath ?? "Package.swift"
-        let projectURL = context.package.directoryURL.appending(path: relativeProjectPath)
+        let projectPath = configuration?.projectPath ?? "Package.swift"
+        let projectURL = URL(filePath: projectPath, relativeTo: context.package.directoryURL)
 
         return try createBuildCommands(
             executable: executable,
             targetOptions: targetOptions,
             projectURL: projectURL,
+            projectDirectoryURL: context.package.directoryURL,
             pluginWorkDirectoryURL: context.pluginWorkDirectoryURL
         )
     }

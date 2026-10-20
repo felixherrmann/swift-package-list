@@ -14,6 +14,7 @@ struct SwiftPackageListPlugin: Plugin {
         executable: URL,
         targetOptions: Configuration.TargetOptions?,
         projectURL: URL,
+        projectDirectoryURL: URL,
         pluginWorkDirectoryURL: URL
     ) throws -> [Command] {
         let sourcePackagesPath = try sourcePackagesDirectory(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
@@ -27,7 +28,8 @@ struct SwiftPackageListPlugin: Plugin {
         } ?? []
 
         let customPackagesFilePathArguments: [String] = targetOptions?.customPackagesFilePaths?.flatMap { filePath in
-            return ["--custom-packages-file-path", filePath]
+            let url = URL(filePath: filePath, relativeTo: projectDirectoryURL)
+            return ["--custom-packages-file-path", url.path]
         } ?? []
 
         let outputFiles: [URL]
