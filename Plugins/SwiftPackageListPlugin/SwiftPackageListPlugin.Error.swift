@@ -15,8 +15,10 @@ extension SwiftPackageListPlugin {
     }
 }
 
-extension SwiftPackageListPlugin.Error: CustomDebugStringConvertible {
-    var debugDescription: String {
+// MARK: - CustomStringConvertible
+
+extension SwiftPackageListPlugin.Error: CustomStringConvertible {
+    var description: String {
         switch self {
         case .configurationUnavailable(url: let url, underlyingError: let error):
             return "The configuration at \(url.path) is unavailable: \(error)"
