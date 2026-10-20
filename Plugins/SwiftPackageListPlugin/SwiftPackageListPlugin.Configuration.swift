@@ -18,7 +18,7 @@ extension SwiftPackageListPlugin {
 
         init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
             let url = directory.appending(path: Self.fileName)
-            guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+            guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
 
             let data: Data
             do {
