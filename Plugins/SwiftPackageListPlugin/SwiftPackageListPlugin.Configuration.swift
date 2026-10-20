@@ -7,7 +7,7 @@
 
 import Foundation
 
-// swiftlint:disable identifier_name type_name
+// swiftlint:disable identifier_name type_name discouraged_optional_collection discouraged_optional_boolean
 
 extension SwiftPackageListPlugin {
     struct Configuration {
@@ -79,7 +79,6 @@ extension SwiftPackageListPlugin.Configuration.Storage {
     struct V1: Decodable {
         let projectPath: String?
         let project: SwiftPackageListPlugin.Configuration.TargetOptions?
-        // swiftlint:disable:next discouraged_optional_collection
         let targets: [String: SwiftPackageListPlugin.Configuration.TargetOptions]?
     }
 }
@@ -90,9 +89,9 @@ extension SwiftPackageListPlugin.Configuration {
     struct TargetOptions: Decodable {
         let outputType: OutputType?
         let packageOrder: PackageOrder?
-        let requiresLicense: Bool? // swiftlint:disable:this discouraged_optional_boolean
-        let ignorePackages: [String]? // swiftlint:disable:this discouraged_optional_collection
-        let customPackagesFilePaths: [String]? // swiftlint:disable:this discouraged_optional_collection
+        let requiresLicense: Bool?
+        let ignorePackages: [String]?
+        let customPackagesFilePaths: [String]?
     }
 }
 
@@ -149,4 +148,4 @@ extension SwiftPackageListPlugin.Configuration {
     }
 }
 
-// swiftlint:enable identifier_name type_name
+// swiftlint:enable identifier_name type_name discouraged_optional_collection discouraged_optional_boolean
