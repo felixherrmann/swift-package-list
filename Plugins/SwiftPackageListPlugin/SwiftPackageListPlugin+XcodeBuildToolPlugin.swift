@@ -16,6 +16,7 @@ extension SwiftPackageListPlugin: XcodeBuildToolPlugin {
 
         let configuration = try Configuration(in: context.xcodeProject.directoryURL)
         let targetOptions = configuration?.targetOptions(for: target.displayName)
+        let environmentOptions = Environment.current.flatMap { configuration?.environmentOptions(for: $0.rawValue) }
 
         let projectPath = configuration?.projectPath ?? "\(context.xcodeProject.displayName).xcodeproj"
         let projectURL = URL(filePath: projectPath, relativeTo: context.xcodeProject.directoryURL)
@@ -23,6 +24,7 @@ extension SwiftPackageListPlugin: XcodeBuildToolPlugin {
         return try createBuildCommands(
             executable: executable,
             targetOptions: targetOptions,
+            environmentOptions: environmentOptions,
             projectURL: projectURL,
             projectDirectoryURL: context.xcodeProject.directoryURL,
             pluginWorkDirectoryURL: context.pluginWorkDirectoryURL

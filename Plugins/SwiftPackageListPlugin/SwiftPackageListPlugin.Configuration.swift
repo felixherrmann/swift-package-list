@@ -101,6 +101,7 @@ extension SwiftPackageListPlugin.Configuration.Storage {
     struct V2: Decodable {
         let projectPath: String?
         let targets: [String: SwiftPackageListPlugin.Configuration.TargetOptions]?
+        let environments: [String: SwiftPackageListPlugin.Configuration.EnvironmentOptions]?
     }
 }
 
@@ -114,6 +115,8 @@ extension SwiftPackageListPlugin.Configuration {
         let ignorePackages: [String]?
         let customPackagesFilePaths: [String]?
     }
+
+    struct EnvironmentOptions: Decodable { }
 }
 
 extension SwiftPackageListPlugin.Configuration {
@@ -169,6 +172,15 @@ extension SwiftPackageListPlugin.Configuration {
             return v1.targets?[name] ?? v1.project
         case .v2(let v2):
             return v2.targets?[name] ?? v2.targets?["*"]
+        }
+    }
+
+    func environmentOptions(for name: String) -> EnvironmentOptions? {
+        switch storage {
+        case .v1(_):
+            return nil
+        case .v2(let v2):
+            return v2.environments?[name]
         }
     }
 }

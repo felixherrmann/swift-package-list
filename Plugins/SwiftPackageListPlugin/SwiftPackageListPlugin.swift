@@ -13,6 +13,7 @@ struct SwiftPackageListPlugin: Plugin {
     func createBuildCommands(
         executable: URL,
         targetOptions: Configuration.TargetOptions?,
+        environmentOptions: Configuration.EnvironmentOptions?,
         projectURL: URL,
         projectDirectoryURL: URL,
         pluginWorkDirectoryURL: URL

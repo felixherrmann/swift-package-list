@@ -1,4 +1,5 @@
 disabled_rules:
+  - empty_enum_arguments
   - nesting
   - trailing_comma
   - optional_data_string_conversion
