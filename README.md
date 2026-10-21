@@ -65,19 +65,22 @@ The easiest way to add this tool to your project is using the provided build-too
 
 For Xcode projects simply add it under the `Run Build Tool Plug-ins` section in the Target's Build Phases tab after you have added this package to the project's Package Dependencies; for Swift packages configure it in the `Package.swift` manifest, as described [here](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/enablebuildplugin).
 
-By default this will use the JSON output with `--requires-license` but you can create a `swift-package-list-config.json` in your project's root to configure that behavior, both project and target specific (target configs have precedence over the project one). Everything in the configuration is optional and has the following format:
+By default the plugin uses JSON output with `--requires-license`. To configure it, create a `.swift-package-list.json` file in your project's root directory.
+
+Configuration files support JSON and JSON5, including comments, unquoted keys and trailing commas; paths are resolved relative to the project directory. Use `version: 2` for the following format; all other fields are optional:
+
 ```json5
 // Swift Package List configuration file
 // Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
-    version: 1,
+    version: 2,
     projectPath: "Project.xcworkspace",
-    project: {
-        outputType: "plist",
-        requiresLicense: false,
-    },
     targets: {
+        "*": {
+            outputType: "plist",
+            requiresLicense: false,
+        },
         "Target 1": {
             outputType: "settings-bundle",
             packageOrder: "name-ascending",
@@ -97,6 +100,8 @@ By default this will use the JSON output with `--requires-license` but you can c
     },
 }
 ```
+
+The `targets` keys are target names (`displayName` in Xcode). The `"*"` entry supplies options for targets without an explicit entry; omitted options use the plugin defaults.
 
 Once added and configured the file(s) will get generated during every build process and are available in the App's bundle.
 You can then open them manually or use the various options in the included [Swift Package](#swift-package).
@@ -227,7 +232,7 @@ To provide custom packages or other items with licenses, you can use the `--cust
 ]
 ```
 
-All optional fields have null values in this example and can be left out, the other ones are required.
+All optional fields have null values in this example and can be left out; `identity`, `kind`, `location` and `name` are required. The `license` field contains the license text. Custom packages are subject to the same filtering and ordering as discovered packages, so entries without a license are skipped when `--requires-license` is enabled.
 
 
 ## Swift Package
