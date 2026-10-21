@@ -31,7 +31,7 @@ struct SwiftPackageList: ParsableCommand {
         let customPackages = try inputOptions.customPackagesFilePaths
             .map(URL.init(fileURLWithPath:))
             .map(CustomPackages.init(url:))
-            .flatMap(\.packages)
+            .flatMap { try $0.packages() }
         let packages = (projectPackages + customPackages)
             .filter(outputOptions.filter(package:))
             .sorted(by: outputOptions.sort(lhs:rhs:))

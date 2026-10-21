@@ -1,0 +1,35 @@
+{
+    version: 2,
+    packages: [
+        {
+            identity: "raw-license",
+            name: "RawLicense",
+            location: "https://example.com/raw-license",
+            version: "1.2.3",
+            license: { raw: "Raw license text" },
+        },
+        {
+            identity: "path-license",
+            name: "PathLicense",
+            location: "",
+            license: { file: "Licenses/File/LICENSE.txt" },
+        },
+        {
+            identity: "directory-license",
+            name: "DirectoryLicense",
+            location: "",
+            license: { directory: "Licenses/Directory" },
+        },
+        {
+            identity: "no-license",
+            name: "NoLicense",
+        },
+        {
+            identity: "null-license",
+            name: "NullLicense",
+            location: null,
+            version: null,
+            license: null,
+        },
+    ],
+}
