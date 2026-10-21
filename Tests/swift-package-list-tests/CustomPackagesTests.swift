@@ -1,6 +1,6 @@
 //
 //  CustomPackagesTests.swift
-//  SwiftPackageListCoreTests
+//  swift-package-list-tests
 //
 //  Created by Felix Herrmann on 17.02.25.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import Testing
 
-@testable import SwiftPackageListCore
+@testable import swift_package_list
 
 struct CustomPackagesTests {
     @Test func packageParsing() throws {
@@ -18,7 +18,7 @@ struct CustomPackagesTests {
             subdirectory: "Resources/CustomPackages"
         )
         let unwrappedURL = try #require(url)
-        let customPackages = CustomPackages(url: unwrappedURL)
+        let customPackages = SwiftPackageList.CustomPackages(url: unwrappedURL)
         let package = try #require(try customPackages.packages().first)
 
         #expect(package.branch == "branch-test")
