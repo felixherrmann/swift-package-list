@@ -17,7 +17,7 @@ struct SwiftPackageListPlugin: Plugin {
         projectDirectoryURL: URL,
         pluginWorkDirectoryURL: URL
     ) throws -> [Command] {
-        let sourcePackagesPath = try sourcePackagesDirectory(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
+        let sourcePackagesPath = try locateSourcePackagesDirectory(from: pluginWorkDirectoryURL)
         let outputType = targetOptions?.outputType ?? .json
         let outputURL = pluginWorkDirectoryURL
         let packageOrder = targetOptions?.packageOrder ?? .source
@@ -56,7 +56,7 @@ struct SwiftPackageListPlugin: Plugin {
         ]
     }
 
-    private func sourcePackagesDirectory(pluginWorkDirectoryURL: URL) throws -> URL {
+    private func locateSourcePackagesDirectory(from pluginWorkDirectoryURL: URL) throws -> URL {
         var url = pluginWorkDirectoryURL
         while url.path(percentEncoded: false) != "/" {
             let potentialLocation = url.appending(path: "SourcePackages")
