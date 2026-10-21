@@ -48,6 +48,7 @@ extension SwiftPackageListPlugin {
 extension SwiftPackageListPlugin.Configuration {
     enum Storage {
         case v1(V1)
+        case v2(V2)
     }
 }
 
@@ -63,6 +64,8 @@ extension SwiftPackageListPlugin.Configuration.Storage: Decodable {
         switch version {
         case 1:
             self = .v1(try V1(from: decoder))
+        case 2:
+            self = .v2(try V2(from: decoder))
         case let version:
             throw DecodingError.dataCorruptedError(
                 forKey: .version,
@@ -83,7 +86,16 @@ extension SwiftPackageListPlugin.Configuration.Storage {
     }
 }
 
-// MARK: - TargetOptions
+// MARK: - V2
+
+extension SwiftPackageListPlugin.Configuration.Storage {
+    struct V2: Decodable {
+        let projectPath: String?
+        let targets: [String: SwiftPackageListPlugin.Configuration.TargetOptions]?
+    }
+}
+
+// MARK: - Options
 
 extension SwiftPackageListPlugin.Configuration {
     struct TargetOptions: Decodable {
@@ -137,13 +149,17 @@ extension SwiftPackageListPlugin.Configuration {
         switch storage {
         case .v1(let v1):
             return v1.projectPath
+        case .v2(let v2):
+            return v2.projectPath
         }
     }
 
-    func targetOptions(for targetName: String) -> TargetOptions? {
+    func targetOptions(for name: String) -> TargetOptions? {
         switch storage {
         case .v1(let v1):
-            return v1.targets?[targetName] ?? v1.project
+            return v1.targets?[name] ?? v1.project
+        case .v2(let v2):
+            return v2.targets?[name] ?? v2.targets?["*"]
         }
     }
 }
