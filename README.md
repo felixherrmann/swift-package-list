@@ -212,18 +212,18 @@ You can then use [QuickLook](https://developer.apple.com/documentation/quicklook
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
 
-```json
+```json5
 [
     {
-        "branch" : null,
-        "identity" : "custom-package-example",
-        "kind" : "custom",
-        "license" : null,
-        "location" : "",
-        "name" : "CustomPackageExample",
-        "revision" : null,
-        "version" : null
-    }
+        branch: null,
+        identity: "custom-package-example",
+        kind: "custom",
+        license: null,
+        location: "",
+        name: "CustomPackageExample",
+        revision: null,
+        version: null,
+    },
 ]
 ```
 
