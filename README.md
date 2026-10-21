@@ -98,6 +98,11 @@ Configuration files support JSON and JSON5, including comments, unquoted keys an
             ],
         },
     },
+    environments: {
+        "ci": {
+            customSourcePackagesPath: "SourcePackages",
+        },
+    },
 }
 ```
 
@@ -109,6 +114,20 @@ You can then open them manually or use the various options in the included [Swif
 > [!NOTE]
 > When using Xcode Cloud add `defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES`
 > to `ci_post_clone.sh` which disables the plugin validation.
+
+#### Environment
+
+Select an environment by setting `SWIFT_PACKAGE_LIST_PLUGIN_ENVIRONMENT` in the process that starts the build. Its value must exactly match a key in the configuration's `environments` section.
+
+For example, a CI build can use `-clonedSourcePackagesDirPath` to store package sources in a custom directory. Run the following from the project root to select the `ci` entry above and use its matching `SourcePackages` path:
+
+```shell
+export SWIFT_PACKAGE_LIST_PLUGIN_ENVIRONMENT=ci
+xcodebuild -workspace Project.xcworkspace \
+    -scheme "Target 1" \
+    -clonedSourcePackagesDirPath SourcePackages \
+    build
+```
 
 ### Run Script Phase
 
