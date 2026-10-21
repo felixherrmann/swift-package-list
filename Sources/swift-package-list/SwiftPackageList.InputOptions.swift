@@ -1,5 +1,5 @@
 //
-//  SwiftPackageList+InputOptions.swift
+//  SwiftPackageList.InputOptions.swift
 //  swift-package-list
 //
 //  Created by Felix Herrmann on 21.05.23.

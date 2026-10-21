@@ -1,5 +1,5 @@
 //
-//  SwiftPackageList+OutputOptions.swift
+//  SwiftPackageList.OutputOptions.swift
 //  swift-package-list
 //
 //  Created by Felix Herrmann on 27.12.23.
