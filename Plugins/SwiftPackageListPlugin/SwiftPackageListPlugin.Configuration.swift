@@ -11,35 +11,44 @@ import Foundation
 
 extension SwiftPackageListPlugin {
     struct Configuration {
-        private static let fileName = "swift-package-list-config.json"
-
         let url: URL
         let storage: Storage
+    }
+}
 
-        init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
-            let url = directory.appending(path: Self.fileName)
-            guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
+// MARK: - Loading
 
-            let data: Data
-            do {
-                data = try Data(contentsOf: url)
-            } catch {
-                throw .configurationUnavailable(url: url, underlyingError: error)
-            }
+extension SwiftPackageListPlugin.Configuration {
+    private static let fileNames = [
+        ".swift-package-list.json",
+        "swift-package-list-config.json",
+    ]
 
-            let decoder = JSONDecoder()
-            decoder.allowsJSON5 = true
+    init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
+        let url = Self.fileNames
+            .map { directory.appending(path: $0) }
+            .first { FileManager.default.fileExists(atPath: $0.path(percentEncoded: false)) }
+        guard let url else { return nil }
 
-            let storage: Storage
-            do {
-                storage = try decoder.decode(Storage.self, from: data)
-            } catch {
-                throw .configurationInvalid(url: url, underlyingError: error)
-            }
-
-            self.url = url
-            self.storage = storage
+        let data: Data
+        do {
+            data = try Data(contentsOf: url)
+        } catch {
+            throw .configurationUnavailable(url: url, underlyingError: error)
         }
+
+        let decoder = JSONDecoder()
+        decoder.allowsJSON5 = true
+
+        let storage: Storage
+        do {
+            storage = try decoder.decode(Storage.self, from: data)
+        } catch {
+            throw .configurationInvalid(url: url, underlyingError: error)
+        }
+
+        self.url = url
+        self.storage = storage
     }
 }
 
