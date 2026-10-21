@@ -34,4 +34,7 @@ extension Package.Kind {
 
     /// A package from  a registry.
     public static let registry = Self(rawValue: "registry")
+
+    /// A package supplied through a custom packages file.
+    public static let custom = Self(rawValue: "custom")
 }
