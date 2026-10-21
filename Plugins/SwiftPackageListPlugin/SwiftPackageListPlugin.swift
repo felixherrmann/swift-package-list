@@ -10,24 +10,28 @@ import PackagePlugin
 
 @main
 struct SwiftPackageListPlugin: Plugin {
+    struct Locations {
+        let executable: URL
+        let projectDirectory: URL
+        let pluginWorkDirectory: URL
+        let project: URL
+    }
+
     func createBuildCommands(
-        executable: URL,
         targetOptions: Configuration.TargetOptions?,
         environmentOptions: Configuration.EnvironmentOptions?,
-        projectURL: URL,
-        projectDirectoryURL: URL,
-        pluginWorkDirectoryURL: URL
+        locations: Locations
     ) throws(SwiftPackageListPlugin.Error) -> [Command] {
         let outputType = targetOptions?.outputType ?? .json
-        let outputURL = pluginWorkDirectoryURL
+        let outputURL = locations.pluginWorkDirectory
         let packageOrder = targetOptions?.packageOrder ?? .source
         let requiresLicense = targetOptions?.requiresLicense ?? true
 
         let sourcePackagesPath: URL
         if let customSourcePackagesPath = environmentOptions?.customSourcePackagesPath {
-            sourcePackagesPath = URL(filePath: customSourcePackagesPath, relativeTo: projectDirectoryURL)
+            sourcePackagesPath = URL(filePath: customSourcePackagesPath, relativeTo: locations.projectDirectory)
         } else {
-            sourcePackagesPath = try locateSourcePackagesDirectory(from: pluginWorkDirectoryURL)
+            sourcePackagesPath = try locateSourcePackagesDirectory(from: locations.pluginWorkDirectory)
         }
 
         let ignorePackageArguments: [String] = targetOptions?.ignorePackages?.flatMap { identity in
@@ -35,7 +39,7 @@ struct SwiftPackageListPlugin: Plugin {
         } ?? []
 
         let customPackagesFilePathArguments: [String] = targetOptions?.customPackagesFilePaths?.flatMap { filePath in
-            let url = URL(filePath: filePath, relativeTo: projectDirectoryURL)
+            let url = URL(filePath: filePath, relativeTo: locations.projectDirectory)
             return ["--custom-packages-file-path", url.path(percentEncoded: false)]
         } ?? []
 
@@ -49,9 +53,9 @@ struct SwiftPackageListPlugin: Plugin {
         return [
             .buildCommand(
                 displayName: "SwiftPackageListPlugin",
-                executable: executable,
+                executable: locations.executable,
                 arguments: [
-                    projectURL.path(percentEncoded: false),
+                    locations.project.path(percentEncoded: false),
                     "--custom-source-packages-path", sourcePackagesPath.path(percentEncoded: false),
                     "--output-type", outputType.rawValue,
                     "--output-path", outputURL.path(percentEncoded: false),

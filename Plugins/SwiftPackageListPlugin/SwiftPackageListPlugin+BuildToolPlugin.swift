@@ -11,21 +11,25 @@ import PackagePlugin
 extension SwiftPackageListPlugin: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
         let executable = try context.tool(named: "swift-package-list").url
+        let projectDirectory = context.package.directoryURL
+        let pluginWorkDirectory = context.pluginWorkDirectoryURL
 
-        let configuration = try Configuration(in: context.package.directoryURL)
+        let configuration = try Configuration(in: projectDirectory)
         let targetOptions = configuration?.targetOptions(for: target.name)
         let environmentOptions = Environment.current.flatMap { configuration?.environmentOptions(for: $0.rawValue) }
 
         let projectPath = configuration?.projectPath ?? "Package.swift"
-        let projectURL = URL(filePath: projectPath, relativeTo: context.package.directoryURL)
+        let project = URL(filePath: projectPath, relativeTo: projectDirectory)
 
         return try createBuildCommands(
-            executable: executable,
             targetOptions: targetOptions,
             environmentOptions: environmentOptions,
-            projectURL: projectURL,
-            projectDirectoryURL: context.package.directoryURL,
-            pluginWorkDirectoryURL: context.pluginWorkDirectoryURL
+            locations: Locations(
+                executable: executable,
+                projectDirectory: projectDirectory,
+                pluginWorkDirectory: pluginWorkDirectory,
+                project: project
+            )
         )
     }
 }
