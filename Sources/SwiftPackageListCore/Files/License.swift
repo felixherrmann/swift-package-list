@@ -7,8 +7,12 @@
 
 import Foundation
 
-struct License: File {
-    let url: URL
+public struct License: File {
+    public let url: URL
+
+    public init(url: URL) {
+        self.url = url
+    }
 }
 
 extension License {
@@ -45,7 +49,7 @@ extension License {
         return filename.range(of: pattern, options: [.regularExpression, .caseInsensitive]) != nil
     }
 
-    init?(uncheckedURL url: URL) {
+    public init?(uncheckedURL url: URL) {
         guard Self.filenamePatterns.contains(where: { Self.checkFilename(url.lastPathComponent, for: $0) }) else { return nil }
         self.init(url: url)
     }
@@ -57,7 +61,7 @@ extension License: Comparable {
         return index ?? Self.filenamePatterns.count
     }
 
-    static func < (lhs: License, rhs: License) -> Bool {
+    public static func < (lhs: License, rhs: License) -> Bool {
         let lhsValues = (lhs.rank, lhs.url.lastPathComponent.lowercased(), lhs.url.path)
         let rhsValues = (rhs.rank, rhs.url.lastPathComponent.lowercased(), rhs.url.path)
         return lhsValues < rhsValues
@@ -65,7 +69,7 @@ extension License: Comparable {
 }
 
 extension License {
-    var content: String {
+    public var content: String {
         get throws {
             return try String(contentsOf: url, encoding: .utf8)
         }
