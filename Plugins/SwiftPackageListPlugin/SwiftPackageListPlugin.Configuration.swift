@@ -116,7 +116,9 @@ extension SwiftPackageListPlugin.Configuration {
         let customPackagesFilePaths: [String]?
     }
 
-    struct EnvironmentOptions: Decodable { }
+    struct EnvironmentOptions: Decodable {
+        let customSourcePackagesPath: String?
+    }
 }
 
 extension SwiftPackageListPlugin.Configuration {

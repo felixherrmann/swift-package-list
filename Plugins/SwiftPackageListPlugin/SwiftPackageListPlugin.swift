@@ -18,11 +18,17 @@ struct SwiftPackageListPlugin: Plugin {
         projectDirectoryURL: URL,
         pluginWorkDirectoryURL: URL
     ) throws(SwiftPackageListPlugin.Error) -> [Command] {
-        let sourcePackagesPath = try locateSourcePackagesDirectory(from: pluginWorkDirectoryURL)
         let outputType = targetOptions?.outputType ?? .json
         let outputURL = pluginWorkDirectoryURL
         let packageOrder = targetOptions?.packageOrder ?? .source
         let requiresLicense = targetOptions?.requiresLicense ?? true
+
+        let sourcePackagesPath: URL
+        if let customSourcePackagesPath = environmentOptions?.customSourcePackagesPath {
+            sourcePackagesPath = URL(filePath: customSourcePackagesPath, relativeTo: projectDirectoryURL)
+        } else {
+            sourcePackagesPath = try locateSourcePackagesDirectory(from: pluginWorkDirectoryURL)
+        }
 
         let ignorePackageArguments: [String] = targetOptions?.ignorePackages?.flatMap { identity in
             return ["--ignore-package", identity]
