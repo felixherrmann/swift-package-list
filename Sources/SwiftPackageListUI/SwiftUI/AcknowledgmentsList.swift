@@ -60,18 +60,15 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
                 }
             }
         }
-#if os(visionOS)
         .navigationTitle(
             Text("SPL_ACKNOWLEDGMENTS_TITLE", bundle: .module, comment: "Navigation bar title of the license list")
         )
+#if os(visionOS)
         .navigationBarTitleDisplayMode(.inline)
         .task {
             _loadPackages()
         }
 #else
-        .backport.navigationTitle(
-            Text("SPL_ACKNOWLEDGMENTS_TITLE", bundle: .module, comment: "Navigation bar title of the license list")
-        )
 #if os(iOS) || os(watchOS)
         .backport.navigationBarTitleDisplayMode(.inline)
 #endif
