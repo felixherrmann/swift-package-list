@@ -23,8 +23,8 @@ extension SettingsBundleGenerator {
         case ru
         case tr
         case uk
-        case zhHans = "zh-hans"
-        case zhHant = "zh-hant"
+        case zhHans = "zh-Hans"
+        case zhHant = "zh-Hant"
         // swiftlint:enable identifier_name
     }
 }
