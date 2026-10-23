@@ -16,6 +16,7 @@ extension SettingsBundleGenerator {
         case dutch = "nl"
         case english = "en"
         case englishBritish = "en-GB"
+        case finnish = "fi"
         case french = "fr"
         case german = "de"
         case hindi = "hi"
@@ -68,6 +69,10 @@ extension SettingsBundleGenerator.Language {
         case .englishBritish:
             return [
                 .acknowledgmentsTitle: "Acknowledgements",
+            ]
+        case .finnish:
+            return [
+                .acknowledgmentsTitle: "Kiitokset",
             ]
         case .french:
             return [
@@ -167,6 +172,10 @@ extension SettingsBundleGenerator.Language {
         case .englishBritish:
             return [
                 .acknowledgmentsSectionTitle: "Licences",
+            ]
+        case .finnish:
+            return [
+                .acknowledgmentsSectionTitle: "Lisenssit",
             ]
         case .french:
             return [

@@ -40,6 +40,12 @@
             "value" : "Licencias"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisenssit"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -177,6 +183,12 @@
             "value" : "Agradecimientos"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kiitokset"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -312,6 +324,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir repositorio"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaa koodivarasto"
           }
         },
         "fr" : {

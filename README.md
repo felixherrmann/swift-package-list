@@ -335,6 +335,7 @@ The Settings Bundle and the UI-components are currently localized in the followi
 | Dutch                | nl      |
 | English              | en      |
 | English, British     | en-GB   |
+| Finnish              | fi      |
 | French               | fr      |
 | German               | de      |
 | Hindi                | hi      |
