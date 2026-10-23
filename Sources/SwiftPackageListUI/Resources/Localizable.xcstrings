@@ -22,6 +22,12 @@
             "value" : "Licenses"
           }
         },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licences"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -117,6 +123,12 @@
             "value" : "Acknowledgments"
           }
         },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acknowledgements"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -207,6 +219,12 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open repository"
+          }
+        },
+        "en-GB" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open repository"

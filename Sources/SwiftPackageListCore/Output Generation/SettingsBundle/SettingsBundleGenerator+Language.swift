@@ -13,6 +13,7 @@ extension SettingsBundleGenerator {
         case chineseSimplified = "zh-Hans"
         case chineseTraditional = "zh-Hant"
         case english = "en"
+        case englishBritish = "en-GB"
         case french = "fr"
         case german = "de"
         case hindi = "hi"
@@ -49,6 +50,10 @@ extension SettingsBundleGenerator.Language {
         case .english:
             return [
                 .acknowledgmentsTitle: "Acknowledgments",
+            ]
+        case .englishBritish:
+            return [
+                .acknowledgmentsTitle: "Acknowledgements",
             ]
         case .french:
             return [
@@ -120,6 +125,10 @@ extension SettingsBundleGenerator.Language {
         case .english:
             return [
                 .acknowledgmentsSectionTitle: "Licenses",
+            ]
+        case .englishBritish:
+            return [
+                .acknowledgmentsSectionTitle: "Licences",
             ]
         case .french:
             return [

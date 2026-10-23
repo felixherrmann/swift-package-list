@@ -332,6 +332,7 @@ The Settings Bundle and the UI-components are currently localized in the followi
 | Chinese, Simplified  | zh-Hans |
 | Chinese, Traditional | zh-Hant |
 | English              | en      |
+| English, British     | en-GB   |
 | French               | fr      |
 | German               | de      |
 | Hindi                | hi      |
