@@ -46,6 +46,12 @@
             "value" : "लाइसेंस"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisensi"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -159,6 +165,12 @@
             "value" : "आभार"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ucapan Terima Kasih"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -270,6 +282,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "रिपॉज़िटरी खोलें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buka repositori"
           }
         },
         "it" : {

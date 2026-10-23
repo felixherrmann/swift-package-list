@@ -18,6 +18,7 @@ extension SettingsBundleGenerator {
         case french = "fr"
         case german = "de"
         case hindi = "hi"
+        case indonesian = "id"
         case italian = "it"
         case japanese = "ja"
         case korean = "ko"
@@ -72,6 +73,10 @@ extension SettingsBundleGenerator.Language {
         case .hindi:
             return [
                 .acknowledgmentsTitle: "आभार",
+            ]
+        case .indonesian:
+            return [
+                .acknowledgmentsTitle: "Ucapan Terima Kasih",
             ]
         case .italian:
             return [
@@ -155,6 +160,10 @@ extension SettingsBundleGenerator.Language {
         case .hindi:
             return [
                 .acknowledgmentsSectionTitle: "लाइसेंस",
+            ]
+        case .indonesian:
+            return [
+                .acknowledgmentsSectionTitle: "Lisensi",
             ]
         case .italian:
             return [
