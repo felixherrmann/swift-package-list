@@ -70,6 +70,12 @@ internal final class _SPLLicenseTextViewController: UIViewController {
                 target: self,
                 action: #selector(_handleRepositoryBarButtonItemPress)
             )
+            repositoryBarButtonItem.accessibilityLabel = NSLocalizedString(
+                "license.open-repository",
+                bundle: .module,
+                value: "Open repository",
+                comment: "Accessibility label of the button that opens the package's source repository."
+            )
             navigationItem.rightBarButtonItem = repositoryBarButtonItem
         }
     }
