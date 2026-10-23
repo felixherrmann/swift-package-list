@@ -10,6 +10,12 @@
             "value" : "التراخيص"
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence"
+          }
+        },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
@@ -159,6 +165,12 @@
             "value" : "إقرارات"
           }
         },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poděkování"
+          }
+        },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
@@ -306,6 +318,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "فتح المستودع"
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otevřít repozitář"
           }
         },
         "da" : {

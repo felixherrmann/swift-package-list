@@ -12,6 +12,7 @@ extension SettingsBundleGenerator {
         case arabic = "ar"
         case chineseSimplified = "zh-Hans"
         case chineseTraditional = "zh-Hant"
+        case czech = "cs"
         case danish = "da"
         case dutch = "nl"
         case english = "en"
@@ -54,6 +55,10 @@ extension SettingsBundleGenerator.Language {
         case .chineseTraditional:
             return [
                 .acknowledgmentsTitle: "致謝",
+            ]
+        case .czech:
+            return [
+                .acknowledgmentsTitle: "Poděkování",
             ]
         case .danish:
             return [
@@ -161,6 +166,10 @@ extension SettingsBundleGenerator.Language {
         case .chineseTraditional:
             return [
                 .acknowledgmentsSectionTitle: "許可證",
+            ]
+        case .czech:
+            return [
+                .acknowledgmentsSectionTitle: "Licence",
             ]
         case .danish:
             return [

@@ -331,6 +331,7 @@ The Settings Bundle and the UI-components are currently localized in the followi
 | Arabic               | ar      |
 | Chinese, Simplified  | zh-Hans |
 | Chinese, Traditional | zh-Hant |
+| Czech                | cs      |
 | Danish               | da      |
 | Dutch                | nl      |
 | English              | en      |
