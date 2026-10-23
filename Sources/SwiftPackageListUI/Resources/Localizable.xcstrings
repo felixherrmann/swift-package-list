@@ -106,6 +106,12 @@
             "value" : "Ліцензії"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giấy phép"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -225,6 +231,12 @@
             "value" : "Подяки"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lời cảm ơn"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -342,6 +354,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відкрити репозиторій"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở kho lưu trữ"
           }
         },
         "zh-Hans" : {

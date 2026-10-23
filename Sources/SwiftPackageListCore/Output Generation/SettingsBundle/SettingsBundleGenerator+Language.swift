@@ -28,6 +28,7 @@ extension SettingsBundleGenerator {
         case spanish = "es"
         case turkish = "tr"
         case ukrainian = "uk"
+        case vietnamese = "vi"
     }
 }
 
@@ -113,6 +114,10 @@ extension SettingsBundleGenerator.Language {
         case .ukrainian:
             return [
                 .acknowledgmentsTitle: "Подяки",
+            ]
+        case .vietnamese:
+            return [
+                .acknowledgmentsTitle: "Lời cảm ơn",
             ]
         }
     }
@@ -200,6 +205,10 @@ extension SettingsBundleGenerator.Language {
         case .ukrainian:
             return [
                 .acknowledgmentsSectionTitle: "Ліцензії",
+            ]
+        case .vietnamese:
+            return [
+                .acknowledgmentsSectionTitle: "Giấy phép",
             ]
         }
     }
