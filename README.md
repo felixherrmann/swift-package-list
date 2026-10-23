@@ -239,6 +239,7 @@ To provide custom packages or other items with licenses, you can use the `--cust
 
 ```json5
 {
+    $schema: "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/custom-packages.v2.schema.json",
     version: 2,
     packages: [
         {
