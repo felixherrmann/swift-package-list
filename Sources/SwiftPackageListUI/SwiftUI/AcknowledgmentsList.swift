@@ -66,12 +66,12 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
 #if os(iOS) || os(watchOS) || os(visionOS)
         .navigationBarTitleDisplayMode(.inline)
 #endif
-#if os(visionOS)
-        .task {
+#if os(macOS)
+        .backport.task {
             _loadPackages()
         }
 #else
-        .backport.task {
+        .task {
             _loadPackages()
         }
 #endif
