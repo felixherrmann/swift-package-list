@@ -74,6 +74,7 @@ Configuration files support JSON and JSON5, including comments, unquoted keys an
 // Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
+    $schema: "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/plugin.v2.schema.json",
     version: 2,
     projectPath: "Project.xcworkspace",
     targets: {

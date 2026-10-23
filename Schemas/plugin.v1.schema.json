@@ -1,0 +1,80 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/plugin.v1.schema.json",
+    "title": "Swift Package List Plugin Configuration v1",
+    "description": "Legacy configuration for SwiftPackageListPlugin. Relative paths are resolved against the project directory. An omitted or null version selects v1.",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "The JSON Schema used by editors to validate this configuration."
+        },
+        "version": {
+            "type": ["integer", "null"],
+            "enum": [1, null],
+            "default": 1,
+            "description": "The configuration format version. Omit, set to null or set to 1 for v1."
+        },
+        "projectPath": {
+            "type": ["string", "null"],
+            "description": "Path to the project or workspace. Defaults to Package.swift for Swift packages or the current .xcodeproj for Xcode projects."
+        },
+        "project": {
+            "description": "Options for targets without an explicit entry in targets. Explicit target entries do not inherit these options; omitted or null options use the plugin defaults.",
+            "anyOf": [
+                { "$ref": "#/$defs/targetOptions" },
+                { "type": "null" }
+            ]
+        },
+        "targets": {
+            "type": ["object", "null"],
+            "description": "Options keyed by exact target name (displayName in Xcode). The '*' key has no wildcard behavior in v1; use project for fallback options.",
+            "additionalProperties": {
+                "$ref": "#/$defs/targetOptions"
+            }
+        }
+    },
+    "$defs": {
+        "targetOptions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "outputType": {
+                    "type": ["string", "null"],
+                    "enum": ["stdout", "json", "plist", "settings-bundle", "pdf", null],
+                    "default": "json",
+                    "description": "Output format. stdout prints to the build log; other formats generate a file in the plugin work directory."
+                },
+                "packageOrder": {
+                    "type": ["string", "null"],
+                    "enum": ["source", "name-ascending", "name-descending", "identity-ascending", "identity-descending", null],
+                    "default": "source",
+                    "description": "The order of packages in the generated output."
+                },
+                "requiresLicense": {
+                    "type": ["boolean", "null"],
+                    "default": true,
+                    "description": "Include only packages with a license."
+                },
+                "ignorePackages": {
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "Package identities to exclude from the output."
+                },
+                "customPackagesFilePaths": {
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "Paths to custom package files to include in the output."
+                }
+            }
+        }
+    }
+}
