@@ -345,6 +345,7 @@ The Settings Bundle and the UI-components are currently localized in the followi
 | Portuguese           | pt      |
 | Russian              | ru      |
 | Spanish              | es      |
+| Swedish              | sv      |
 | Turkish              | tr      |
 | Ukrainian            | uk      |
 | Vietnamese           | vi      |

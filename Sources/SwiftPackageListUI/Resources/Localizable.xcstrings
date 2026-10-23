@@ -94,6 +94,12 @@
             "value" : "Лицензии"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenser"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -219,6 +225,12 @@
             "value" : "Благодарности"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tack"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -342,6 +354,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Открыть репозиторий"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna kodarkiv"
           }
         },
         "tr" : {
