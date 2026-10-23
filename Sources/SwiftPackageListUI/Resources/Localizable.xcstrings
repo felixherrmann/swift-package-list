@@ -10,6 +10,12 @@
             "value" : "التراخيص"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenser"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -141,6 +147,12 @@
             "value" : "إقرارات"
           }
         },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -270,6 +282,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "فتح المستودع"
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åbn kodelager"
           }
         },
         "de" : {
