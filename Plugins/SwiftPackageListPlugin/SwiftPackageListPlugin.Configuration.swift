@@ -151,7 +151,7 @@ extension SwiftPackageListPlugin.Configuration.OutputType {
         case .settingsBundle:
             return "Settings.bundle"
         case .pdf:
-            return "Acknowledgements.pdf"
+            return "Acknowledgments.pdf"
         }
     }
 }

@@ -46,9 +46,9 @@ final class SettingsBundleGeneratorTests {
         	<array>
         		<dict>
         			<key>File</key>
-        			<string>Acknowledgements</string>
+        			<string>Acknowledgments</string>
         			<key>Title</key>
-        			<string>Acknowledgements</string>
+        			<string>Acknowledgments</string>
         			<key>Type</key>
         			<string>PSChildPaneSpecifier</string>
         		</dict>
@@ -63,10 +63,10 @@ final class SettingsBundleGeneratorTests {
         #expect(rootPlist == expectedRootPlist)
     }
 
-    @Test func acknowledgementsPlistOutput() throws {
-        let acknowledgementsPlist = try String(contentsOf: outputURL.appendingPathComponent("Acknowledgements.plist"))
+    @Test func acknowledgmentsPlistOutput() throws {
+        let acknowledgmentsPlist = try String(contentsOf: outputURL.appendingPathComponent("Acknowledgments.plist"))
         // swiftlint:disable indentation_width
-        let expectedAcknowledgementsPlist = """
+        let expectedAcknowledgmentsPlist = """
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
         <plist version="1.0">
@@ -89,13 +89,13 @@ final class SettingsBundleGeneratorTests {
         		</dict>
         	</array>
         	<key>StringsTable</key>
-        	<string>Acknowledgements</string>
+        	<string>Acknowledgments</string>
         </dict>
         </plist>
 
         """
         // swiftlint:enable indentation_width
-        #expect(acknowledgementsPlist == expectedAcknowledgementsPlist)
+        #expect(acknowledgmentsPlist == expectedAcknowledgmentsPlist)
     }
 
     @Test func testPlistOutput() throws {
@@ -128,19 +128,19 @@ final class SettingsBundleGeneratorTests {
         let rootStringsPath = outputURL.appendingPathComponent("de.lproj").appendingPathComponent("Root.strings")
         let rootStrings = try String(contentsOf: rootStringsPath)
         let expectedRootStrings = """
-        "Acknowledgements" = "Danksagungen";
+        "Acknowledgments" = "Danksagungen";
         """
         #expect(rootStrings == expectedRootStrings)
     }
 
-    @Test func acknowledgementsStringsOutput() throws {
-        let acknowledgementsStringsPath = outputURL
+    @Test func acknowledgmentsStringsOutput() throws {
+        let acknowledgmentsStringsPath = outputURL
             .appendingPathComponent("de.lproj")
-            .appendingPathComponent("Acknowledgements.strings")
-        let acknowledgementsStrings = try String(contentsOf: acknowledgementsStringsPath)
-        let expectedAcknowledgementsStrings = """
+            .appendingPathComponent("Acknowledgments.strings")
+        let acknowledgmentsStrings = try String(contentsOf: acknowledgmentsStringsPath)
+        let expectedAcknowledgmentsStrings = """
         "Licenses" = "Lizenzen";
         """
-        #expect(acknowledgementsStrings == expectedAcknowledgementsStrings)
+        #expect(acknowledgmentsStrings == expectedAcknowledgmentsStrings)
     }
 }

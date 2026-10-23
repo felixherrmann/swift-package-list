@@ -13,7 +13,7 @@ import SwiftPackageList
 @testable import SwiftPackageListCore
 
 final class PDFGeneratorTests {
-    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Acknowledgements-\(UUID()).pdf")
+    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Acknowledgments-\(UUID()).pdf")
 
     init() throws {
         let url = try #require(
@@ -53,14 +53,14 @@ final class PDFGeneratorTests {
 
         let attributes = try #require(output.documentAttributes)
         #expect(attributes["Author"] as? String == "Swift Package List")
-        #expect(attributes["Subject"] as? String == "Project Acknowledgements")
+        #expect(attributes["Subject"] as? String == "Project Acknowledgments")
         #expect(attributes["Title"] as? String == "Project_Acks_File_\(creationDate)")
         #expect(attributes["Creator"] as? String == "swift-package-list")
 
         let expectedOutput: String
         if #available(macOS 15.0, *) {
             expectedOutput = """
-            Acknowledgements
+            Acknowledgments
             Portions of this Swift Package List Software may utilize the following copyrighted
             material, the use of which is hereby acknowledged.
             test
@@ -68,7 +68,7 @@ final class PDFGeneratorTests {
             """
         } else {
             expectedOutput = """
-            Acknowledgements
+            Acknowledgments
             Portions of this Swift Package List Software may utilize the following \
             copyrighted material, the use of which is hereby acknowledged.
             test

@@ -29,81 +29,81 @@ extension SettingsBundleGenerator {
 
 extension SettingsBundleGenerator.Language {
     private enum RootStringsKey: String {
-        case acknowledgements = "Acknowledgements"
+        case acknowledgments = "Acknowledgments"
     }
 
     private var rootStrings: [RootStringsKey: String] {
         switch self {
         case .arabic:
             return [
-                .acknowledgements: "إقرارات",
+                .acknowledgments: "إقرارات",
             ]
         case .chineseSimplified:
             return [
-                .acknowledgements: "致谢",
+                .acknowledgments: "致谢",
             ]
         case .chineseTraditional:
             return [
-                .acknowledgements: "致謝",
+                .acknowledgments: "致謝",
             ]
         case .english:
             return [
-                .acknowledgements: "Acknowledgments",
+                .acknowledgments: "Acknowledgments",
             ]
         case .french:
             return [
-                .acknowledgements: "Remerciements",
+                .acknowledgments: "Remerciements",
             ]
         case .german:
             return [
-                .acknowledgements: "Danksagungen",
+                .acknowledgments: "Danksagungen",
             ]
         case .hindi:
             return [
-                .acknowledgements: "आभार",
+                .acknowledgments: "आभार",
             ]
         case .italian:
             return [
-                .acknowledgements: "Ringraziamenti",
+                .acknowledgments: "Ringraziamenti",
             ]
         case .japanese:
             return [
-                .acknowledgements: "謝辞"
+                .acknowledgments: "謝辞"
             ]
         case .polish:
             return [
-                .acknowledgements: "Podziękowania",
+                .acknowledgments: "Podziękowania",
             ]
         case .portuguese:
             return [
-                .acknowledgements: "Agradecimentos",
+                .acknowledgments: "Agradecimentos",
             ]
         case .russian:
             return [
-                .acknowledgements: "Благодарности",
+                .acknowledgments: "Благодарности",
             ]
         case .spanish:
             return [
-                .acknowledgements: "Agradecimientos",
+                .acknowledgments: "Agradecimientos",
             ]
         case .turkish:
             return [
-                .acknowledgements: "Teşekkürler",
+                .acknowledgments: "Teşekkürler",
             ]
         case .ukrainian:
             return [
-                .acknowledgements: "Подяки",
+                .acknowledgments: "Подяки",
             ]
         }
     }
 }
 
 extension SettingsBundleGenerator.Language {
-    private enum AcknowledgementsStringsKey: String {
+    private enum AcknowledgmentsStringsKey: String {
         case licenses = "Licenses"
     }
 
-    private var acknowledgementsStrings: [AcknowledgementsStringsKey: String] {
+    private var acknowledgmentsStrings: [AcknowledgmentsStringsKey: String] {
         switch self {
         case .arabic:
             return [
@@ -178,8 +178,8 @@ extension SettingsBundleGenerator.Language {
         return Data(fileString.utf8)
     }
 
-    var acknowledgementsFileData: Data {
-        let fileString = acknowledgementsStrings
+    var acknowledgmentsFileData: Data {
+        let fileString = acknowledgmentsStrings
             .map { "\"\($0.key.rawValue)\" = \"\($0.value)\"" }
             .joined(separator: ";\n")
             .appending(";")

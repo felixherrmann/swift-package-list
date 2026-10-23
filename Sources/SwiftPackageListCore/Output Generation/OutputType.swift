@@ -50,7 +50,7 @@ extension OutputType {
             let outputURL = try outputURL(fileName: "Settings", fileExtension: "bundle", options: options)
             return SettingsBundleGenerator(outputURL: outputURL, packages: packages)
         case .pdf:
-            let outputURL = try outputURL(fileName: "Acknowledgements", fileExtension: "pdf", options: options)
+            let outputURL = try outputURL(fileName: "Acknowledgments", fileExtension: "pdf", options: options)
             return PDFGenerator(outputURL: outputURL, packages: packages, project: project)
         }
     }

@@ -1,5 +1,5 @@
 //
-//  BundleAcknowledgementsTests.swift
+//  BundleAcknowledgmentsTests.swift
 //  SwiftPackageListTests
 //
 //  Created by Felix Herrmann on 11.02.24.
@@ -10,23 +10,23 @@ import Testing
 
 @testable import SwiftPackageList
 
-struct BundleAcknowledgementsTests {
+struct BundleAcknowledgmentsTests {
     @Test func url() {
         let expectedURL = Bundle.module.bundleURL
             .appendingPathComponent("Contents")
             .appendingPathComponent("Resources")
-            .appendingPathComponent("Acknowledgements")
+            .appendingPathComponent("Acknowledgments")
             .appendingPathExtension("pdf")
 
-        #expect(Bundle.module.acknowledgementsURL == expectedURL)
+        #expect(Bundle.module.acknowledgmentsURL == expectedURL)
     }
 
     @Test func path() {
         let expectedPath = Bundle.module.bundlePath
             .appending("/Contents")
             .appending("/Resources")
-            .appending("/Acknowledgements.pdf")
+            .appending("/Acknowledgments.pdf")
 
-        #expect(Bundle.module.acknowledgementsPath == expectedPath)
+        #expect(Bundle.module.acknowledgmentsPath == expectedPath)
     }
 }

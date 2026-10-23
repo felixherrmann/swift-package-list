@@ -196,21 +196,21 @@ This tool supports the following [Tuist external dependency](https://docs.tuist.
 
 ### Settings Bundle
 
-You can also generate a `Settings.bundle` file to show the acknowledgements in the Settings app. This works slightly different
+You can also generate a `Settings.bundle` file to show the acknowledgments in the Settings app. This works slightly different
 than the other file types, because a Settings Bundle is a collection of several files and might already exist in your app. 
 Just specify `--output-type settings-bundle` on the command execution.
 
 **Important:** The `Root.plist` and `Root.strings` files will (unlike the other files) only be created if they not already exists,
-otherwise it would remove existing configurations. Make sure you set up the `Acknowledgements.plist` correctly as a Child Pane as shown below:
+otherwise it would remove existing configurations. Make sure you set up the `Acknowledgments.plist` correctly as a Child Pane as shown below:
 
 ```xml
 <dict>
     <key>Type</key>
     <string>PSChildPaneSpecifier</string>
     <key>Title</key>
-    <string>Acknowledgements</string>
+    <string>Acknowledgments</string>
     <key>File</key>
-    <string>Acknowledgements</string>
+    <string>Acknowledgments</string>
 </dict>
 ```
 
@@ -228,7 +228,7 @@ Once created and added to the project, it can be easily accessed from the applic
 ```swift
 import SwiftPackageList
 
-let url = Bundle.main.acknowledgementsURL
+let url = Bundle.main.acknowledgmentsURL
 ```
 You can then use [QuickLook](https://developer.apple.com/documentation/quicklook), [NSWorkspace.open(\_:)](https://developer.apple.com/documentation/appkit/nsworkspace/1533463-open) or any other method to display the PDF.
 

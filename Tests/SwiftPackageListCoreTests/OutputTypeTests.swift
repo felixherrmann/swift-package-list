@@ -33,7 +33,7 @@ struct OutputTypeTests {
 
         let anyPDFGenerator = try OutputType.pdf.outputGenerator(packages: [], project: project, options: options)
         let pdfGenerator = try #require(anyPDFGenerator as? PDFGenerator)
-        #expect(pdfGenerator.outputURL.path == "/User/test/Desktop/Acknowledgements.pdf")
+        #expect(pdfGenerator.outputURL.path == "/User/test/Desktop/Acknowledgments.pdf")
     }
 
     @Test func customOutputURL() throws {
