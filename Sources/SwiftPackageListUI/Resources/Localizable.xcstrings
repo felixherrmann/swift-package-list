@@ -64,6 +64,12 @@
             "value" : "라이선스"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenties"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +177,12 @@
             "value" : "감사의 말"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dankbetuigingen"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -276,6 +288,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "저장소 열기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repository openen"
           }
         },
         "pl" : {
