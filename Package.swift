@@ -7,11 +7,11 @@ let package = Package(
     name: "swift-package-list",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v10_15),
-        .macCatalyst(.v13),
-        .iOS(.v13),
-        .tvOS(.v13),
-        .watchOS(.v6),
+        .macOS(.v11),
+        .macCatalyst(.v15),
+        .iOS(.v15),
+        .tvOS(.v15),
+        .watchOS(.v8),
         .visionOS(.v1),
     ],
     products: [

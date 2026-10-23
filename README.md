@@ -275,10 +275,10 @@ Load the generated package-list file from the bundle or use some pre-build UI co
 
 ### Requirements
 
-- macOS 10.15
-- iOS 13.0
-- tvOS 13.0
-- watchOS 6.0
+- macOS 11.0
+- iOS 15.0
+- tvOS 15.0
+- watchOS 8.0
 - visionOS 1.0
 
 ### Usage
