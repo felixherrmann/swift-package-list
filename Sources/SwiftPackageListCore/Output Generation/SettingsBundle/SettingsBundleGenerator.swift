@@ -43,7 +43,7 @@ struct SettingsBundleGenerator: OutputGenerator {
     private func createRootPlist() throws {
         let rootURL = outputURL.appendingPathComponent("Root.plist")
         guard !fileManager.fileExists(atPath: rootURL.path) else { return }
-        let rootSpecifiers: [Specifier] = [.childPane(title: "Acknowledgments", file: "Acknowledgments")]
+        let rootSpecifiers: [Specifier] = [.childPane(title: "SPL_ACKNOWLEDGMENTS_TITLE", file: "Acknowledgments")]
         let rootPlist = PropertyList(stringsTable: "Root", preferenceSpecifiers: rootSpecifiers)
         let encodedRoot = try encoder.encode(rootPlist)
         try encodedRoot.write(to: rootURL)
@@ -51,7 +51,7 @@ struct SettingsBundleGenerator: OutputGenerator {
 
     private func createAcknowledgmentsPlist() throws {
         let packageChildPanes: [Specifier] = packages.map { .childPane(title: $0.name, file: "Packages/\($0.name)") }
-        let preferenceSpecifiers: [Specifier] = [.group(title: "Licenses")] + packageChildPanes
+        let preferenceSpecifiers: [Specifier] = [.group(title: "SPL_ACKNOWLEDGMENTS_SECTION_TITLE")] + packageChildPanes
         let acknowledgmentsPlist = PropertyList(stringsTable: "Acknowledgments", preferenceSpecifiers: preferenceSpecifiers)
         let encodedAcknowledgments = try encoder.encode(acknowledgmentsPlist)
         let acknowledgmentsURL = outputURL.appendingPathComponent("Acknowledgments.plist")

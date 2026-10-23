@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "acknowledgments.section-title" : {
+    "SPL_ACKNOWLEDGMENTS_SECTION_TITLE" : {
       "comment" : "Section title for the license list",
       "localizations" : {
         "ar" : {
@@ -96,7 +96,7 @@
         }
       }
     },
-    "acknowledgments.title" : {
+    "SPL_ACKNOWLEDGMENTS_TITLE" : {
       "comment" : "Navigation bar title of the license list",
       "localizations" : {
         "ar" : {
@@ -191,7 +191,7 @@
         }
       }
     },
-    "license.open-repository" : {
+    "SPL_LICENSE_OPEN_REPOSITORY" : {
       "comment" : "Accessibility label of the button that opens the package's source repository.",
       "localizations" : {
         "ar" : {

@@ -48,7 +48,7 @@ final class SettingsBundleGeneratorTests {
         			<key>File</key>
         			<string>Acknowledgments</string>
         			<key>Title</key>
-        			<string>Acknowledgments</string>
+        			<string>SPL_ACKNOWLEDGMENTS_TITLE</string>
         			<key>Type</key>
         			<string>PSChildPaneSpecifier</string>
         		</dict>
@@ -75,7 +75,7 @@ final class SettingsBundleGeneratorTests {
         	<array>
         		<dict>
         			<key>Title</key>
-        			<string>Licenses</string>
+        			<string>SPL_ACKNOWLEDGMENTS_SECTION_TITLE</string>
         			<key>Type</key>
         			<string>PSGroupSpecifier</string>
         		</dict>
@@ -128,7 +128,7 @@ final class SettingsBundleGeneratorTests {
         let rootStringsPath = outputURL.appendingPathComponent("de.lproj").appendingPathComponent("Root.strings")
         let rootStrings = try String(contentsOf: rootStringsPath)
         let expectedRootStrings = """
-        "Acknowledgments" = "Danksagungen";
+        "SPL_ACKNOWLEDGMENTS_TITLE" = "Danksagungen";
         """
         #expect(rootStrings == expectedRootStrings)
     }
@@ -139,7 +139,7 @@ final class SettingsBundleGeneratorTests {
             .appendingPathComponent("Acknowledgments.strings")
         let acknowledgmentsStrings = try String(contentsOf: acknowledgmentsStringsPath)
         let expectedAcknowledgmentsStrings = """
-        "Licenses" = "Lizenzen";
+        "SPL_ACKNOWLEDGMENTS_SECTION_TITLE" = "Lizenzen";
         """
         #expect(acknowledgmentsStrings == expectedAcknowledgmentsStrings)
     }

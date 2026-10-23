@@ -29,70 +29,70 @@ extension SettingsBundleGenerator {
 
 extension SettingsBundleGenerator.Language {
     private enum RootStringsKey: String {
-        case acknowledgments = "Acknowledgments"
+        case acknowledgmentsTitle = "SPL_ACKNOWLEDGMENTS_TITLE"
     }
 
     private var rootStrings: [RootStringsKey: String] {
         switch self {
         case .arabic:
             return [
-                .acknowledgments: "إقرارات",
+                .acknowledgmentsTitle: "إقرارات",
             ]
         case .chineseSimplified:
             return [
-                .acknowledgments: "致谢",
+                .acknowledgmentsTitle: "致谢",
             ]
         case .chineseTraditional:
             return [
-                .acknowledgments: "致謝",
+                .acknowledgmentsTitle: "致謝",
             ]
         case .english:
             return [
-                .acknowledgments: "Acknowledgments",
+                .acknowledgmentsTitle: "Acknowledgments",
             ]
         case .french:
             return [
-                .acknowledgments: "Remerciements",
+                .acknowledgmentsTitle: "Remerciements",
             ]
         case .german:
             return [
-                .acknowledgments: "Danksagungen",
+                .acknowledgmentsTitle: "Danksagungen",
             ]
         case .hindi:
             return [
-                .acknowledgments: "आभार",
+                .acknowledgmentsTitle: "आभार",
             ]
         case .italian:
             return [
-                .acknowledgments: "Ringraziamenti",
+                .acknowledgmentsTitle: "Ringraziamenti",
             ]
         case .japanese:
             return [
-                .acknowledgments: "謝辞"
+                .acknowledgmentsTitle: "謝辞"
             ]
         case .polish:
             return [
-                .acknowledgments: "Podziękowania",
+                .acknowledgmentsTitle: "Podziękowania",
             ]
         case .portuguese:
             return [
-                .acknowledgments: "Agradecimentos",
+                .acknowledgmentsTitle: "Agradecimentos",
             ]
         case .russian:
             return [
-                .acknowledgments: "Благодарности",
+                .acknowledgmentsTitle: "Благодарности",
             ]
         case .spanish:
             return [
-                .acknowledgments: "Agradecimientos",
+                .acknowledgmentsTitle: "Agradecimientos",
             ]
         case .turkish:
             return [
-                .acknowledgments: "Teşekkürler",
+                .acknowledgmentsTitle: "Teşekkürler",
             ]
         case .ukrainian:
             return [
-                .acknowledgments: "Подяки",
+                .acknowledgmentsTitle: "Подяки",
             ]
         }
     }
@@ -100,70 +100,70 @@ extension SettingsBundleGenerator.Language {
 
 extension SettingsBundleGenerator.Language {
     private enum AcknowledgmentsStringsKey: String {
-        case licenses = "Licenses"
+        case acknowledgmentsSectionTitle = "SPL_ACKNOWLEDGMENTS_SECTION_TITLE"
     }
 
     private var acknowledgmentsStrings: [AcknowledgmentsStringsKey: String] {
         switch self {
         case .arabic:
             return [
-                .licenses: "التراخيص",
+                .acknowledgmentsSectionTitle: "التراخيص",
             ]
         case .chineseSimplified:
             return [
-                .licenses: "许可证",
+                .acknowledgmentsSectionTitle: "许可证",
             ]
         case .chineseTraditional:
             return [
-                .licenses: "許可證",
+                .acknowledgmentsSectionTitle: "許可證",
             ]
         case .english:
             return [
-                .licenses: "Licenses",
+                .acknowledgmentsSectionTitle: "Licenses",
             ]
         case .french:
             return [
-                .licenses: "Licences",
+                .acknowledgmentsSectionTitle: "Licences",
             ]
         case .german:
             return [
-                .licenses: "Lizenzen",
+                .acknowledgmentsSectionTitle: "Lizenzen",
             ]
         case .hindi:
             return [
-                .licenses: "लाइसेंस",
+                .acknowledgmentsSectionTitle: "लाइसेंस",
             ]
         case .italian:
             return [
-                .licenses: "Licenze",
+                .acknowledgmentsSectionTitle: "Licenze",
             ]
         case .japanese:
             return [
-                .licenses: "ライセンス"
+                .acknowledgmentsSectionTitle: "ライセンス"
             ]
         case .polish:
             return [
-                .licenses: "Licencje",
+                .acknowledgmentsSectionTitle: "Licencje",
             ]
         case .portuguese:
             return [
-                .licenses: "Licenças",
+                .acknowledgmentsSectionTitle: "Licenças",
             ]
         case .russian:
             return [
-                .licenses: "Лицензии",
+                .acknowledgmentsSectionTitle: "Лицензии",
             ]
         case .spanish:
             return [
-                .licenses: "Licencias",
+                .acknowledgmentsSectionTitle: "Licencias",
             ]
         case .turkish:
             return [
-                .licenses: "Lisanslar",
+                .acknowledgmentsSectionTitle: "Lisanslar",
             ]
         case .ukrainian:
             return [
-                .licenses: "Ліцензії",
+                .acknowledgmentsSectionTitle: "Ліцензії",
             ]
         }
     }

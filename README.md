@@ -208,7 +208,7 @@ otherwise it would remove existing configurations. Make sure you set up the `Ack
     <key>Type</key>
     <string>PSChildPaneSpecifier</string>
     <key>Title</key>
-    <string>Acknowledgments</string>
+    <string>SPL_ACKNOWLEDGMENTS_TITLE</string>
     <key>File</key>
     <string>Acknowledgments</string>
 </dict>

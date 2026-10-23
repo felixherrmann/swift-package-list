@@ -51,7 +51,7 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
     public var body: some View {
         List {
             Section(
-                header: Text("acknowledgments.section-title", bundle: .module, comment: "Section title for the license list")
+                header: Text("SPL_ACKNOWLEDGMENTS_SECTION_TITLE", bundle: .module, comment: "Section title for the license list")
             ) {
                 ForEach(_packages, id: \.self) { package in
                     NavigationLink(package.name) {
@@ -62,7 +62,7 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
         }
 #if os(visionOS)
         .navigationTitle(
-            Text("acknowledgments.title", bundle: .module, comment: "Navigation bar title of the license list")
+            Text("SPL_ACKNOWLEDGMENTS_TITLE", bundle: .module, comment: "Navigation bar title of the license list")
         )
         .navigationBarTitleDisplayMode(.inline)
         .task {
@@ -70,7 +70,7 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
         }
 #else
         .backport.navigationTitle(
-            Text("acknowledgments.title", bundle: .module, comment: "Navigation bar title of the license list")
+            Text("SPL_ACKNOWLEDGMENTS_TITLE", bundle: .module, comment: "Navigation bar title of the license list")
         )
 #if os(iOS) || os(watchOS)
         .backport.navigationBarTitleDisplayMode(.inline)

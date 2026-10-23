@@ -77,7 +77,7 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
 
     private func _setupNavigationBar() {
         let title = NSLocalizedString(
-            "acknowledgments.title",
+            "SPL_ACKNOWLEDGMENTS_TITLE",
             bundle: .module,
             value: "Acknowledgments",
             comment: "Navigation bar title of the license list"
@@ -102,7 +102,7 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
 
     override open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return NSLocalizedString(
-            "acknowledgments.section-title",
+            "SPL_ACKNOWLEDGMENTS_SECTION_TITLE",
             bundle: .module,
             value: "Licenses",
             comment: "Section title for the license list"
