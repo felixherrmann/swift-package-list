@@ -24,6 +24,7 @@ extension SettingsBundleGenerator {
         case italian = "it"
         case japanese = "ja"
         case korean = "ko"
+        case norwegianBokmal = "nb"
         case polish = "pl"
         case portuguese = "pt"
         case russian = "ru"
@@ -101,6 +102,10 @@ extension SettingsBundleGenerator.Language {
         case .korean:
             return [
                 .acknowledgmentsTitle: "감사의 말",
+            ]
+        case .norwegianBokmal:
+            return [
+                .acknowledgmentsTitle: "Takk",
             ]
         case .polish:
             return [
@@ -204,6 +209,10 @@ extension SettingsBundleGenerator.Language {
         case .korean:
             return [
                 .acknowledgmentsSectionTitle: "라이선스",
+            ]
+        case .norwegianBokmal:
+            return [
+                .acknowledgmentsSectionTitle: "Lisenser",
             ]
         case .polish:
             return [

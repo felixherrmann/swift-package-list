@@ -343,6 +343,7 @@ The Settings Bundle and the UI-components are currently localized in the followi
 | Italian              | it      |
 | Japanese             | ja      |
 | Korean               | ko      |
+| Norwegian Bokmål     | nb      |
 | Polish               | pl      |
 | Portuguese           | pt      |
 | Russian              | ru      |

@@ -82,6 +82,12 @@
             "value" : "라이선스"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisenser"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -225,6 +231,12 @@
             "value" : "감사의 말"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takk"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -366,6 +378,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "저장소 열기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne kodelager"
           }
         },
         "nl" : {
