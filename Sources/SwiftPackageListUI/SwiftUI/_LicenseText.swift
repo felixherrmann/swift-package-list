@@ -17,7 +17,7 @@ internal struct _LicenseText: View {
         ZStack {
 #if os(iOS)
             Color(.systemGroupedBackground)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
 #endif
 #if os(tvOS)
             _TVOSTextView(_text: _package.license ?? "")
