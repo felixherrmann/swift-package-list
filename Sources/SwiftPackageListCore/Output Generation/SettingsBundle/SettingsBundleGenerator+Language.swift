@@ -31,6 +31,7 @@ extension SettingsBundleGenerator {
         case russian = "ru"
         case spanish = "es"
         case swedish = "sv"
+        case thai = "th"
         case turkish = "tr"
         case ukrainian = "uk"
         case vietnamese = "vi"
@@ -131,6 +132,10 @@ extension SettingsBundleGenerator.Language {
         case .swedish:
             return [
                 .acknowledgmentsTitle: "Tack",
+            ]
+        case .thai:
+            return [
+                .acknowledgmentsTitle: "กิตติกรรมประกาศ",
             ]
         case .turkish:
             return [
@@ -242,6 +247,10 @@ extension SettingsBundleGenerator.Language {
         case .swedish:
             return [
                 .acknowledgmentsSectionTitle: "Licenser",
+            ]
+        case .thai:
+            return [
+                .acknowledgmentsSectionTitle: "ใบอนุญาต",
             ]
         case .turkish:
             return [

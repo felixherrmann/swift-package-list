@@ -124,6 +124,12 @@
             "value" : "Licenser"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใบอนุญาต"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -279,6 +285,12 @@
             "value" : "Tack"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กิตติกรรมประกาศ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -432,6 +444,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öppna kodarkiv"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดที่เก็บซอร์สโค้ด"
           }
         },
         "tr" : {
