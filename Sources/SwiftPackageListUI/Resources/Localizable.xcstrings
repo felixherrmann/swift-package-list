@@ -58,6 +58,12 @@
             "value" : "ライセンス"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -159,6 +165,12 @@
             "value" : "謝辞"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "감사의 말"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -258,6 +270,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "リポジトリを開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장소 열기"
           }
         },
         "pl" : {

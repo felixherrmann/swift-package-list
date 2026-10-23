@@ -19,6 +19,7 @@ extension SettingsBundleGenerator {
         case hindi = "hi"
         case italian = "it"
         case japanese = "ja"
+        case korean = "ko"
         case polish = "pl"
         case portuguese = "pt"
         case russian = "ru"
@@ -74,6 +75,10 @@ extension SettingsBundleGenerator.Language {
         case .japanese:
             return [
                 .acknowledgmentsTitle: "謝辞"
+            ]
+        case .korean:
+            return [
+                .acknowledgmentsTitle: "감사의 말",
             ]
         case .polish:
             return [
@@ -149,6 +154,10 @@ extension SettingsBundleGenerator.Language {
         case .japanese:
             return [
                 .acknowledgmentsSectionTitle: "ライセンス"
+            ]
+        case .korean:
+            return [
+                .acknowledgmentsSectionTitle: "라이선스",
             ]
         case .polish:
             return [
