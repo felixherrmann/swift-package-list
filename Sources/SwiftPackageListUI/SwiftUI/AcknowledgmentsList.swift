@@ -39,6 +39,8 @@ import SwiftPackageList
 /// - Important: This view must be used inside a `NavigationStack` to function properly.
 public struct AcknowledgmentsList<Provider: PackageProvider>: View {
     private let _packageProvider: Provider
+    private let _logger = Logger(subsystem: "com.felixherrmann.swift-package-list", category: "AcknowledgmentsList")
+
     @State private var _packages: [Package] = []
 
     /// Creates a ``AcknowledgmentsList`` for a package provider.
@@ -81,12 +83,7 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
         do {
             _packages = try _packageProvider.packages()
         } catch {
-            os_log(
-                "Error: %@",
-                log: OSLog(subsystem: "com.felixherrmann.swift-package-list", category: "AcknowledgmentsList"),
-                type: .error,
-                String(describing: error)
-            )
+            _logger.error("Failed to load packages: \(String(describing: error))")
         }
     }
 }

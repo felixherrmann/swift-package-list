@@ -21,6 +21,11 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
 
     // MARK: - Properties
 
+    private let _logger = Logger(
+        subsystem: "com.felixherrmann.swift-package-list",
+        category: "SPLAcknowledgmentsTableViewController"
+    )
+
     /// The package provider object used as the source of data.
     open var packageProvider: Provider
 
@@ -61,15 +66,7 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
         do {
             _packages = try packageProvider.packages()
         } catch {
-            os_log(
-                "Error: %@",
-                log: OSLog(
-                    subsystem: "com.felixherrmann.swift-package-list",
-                    category: "SPLAcknowledgmentsTableViewController"
-                ),
-                type: .error,
-                String(describing: error)
-            )
+            _logger.error("Failed to load packages: \(String(describing: error))")
         }
     }
 
