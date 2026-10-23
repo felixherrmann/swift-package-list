@@ -46,11 +46,11 @@ extension SettingsBundleGenerator.Language {
             ]
         case .en:
             return [
-                .acknowledgements: "Acknowledgements",
+                .acknowledgements: "Acknowledgments",
             ]
         case .es:
             return [
-                .acknowledgements: "Expresiones de gratitud",
+                .acknowledgements: "Agradecimientos",
             ]
         case .fr:
             return [
@@ -58,7 +58,7 @@ extension SettingsBundleGenerator.Language {
             ]
         case .hi:
             return [
-                .acknowledgements: "स्वीकृतियाँ",
+                .acknowledgements: "आभार",
             ]
         case .it:
             return [

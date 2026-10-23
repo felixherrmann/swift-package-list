@@ -108,7 +108,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anmerkungen"
+            "value" : "Danksagungen"
           }
         },
         "en" : {
@@ -120,7 +120,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Expresiones de gratitud"
+            "value" : "Agradecimientos"
           }
         },
         "fr" : {
@@ -132,7 +132,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "स्वीकृतियाँ"
+            "value" : "आभार"
           }
         },
         "it" : {
