@@ -33,11 +33,11 @@ extension SwiftPackageList {
         @Option(
             name: .customLong("ignore-package"),
             help: ArgumentHelp(
-                "Will skip a package with the specified identity. (This option may be repeated multiple times)",
-                valueName: "package-identity"
+                "Will skip a package with the specified identity; glob patterns are supported. (This option may be repeated multiple times)", // swiftlint:disable:this line_length
+                valueName: "package-identity-pattern"
             )
         )
-        var ignoredPackageIdentities: [String] = []
+        var ignoredPackageIdentities: [Pattern] = []
     }
 }
 
@@ -61,7 +61,7 @@ extension SwiftPackageList.OutputOptions {
 extension SwiftPackageList.OutputOptions {
     func filter(package: Package) -> Bool {
         if requiresLicense && !package.hasLicense { return false }
-        return !ignoredPackageIdentities.contains(package.identity)
+        return !ignoredPackageIdentities.contains { $0.matches(package.identity) }
     }
 
     func sort(lhs: Package, rhs: Package) -> Bool {

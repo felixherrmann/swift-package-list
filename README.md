@@ -55,7 +55,7 @@ In addition to that you can specify the following options:
 | --custom-file-name \<custom-file-name\>                       | A custom filename to be used instead of the default ones.                                                                                                   |
 | --package-order \<package-order\>                             | The order in which the packages will be listed. (values: source, name-ascending, name-descending, identity-ascending, identity-descending; default: source) |
 | --requires-license                                            | Will skip the packages without a license-file.                                                                                                              |
-| --ignore-package \<package-identity\>                         | Will skip a package with the specified identity. (This option may be repeated multiple times)                                                               |
+| --ignore-package \<package-identity-pattern\>                 | Will skip a package with the specified identity; glob patterns are supported. (This option may be repeated multiple times)                                  |
 | --version                                                     | Show the version.                                                                                                                                           |
 | -h, --help                                                    | Show help information.                                                                                                                                      |
 
@@ -93,6 +93,7 @@ Configuration files support JSON and JSON5, including comments, unquoted keys an
             ignorePackages: [
                 "swift-package-list",
                 "swift-argument-parser",
+                "swift-openapi-*",
             ],
             customPackagesFilePaths: [
                 "custom-packages.json",

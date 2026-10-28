@@ -61,10 +61,11 @@
                 "ignorePackages": {
                     "type": ["array", "null"],
                     "items": {
-                        "type": "string"
+                        "type": "string",
+                        "minLength": 1
                     },
                     "default": [],
-                    "description": "Package identities to exclude from the output."
+                    "description": "Package identity patterns to exclude from the output. Glob patterns are supported."
                 },
                 "customPackagesFilePaths": {
                     "type": ["array", "null"],
