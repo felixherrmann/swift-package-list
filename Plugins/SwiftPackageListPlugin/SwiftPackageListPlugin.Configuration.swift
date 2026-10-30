@@ -123,14 +123,14 @@ extension SwiftPackageListPlugin.Configuration {
 
 extension SwiftPackageListPlugin.Configuration {
     enum OutputType: String, Decodable {
+        case table
+        case csv
         case json
         case plist
-        case settingsBundle = "settings-bundle"
-        case pdf
-        case html
         case markdown
-        case csv
-        case table
+        case html
+        case pdf
+        case settingsBundle = "settings-bundle"
     }
 
     enum PackageOrder: String, Decodable {
@@ -145,22 +145,22 @@ extension SwiftPackageListPlugin.Configuration {
 extension SwiftPackageListPlugin.Configuration.OutputType {
     var filename: String {
         switch self {
+        case .table:
+            return "package-table.txt"
+        case .csv:
+            return "package-list.csv"
         case .json:
             return "package-list.json"
         case .plist:
             return "package-list.plist"
-        case .settingsBundle:
-            return "Settings.bundle"
-        case .pdf:
-            return "Acknowledgments.pdf"
-        case .html:
-            return "Acknowledgments.html"
         case .markdown:
             return "Acknowledgments.md"
-        case .csv:
-            return "package-list.csv"
-        case .table:
-            return "package-table.txt"
+        case .html:
+            return "Acknowledgments.html"
+        case .pdf:
+            return "Acknowledgments.pdf"
+        case .settingsBundle:
+            return "Settings.bundle"
         }
     }
 }

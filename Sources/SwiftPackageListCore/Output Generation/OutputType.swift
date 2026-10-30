@@ -9,14 +9,14 @@ import Foundation
 import SwiftPackageList
 
 public enum OutputType: String, CaseIterable {
+    case table
+    case csv
     case json
     case plist
-    case settingsBundle = "settings-bundle"
-    case pdf
-    case html
     case markdown
-    case csv
-    case table
+    case html
+    case pdf
+    case settingsBundle = "settings-bundle"
 }
 
 extension OutputType {
@@ -26,30 +26,30 @@ extension OutputType {
         options: OutputGeneratorOptions = OutputGeneratorOptions()
     ) throws -> any OutputGenerator {
         switch self {
+        case .table:
+            let outputDestination = outputDestination(filename: "package-table", extension: "txt", options: options)
+            return TableGenerator(outputDestination: outputDestination, packages: packages)
+        case .csv:
+            let outputDestination = outputDestination(filename: "package-list", extension: "csv", options: options)
+            return CSVGenerator(outputDestination: outputDestination, packages: packages)
         case .json:
             let outputDestination = outputDestination(filename: "package-list", extension: "json", options: options)
             return JSONGenerator(outputDestination: outputDestination, packages: packages)
         case .plist:
             let outputDestination = outputDestination(filename: "package-list", extension: "plist", options: options)
             return PropertyListGenerator(outputDestination: outputDestination, packages: packages)
-        case .settingsBundle:
-            let outputURL = try outputURL(filename: "Settings", extension: "bundle", options: options)
-            return SettingsBundleGenerator(outputURL: outputURL, packages: packages)
-        case .pdf:
-            let outputURL = try outputURL(filename: "Acknowledgments", extension: "pdf", options: options)
-            return PDFGenerator(outputURL: outputURL, packages: packages, project: project)
-        case .html:
-            let outputDestination = outputDestination(filename: "Acknowledgments", extension: "html", options: options)
-            return HTMLGenerator(outputDestination: outputDestination, packages: packages, project: project)
         case .markdown:
             let outputDestination = outputDestination(filename: "Acknowledgments", extension: "md", options: options)
             return MarkdownGenerator(outputDestination: outputDestination, packages: packages, project: project)
-        case .csv:
-            let outputDestination = outputDestination(filename: "package-list", extension: "csv", options: options)
-            return CSVGenerator(outputDestination: outputDestination, packages: packages)
-        case .table:
-            let outputDestination = outputDestination(filename: "package-table", extension: "txt", options: options)
-            return TableGenerator(outputDestination: outputDestination, packages: packages)
+        case .html:
+            let outputDestination = outputDestination(filename: "Acknowledgments", extension: "html", options: options)
+            return HTMLGenerator(outputDestination: outputDestination, packages: packages, project: project)
+        case .pdf:
+            let outputURL = try outputURL(filename: "Acknowledgments", extension: "pdf", options: options)
+            return PDFGenerator(outputURL: outputURL, packages: packages, project: project)
+        case .settingsBundle:
+            let outputURL = try outputURL(filename: "Settings", extension: "bundle", options: options)
+            return SettingsBundleGenerator(outputURL: outputURL, packages: packages)
         }
     }
 
