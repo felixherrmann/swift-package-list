@@ -15,6 +15,7 @@ public enum OutputType: String, CaseIterable {
     case pdf
     case html
     case markdown
+    case csv
 }
 
 extension OutputType {
@@ -42,6 +43,9 @@ extension OutputType {
         case .markdown:
             let outputDestination = outputDestination(filename: "Acknowledgments", extension: "md", options: options)
             return MarkdownGenerator(outputDestination: outputDestination, packages: packages, project: project)
+        case .csv:
+            let outputDestination = outputDestination(filename: "package-list", extension: "csv", options: options)
+            return CSVGenerator(outputDestination: outputDestination, packages: packages)
         }
     }
 

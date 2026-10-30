@@ -129,6 +129,7 @@ extension SwiftPackageListPlugin.Configuration {
         case pdf
         case html
         case markdown
+        case csv
     }
 
     enum PackageOrder: String, Decodable {
@@ -155,6 +156,8 @@ extension SwiftPackageListPlugin.Configuration.OutputType {
             return "Acknowledgments.html"
         case .markdown:
             return "Acknowledgments.md"
+        case .csv:
+            return "package-list.csv"
         }
     }
 }

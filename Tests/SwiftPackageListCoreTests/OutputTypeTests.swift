@@ -43,6 +43,10 @@ struct OutputTypeTests {
         let anyMarkdownGenerator = try OutputType.markdown.outputGenerator(packages: [], project: project, options: options)
         let markdownGenerator = try #require(anyMarkdownGenerator as? MarkdownGenerator)
         #expect(markdownGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("Acknowledgments.md")))
+
+        let anyCSVGenerator = try OutputType.csv.outputGenerator(packages: [], project: project, options: options)
+        let csvGenerator = try #require(anyCSVGenerator as? CSVGenerator)
+        #expect(csvGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("package-list.csv")))
     }
 
     @Test func customOutputURL() throws {
@@ -77,6 +81,10 @@ struct OutputTypeTests {
         let anyMarkdownGenerator = try OutputType.markdown.outputGenerator(packages: [], project: project, options: options)
         let markdownGenerator = try #require(anyMarkdownGenerator as? MarkdownGenerator)
         #expect(markdownGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.md")))
+
+        let anyCSVGenerator = try OutputType.csv.outputGenerator(packages: [], project: project, options: options)
+        let csvGenerator = try #require(anyCSVGenerator as? CSVGenerator)
+        #expect(csvGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.csv")))
     }
 
     @Test func standardOutput() throws {
@@ -97,5 +105,9 @@ struct OutputTypeTests {
         let anyMarkdownGenerator = try OutputType.markdown.outputGenerator(packages: [], project: project)
         let markdownGenerator = try #require(anyMarkdownGenerator as? MarkdownGenerator)
         #expect(markdownGenerator.outputDestination == .stdout)
+
+        let anyCSVGenerator = try OutputType.csv.outputGenerator(packages: [], project: project)
+        let csvGenerator = try #require(anyCSVGenerator as? CSVGenerator)
+        #expect(csvGenerator.outputDestination == .stdout)
     }
 }

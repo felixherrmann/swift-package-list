@@ -6,7 +6,7 @@
 A command-line tool to get all used Swift Package dependencies.
 
 The output includes all the `Package.resolved` informations and the license from the checkouts.
-You can also generate a JSON, PLIST, Settings.bundle, PDF or HTML file.
+You can also generate a JSON, PLIST, Settings.bundle, PDF, HTML, Markdown or CSV file.
 
 Additionally there is a Swift Package to read the generated package-list file from the application's bundle or to use pre-build UI for SwiftUI and UIKit.
 
@@ -50,7 +50,7 @@ In addition to that you can specify the following options:
 | --custom-derived-data-path \<custom-derived-data-path\>       | A custom path to your DerivedData-folder.                                                                                                                   |
 | --custom-source-packages-path \<custom-source-packages-path\> | A custom path to the SourcePackages-folder.                                                                                                                 |
 | --custom-packages-file-path \<custom-packages-file-path\>     | A path to a JSON file containing custom packages. (This option may be repeated multiple times)                                                              |
-| --output-type \<output-type\>                                 | The type of output for the package-list. (values: json, plist, settings-bundle, pdf, html, markdown; default: json)                                         |
+| --output-type \<output-type\>                                 | The type of output for the package-list. (values: json, plist, settings-bundle, pdf, html, markdown, csv; default: json)                                    |
 | --output-path \<output-path\>                                 | The path where the file will be written. If omitted, the content is sent to stdout.                                                                         |
 | --custom-file-name \<custom-file-name\>                       | A custom filename to be used instead of the default ones.                                                                                                   |
 | --package-order \<package-order\>                             | The order in which the packages will be listed. (values: source, name-ascending, name-descending, identity-ascending, identity-descending; default: source) |
