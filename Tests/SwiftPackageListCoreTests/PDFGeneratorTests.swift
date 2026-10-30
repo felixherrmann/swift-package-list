@@ -5,26 +5,25 @@
 //  Created by Felix Herrmann on 16.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
 import PDFKit
 import SwiftPackageList
+
 @testable import SwiftPackageListCore
 
-final class PDFGeneratorTests: XCTestCase {
+final class PDFGeneratorTests {
+    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Acknowledgements-\(UUID()).pdf")
 
-    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Acknowledgements.pdf")
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-
-        let url = try XCTUnwrap(
+    init() throws {
+        let url = try #require(
             Bundle.module.url(
                 forResource: "Project",
                 withExtension: "xcodeproj",
                 subdirectory: "Resources/XcodeProject/pbxproj"
             )
         )
-        let projectType = try XCTUnwrap(ProjectType(fileURL: url))
+        let projectType = try ProjectType(fileURL: url)
         let project = try projectType.project(fileURL: url)
         let package = Package(
             kind: .remoteSourceControl,
@@ -41,23 +40,22 @@ final class PDFGeneratorTests: XCTestCase {
         try pdfGenerator.generateOutput()
     }
 
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        try FileManager.default.removeItem(at: outputURL)
+    deinit {
+        try? FileManager.default.removeItem(at: outputURL)
     }
 
-    func testOutput() throws {
-        let output = try XCTUnwrap(PDFDocument(url: outputURL))
+    @Test func output() throws {
+        let output = try #require(PDFDocument(url: outputURL))
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM.dd.yyyy"
         let creationDate = dateFormatter.string(from: Date())
 
-        let attributes = try XCTUnwrap(output.documentAttributes)
-        XCTAssertEqual(attributes["Author"] as? String, "SwiftPackageList")
-        XCTAssertEqual(attributes["Subject"] as? String, "Project Acknowledgements")
-        XCTAssertEqual(attributes["Title"] as? String, "Project_Acks_File_\(creationDate)")
-        XCTAssertEqual(attributes["Creator"] as? String, "swift-package-list")
+        let attributes = try #require(output.documentAttributes)
+        #expect(attributes["Author"] as? String == "SwiftPackageList")
+        #expect(attributes["Subject"] as? String == "Project Acknowledgements")
+        #expect(attributes["Title"] as? String == "Project_Acks_File_\(creationDate)")
+        #expect(attributes["Creator"] as? String == "swift-package-list")
 
         let expectedOutput: String
         if #available(macOS 15.0, *) {
@@ -78,6 +76,6 @@ final class PDFGeneratorTests: XCTestCase {
 
             """
         }
-        XCTAssertEqual(output.string, expectedOutput)
+        #expect(output.string == expectedOutput)
     }
 }

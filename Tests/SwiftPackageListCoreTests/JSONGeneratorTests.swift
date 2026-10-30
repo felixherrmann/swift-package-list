@@ -5,17 +5,16 @@
 //  Created by Felix Herrmann on 16.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
 import SwiftPackageList
+
 @testable import SwiftPackageListCore
 
-final class JSONGeneratorTests: XCTestCase {
+final class JSONGeneratorTests {
+    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list-\(UUID()).json")
 
-    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list.json")
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-
+    init() throws {
         let package = Package(
             kind: .remoteSourceControl,
             identity: "test",
@@ -31,12 +30,11 @@ final class JSONGeneratorTests: XCTestCase {
         try jsonGenerator.generateOutput()
     }
 
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        try FileManager.default.removeItem(at: outputURL)
+    deinit {
+        try? FileManager.default.removeItem(at: outputURL)
     }
 
-    func testOutput() throws {
+    @Test func output() throws {
         let output = try String(contentsOf: outputURL)
         // swiftlint:disable indentation_width
         let expectedOutput = """
@@ -53,6 +51,6 @@ final class JSONGeneratorTests: XCTestCase {
         ]
         """
         // swiftlint:enable indentation_width
-        XCTAssertEqual(output, expectedOutput)
+        #expect(output == expectedOutput)
     }
 }

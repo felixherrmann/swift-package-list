@@ -5,52 +5,54 @@
 //  Created by Felix Herrmann on 09.11.25.
 //
 
-import XCTest
+import Foundation
+import Testing
+
 @testable import SwiftPackageListCore
 
-final class MirrorsTests: XCTestCase {
-    func testVersion1() throws {
+struct MirrorsTests {
+    @Test func version1() throws {
         let url = Bundle.module.url(
             forResource: "mirrors_v1",
             withExtension: "json",
             subdirectory: "Resources/Mirrors"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let mirrors = try Mirrors(url: unwrappedURL)
 
         guard case .v1(let storage) = mirrors.storage else {
-            XCTFail("\(unwrappedURL.path) was not recognized as v1")
+            Issue.record("\(unwrappedURL.path) was not recognized as v1")
             return
         }
 
-        XCTAssertEqual(storage.version, 1)
-        XCTAssertEqual(storage.object.count, 2)
+        #expect(storage.version == 1)
+        #expect(storage.object.count == 2)
     }
 
-    func testUnsupportedVersion() throws {
+    @Test func unsupportedVersion() throws {
         let url = Bundle.module.url(
             forResource: "mirrors_v999",
             withExtension: "json",
             subdirectory: "Resources/Mirrors"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
 
-        XCTAssertThrowsError(try Mirrors(url: unwrappedURL)) { error in
-            XCTAssertTrue(error is RuntimeError)
-            XCTAssertEqual((error as? RuntimeError)?.description, "Version 999 of mirrors.json is not supported")
+        let error = #expect(throws: RuntimeError.self) {
+            try Mirrors(url: unwrappedURL)
         }
+        #expect(error?.description == "Version 999 of mirrors.json is not supported")
     }
 
-    func testMirror() throws {
+    @Test func mirror() throws {
         let url = Bundle.module.url(
             forResource: "mirrors_v1",
             withExtension: "json",
             subdirectory: "Resources/Mirrors"
         )
-        let unwrappedURL = try XCTUnwrap(url)
+        let unwrappedURL = try #require(url)
         let mirrors = try Mirrors(url: unwrappedURL)
 
-        XCTAssertEqual(mirrors.mirror(for: "https://github.com/felixherrmann/swift-package-list"), "https://github.com/example/swift-package-list")
-        XCTAssertEqual(mirrors.mirror(for: "https://github.com/felixherrmann/test"), "/Users/example/test")
+        #expect(mirrors.mirror(for: "https://github.com/felixherrmann/swift-package-list") == "https://github.com/example/swift-package-list")
+        #expect(mirrors.mirror(for: "https://github.com/felixherrmann/test") == "/Users/example/test")
     }
 }
