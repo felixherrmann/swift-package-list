@@ -22,8 +22,11 @@ extension SwiftPackageList {
 extension SwiftPackageList.CustomPackages {
     init(url: URL) throws {
         let data = try Data(contentsOf: url)
+
         let decoder = JSONDecoder()
-        decoder.allowsJSON5 = true
+        if #available(macOS 12.0, *) {
+            decoder.allowsJSON5 = true
+        }
 
         self.url = url
         self.storage = try decoder.decode(Storage.self, from: data)
