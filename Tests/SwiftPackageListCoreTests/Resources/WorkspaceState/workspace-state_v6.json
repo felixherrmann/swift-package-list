@@ -140,7 +140,7 @@
           "identity" : "swift-package-list",
           "kind" : "remoteSourceControl",
           "location" : "https://github.com/felixherrmann/swift-package-list",
-          "name" : "SwiftPackageList"
+          "name" : "swift-package-list"
         },
         "state" : {
           "checkoutState" : {

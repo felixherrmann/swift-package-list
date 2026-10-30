@@ -1,6 +1,6 @@
-#  SwiftPackageList 4 Migration Guide
+# Swift Package List 4 Migration Guide
 
-This guide eases the transition of the existing apps that use SwiftPackageList 3.x to the
+This guide eases the transition of the existing apps that use Swift Package List 3.x to the
 latest version of the tool.
 
 ### Minimum Requirements
@@ -24,10 +24,10 @@ dedicated subcommand anymore and the CLI interface works like before the `scan` 
 introduction:
 
 ```shell
-// SwiftPackageList 3
+// Swift Package List 3
 swift-package-list generate Test.xcodeproj 
 
-// SwiftPackageList 4
+// Swift Package List 4
 swift-package-list Test.xcodeproj --output-type json
 ```
 
@@ -35,10 +35,10 @@ To provide the existing functionality from the `scan` command there is a new `st
 output-type which will print the output in JSON format to the console: 
 
 ```shell
-// SwiftPackageList 3
+// Swift Package List 3
 swift-package-list scan Test.xcodeproj 
 
-// SwiftPackageList 4
+// Swift Package List 4
 swift-package-list Test.xcodeproj --output-type stdout
 ```
 > [!IMPORTANT]
@@ -53,7 +53,7 @@ the name is no longer guaranteed to be unique and should not be used for identif
 purposes; to offer an alternative there is a new `identity` field, exposed from SPM:
 
 ```json
-// SwiftPackageList 3
+// Swift Package List 3
 [
   {
     "license" : "...",
@@ -64,7 +64,7 @@ purposes; to offer an alternative there is a new `identity` field, exposed from 
   }
 ]
 
-// SwiftPackageList 4
+// Swift Package List 4
 [
   {
     "identity" : "swift-package-manager",
@@ -84,10 +84,10 @@ favor of a `PackageProvider` protocol with dedicated implementations for JSON an
 Property-Lists:
 
 ```swift
-// SwiftPackageList 3
+// Swift Package List 3
 let packages = try packageList(bundle: .main, fileName: "package-list")
 
-// SwiftPackageList 4
+// Swift Package List 4
 let packageProvider = JSONPackageProvider(bundle: .main, fileName: "package-list")
 let packages = try packageProvider.packages()
 ```
@@ -96,12 +96,12 @@ This new protocol is also used in the `SwiftPackageListUI` module to provide the
 level of flexibility from this new approach:
 
 ```swift
-// SwiftPackageList 3
+// Swift Package List 3
 var body: some View {
     AcknowledgmentsList(packageListBundle: .main, packageListFileName: "package-list")
 }
 
-// SwiftPackageList 4
+// Swift Package List 4
 var body: some View {
     AcknowledgmentsList(packageProvider: .json(bundle: .main, fileName: "package-list"))
 }

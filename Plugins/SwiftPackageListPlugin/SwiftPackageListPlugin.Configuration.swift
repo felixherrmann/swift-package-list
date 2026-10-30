@@ -7,21 +7,91 @@
 
 import Foundation
 
+// swiftlint:disable identifier_name type_name discouraged_optional_collection discouraged_optional_boolean
+
 extension SwiftPackageListPlugin {
-    struct Configuration: Decodable {
-        let projectPath: String?
-        let project: TargetConfiguration?
-        let targets: [String: TargetConfiguration]? // swiftlint:disable:this discouraged_optional_collection
+    struct Configuration {
+        private static let fileName = "swift-package-list-config.json"
+
+        let url: URL
+        let storage: Storage
+
+        init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
+            let url = directory.appending(path: Self.fileName)
+            guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
+
+            let data: Data
+            do {
+                data = try Data(contentsOf: url)
+            } catch {
+                throw .configurationUnavailable(url: url, underlyingError: error)
+            }
+
+            let decoder = JSONDecoder()
+            decoder.allowsJSON5 = true
+
+            let storage: Storage
+            do {
+                storage = try decoder.decode(Storage.self, from: data)
+            } catch {
+                throw .configurationInvalid(url: url, underlyingError: error)
+            }
+
+            self.url = url
+            self.storage = storage
+        }
     }
 }
 
+// MARK: - Storage
+
 extension SwiftPackageListPlugin.Configuration {
-    struct TargetConfiguration: Decodable {
+    enum Storage {
+        case v1(V1)
+    }
+}
+
+extension SwiftPackageListPlugin.Configuration.Storage: Decodable {
+    private enum VersionKeys: CodingKey {
+        case version
+    }
+
+    init(from decoder: any Decoder) throws {
+        let versionContainer = try decoder.container(keyedBy: VersionKeys.self)
+        let version = try versionContainer.decodeIfPresent(Int.self, forKey: .version) ?? 1
+
+        switch version {
+        case 1:
+            self = .v1(try V1(from: decoder))
+        case let version:
+            throw DecodingError.dataCorruptedError(
+                forKey: .version,
+                in: versionContainer,
+                debugDescription: "Unsupported configuration version: \(version)"
+            )
+        }
+    }
+}
+
+// MARK: - V1
+
+extension SwiftPackageListPlugin.Configuration.Storage {
+    struct V1: Decodable {
+        let projectPath: String?
+        let project: SwiftPackageListPlugin.Configuration.TargetOptions?
+        let targets: [String: SwiftPackageListPlugin.Configuration.TargetOptions]?
+    }
+}
+
+// MARK: - TargetOptions
+
+extension SwiftPackageListPlugin.Configuration {
+    struct TargetOptions: Decodable {
         let outputType: OutputType?
         let packageOrder: PackageOrder?
-        let requiresLicense: Bool? // swiftlint:disable:this discouraged_optional_boolean
-        let ignorePackages: [String]? // swiftlint:disable:this discouraged_optional_collection
-        let customPackagesFilePaths: [String]? // swiftlint:disable:this discouraged_optional_collection
+        let requiresLicense: Bool?
+        let ignorePackages: [String]?
+        let customPackagesFilePaths: [String]?
     }
 }
 
@@ -60,27 +130,22 @@ extension SwiftPackageListPlugin.Configuration.OutputType {
     }
 }
 
-extension SwiftPackageListPlugin.Configuration {
-    static let fileName = "swift-package-list-config.json"
-}
+// MARK: - Normalization
 
 extension SwiftPackageListPlugin.Configuration {
-    init?(url: URL) throws {
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
-
-        let data: Data
-        do {
-            data = try Data(contentsOf: url)
-        } catch {
-            throw SwiftPackageListPlugin.Error.configurationUnavailable(url: url, underlyingError: error)
+    var projectPath: String? {
+        switch storage {
+        case .v1(let v1):
+            return v1.projectPath
         }
+    }
 
-        let decoder = JSONDecoder()
-        decoder.allowsJSON5 = true
-        do {
-            self = try decoder.decode(SwiftPackageListPlugin.Configuration.self, from: data)
-        } catch {
-            throw SwiftPackageListPlugin.Error.configurationInvalid(url: url, underlyingError: error)
+    func targetOptions(for targetName: String) -> TargetOptions? {
+        switch storage {
+        case .v1(let v1):
+            return v1.targets?[targetName] ?? v1.project
         }
     }
 }
+
+// swiftlint:enable identifier_name type_name discouraged_optional_collection discouraged_optional_boolean

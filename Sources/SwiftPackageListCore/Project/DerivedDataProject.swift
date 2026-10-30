@@ -1,5 +1,5 @@
 //
-//  NativeProject.swift
+//  DerivedDataProject.swift
 //  SwiftPackageListCore
 //
 //  Created by Felix Herrmann on 31.12.23.
@@ -8,13 +8,13 @@
 import Foundation
 import SwiftPackageList
 
-protocol NativeProject: Project {
+protocol DerivedDataProject: Project {
     var workspaceURL: URL { get }
     var packageResolved: PackageResolved { get throws }
     var configuration: Configuration? { get }
 }
 
-extension NativeProject {
+extension DerivedDataProject {
     var configuration: Configuration? {
         return nil
     }

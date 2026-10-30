@@ -12,10 +12,10 @@ import Testing
 
 struct ProjectPbxprojTests {
     @Test(arguments: [
-        ("organization_unquoted", "SwiftPackageList"),
-        ("organization_quoted", "SwiftPackageList Inc."),
-        ("organization_escaped", "SwiftPackageList \"Tools\""),
-        ("organization_build_setting", "SwiftPackageList"),
+        ("organization_unquoted", "Swift Package List"),
+        ("organization_quoted", "Swift Package List Inc."),
+        ("organization_escaped", "Swift Package List \"Tools\""),
+        ("organization_build_setting", "Swift Package List"),
         ("organization_missing", nil),
     ])
     func organizationName(resource: String, expectedName: String?) throws {

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftPackageList
 
-struct Tuist: NativeProject {
+struct Tuist: DerivedDataProject {
     let fileURL: URL
     let options: ProjectOptions
     private let dump: Dump

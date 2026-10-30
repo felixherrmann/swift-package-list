@@ -1,4 +1,4 @@
-# SwiftPackageList
+# Swift Package List
 
 [![Xcode Build](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml)
 [![SwiftLint](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml)
@@ -34,10 +34,6 @@ mint install felixherrmann/swift-package-list
 mise use spm:felixherrmann/swift-package-list
 ```
 
-#### Installing from source:
-
-Clone or download this repository and run `make install`, `make update` or `make uninstall`.
-
 ### Usage
 
 Open the terminal and run `swift-package-list <project-path>` with the path to the project file you want to generate the list from.
@@ -46,7 +42,6 @@ Currently supported are:
 - `*.xcworkspace` for Xcode workspaces
 - `Package.swift` for Swift packages
 - `Project.swift` for Tuist projects
-- `Dependencies.swift` for Tuist 3 projects with external dependencies (deprecated)
 
 In addition to that you can specify the following options:
 
@@ -72,10 +67,11 @@ For Xcode projects simply add it under the `Run Build Tool Plug-ins` section in 
 
 By default this will use the JSON output with `--requires-license` but you can create a `swift-package-list-config.json` in your project's root to configure that behavior, both project and target specific (target configs have precedence over the project one). Everything in the configuration is optional and has the following format:
 ```json5
-// SwiftPackageList configuration file
+// Swift Package List configuration file
 // Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
+    version: 1,
     projectPath: "Project.xcworkspace",
     project: {
         outputType: "plist",
@@ -173,7 +169,6 @@ This tool supports the following [Tuist external dependency](https://docs.tuist.
 | [XcodeProj-based](https://docs.tuist.dev/en/guides/features/projects/dependencies#tuists-xcodeprojbased-integration) at root   | `swift-package-list Package.swift --custom-source-packages-path .build`             |
 | [XcodeProj-based](https://docs.tuist.dev/en/guides/features/projects/dependencies#tuists-xcodeprojbased-integration) at /Tuist | `swift-package-list Tuist/Package.swift --custom-source-packages-path Tuist/.build` |
 | [Xcode's default](https://docs.tuist.dev/en/guides/features/projects/dependencies#xcodes-default-integration)                  | `swift-package-list Project.swift`                                                  |
-| Tuist 3 with external dependencies (deprecated)                                                                                | `swift-package-list Dependencies.swift`                                             |
 
 ### Settings Bundle
 
@@ -217,18 +212,18 @@ You can then use [QuickLook](https://developer.apple.com/documentation/quicklook
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
 
-```json
+```json5
 [
     {
-        "branch" : null,
-        "identity" : "custom-package-example",
-        "kind" : "custom",
-        "license" : null,
-        "location" : "",
-        "name" : "CustomPackageExample",
-        "revision" : null,
-        "version" : null
-    }
+        branch: null,
+        identity: "custom-package-example",
+        kind: "custom",
+        license: null,
+        location: "",
+        name: "CustomPackageExample",
+        revision: null,
+        version: null,
+    },
 ]
 ```
 
@@ -318,9 +313,9 @@ The Settings Bundle and the UI-components are currently localized in the followi
 
 ## Known limitations
 
-- SwiftPackageList won't include license files from packages that are located in a registry like Artifactory.
+- Swift Package List won't include license files from packages that are located in a registry like Artifactory.
 
 
 ## License
 
-SwiftPackageList is available under the MIT license. See the [LICENSE](https://github.com/felixherrmann/swift-package-list/blob/master/LICENSE) file for more info.
+Swift Package List is available under the MIT license. See the [LICENSE](https://github.com/felixherrmann/swift-package-list/blob/master/LICENSE) file for more info.

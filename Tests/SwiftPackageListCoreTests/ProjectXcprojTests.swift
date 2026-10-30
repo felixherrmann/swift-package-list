@@ -20,6 +20,6 @@ struct ProjectXcprojTests {
         let unwrappedURL = try #require(url)
         let projectPbxproj = ProjectXcproj(url: unwrappedURL)
 
-        #expect(projectPbxproj.organizationName == "SwiftPackageList")
+        #expect(projectPbxproj.organizationName == "Swift Package List")
     }
 }

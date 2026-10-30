@@ -52,7 +52,7 @@ final class PDFGeneratorTests {
         let creationDate = dateFormatter.string(from: Date())
 
         let attributes = try #require(output.documentAttributes)
-        #expect(attributes["Author"] as? String == "SwiftPackageList")
+        #expect(attributes["Author"] as? String == "Swift Package List")
         #expect(attributes["Subject"] as? String == "Project Acknowledgements")
         #expect(attributes["Title"] as? String == "Project_Acks_File_\(creationDate)")
         #expect(attributes["Creator"] as? String == "swift-package-list")
@@ -61,7 +61,7 @@ final class PDFGeneratorTests {
         if #available(macOS 15.0, *) {
             expectedOutput = """
             Acknowledgements
-            Portions of this SwiftPackageList Software may utilize the following copyrighted
+            Portions of this Swift Package List Software may utilize the following copyrighted
             material, the use of which is hereby acknowledged.
             test
             MIT
@@ -69,7 +69,7 @@ final class PDFGeneratorTests {
         } else {
             expectedOutput = """
             Acknowledgements
-            Portions of this SwiftPackageList Software may utilize the following \
+            Portions of this Swift Package List Software may utilize the following \
             copyrighted material, the use of which is hereby acknowledged.
             test
             MIT

@@ -15,15 +15,17 @@ extension SwiftPackageListPlugin {
     }
 }
 
-extension SwiftPackageListPlugin.Error: CustomDebugStringConvertible {
-    var debugDescription: String {
+// MARK: - CustomStringConvertible
+
+extension SwiftPackageListPlugin.Error: CustomStringConvertible {
+    var description: String {
         switch self {
         case .configurationUnavailable(url: let url, underlyingError: let error):
-            return "The configuration at \(url.path) is unavailable: \(error)"
+            return "The configuration at \(url.path(percentEncoded: false)) is unavailable: \(error)"
         case .configurationInvalid(url: let url, underlyingError: let error):
-            return "The configuration at \(url.path) has an invalid format: \(error)"
+            return "The configuration at \(url.path(percentEncoded: false)) has an invalid format: \(error)"
         case .sourcePackagesNotFound(pluginWorkDirectoryURL: let url):
-            return "SourcePackages directory not found from \(url.path)"
+            return "SourcePackages directory not found from \(url.path(percentEncoded: false))"
         }
     }
 }

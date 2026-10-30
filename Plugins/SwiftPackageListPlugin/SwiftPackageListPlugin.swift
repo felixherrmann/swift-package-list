@@ -12,22 +12,24 @@ import PackagePlugin
 struct SwiftPackageListPlugin: Plugin {
     func createBuildCommands(
         executable: URL,
-        targetConfiguration: Configuration.TargetConfiguration?,
+        targetOptions: Configuration.TargetOptions?,
         projectURL: URL,
+        projectDirectoryURL: URL,
         pluginWorkDirectoryURL: URL
     ) throws -> [Command] {
         let sourcePackagesPath = try sourcePackagesDirectory(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
-        let outputType = targetConfiguration?.outputType ?? .json
+        let outputType = targetOptions?.outputType ?? .json
         let outputURL = pluginWorkDirectoryURL
-        let packageOrder = targetConfiguration?.packageOrder ?? .source
-        let requiresLicense = targetConfiguration?.requiresLicense ?? true
+        let packageOrder = targetOptions?.packageOrder ?? .source
+        let requiresLicense = targetOptions?.requiresLicense ?? true
 
-        let ignorePackageArguments: [String] = targetConfiguration?.ignorePackages?.flatMap { identity in
+        let ignorePackageArguments: [String] = targetOptions?.ignorePackages?.flatMap { identity in
             return ["--ignore-package", identity]
         } ?? []
 
-        let customPackagesFilePathArguments: [String] = targetConfiguration?.customPackagesFilePaths?.flatMap { filePath in
-            return ["--custom-packages-file-path", filePath]
+        let customPackagesFilePathArguments: [String] = targetOptions?.customPackagesFilePaths?.flatMap { filePath in
+            let url = URL(filePath: filePath, relativeTo: projectDirectoryURL)
+            return ["--custom-packages-file-path", url.path(percentEncoded: false)]
         } ?? []
 
         let outputFiles: [URL]
@@ -42,10 +44,10 @@ struct SwiftPackageListPlugin: Plugin {
                 displayName: "SwiftPackageListPlugin",
                 executable: executable,
                 arguments: [
-                    projectURL.path,
-                    "--custom-source-packages-path", sourcePackagesPath.path,
+                    projectURL.path(percentEncoded: false),
+                    "--custom-source-packages-path", sourcePackagesPath.path(percentEncoded: false),
                     "--output-type", outputType.rawValue,
-                    "--output-path", outputURL.path,
+                    "--output-path", outputURL.path(percentEncoded: false),
                     "--package-order", packageOrder.rawValue,
                     requiresLicense ? "--requires-license" : "",
                 ] + ignorePackageArguments + customPackagesFilePathArguments,
@@ -55,13 +57,13 @@ struct SwiftPackageListPlugin: Plugin {
     }
 
     private func sourcePackagesDirectory(pluginWorkDirectoryURL: URL) throws -> URL {
-        var path = pluginWorkDirectoryURL
-        while path.path != "/" {
-            let potentialLocation = path.appending(path: "SourcePackages")
-            if FileManager.default.fileExists(atPath: potentialLocation.path) {
+        var url = pluginWorkDirectoryURL
+        while url.path(percentEncoded: false) != "/" {
+            let potentialLocation = url.appending(path: "SourcePackages")
+            if FileManager.default.fileExists(atPath: potentialLocation.path(percentEncoded: false)) {
                 return potentialLocation
             }
-            path = path.deletingLastPathComponent()
+            url = url.deletingLastPathComponent()
         }
         throw SwiftPackageListPlugin.Error.sourcePackagesNotFound(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
     }
