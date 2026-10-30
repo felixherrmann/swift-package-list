@@ -240,6 +240,10 @@ You can then use [QuickLook](https://developer.apple.com/documentation/quicklook
 
 Use `--output-type html` to generate a standalone `Acknowledgments.html` page that preserves license formatting. Project metadata works as described in the [PDF section](#pdf).
 
+#### Markdown
+
+Use `--output-type markdown` to generate an `Acknowledgments.md` document that preserves license formatting. Project metadata works as described in the [PDF section](#pdf).
+
 ### Custom Packages
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
