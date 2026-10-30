@@ -13,7 +13,7 @@ import SwiftPackageListCore
 extension SwiftPackageList {
     struct OutputOptions: ParsableArguments {
         @Option(help: "The type of output for the package-list.")
-        var outputType: OutputType = .json
+        var outputType: OutputType = .table
 
         @Option(
             help: "The path where the file will be written. If omitted, the content is sent to stdout.",

@@ -43,7 +43,7 @@
             "properties": {
                 "outputType": {
                     "type": ["string", "null"],
-                    "enum": ["json", "plist", "settings-bundle", "pdf", "html", "markdown", "csv", null],
+                    "enum": ["json", "plist", "settings-bundle", "pdf", "html", "markdown", "csv", "table", null],
                     "default": "json",
                     "description": "Format of the output generated in the plugin work directory."
                 },

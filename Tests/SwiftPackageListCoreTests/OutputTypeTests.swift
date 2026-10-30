@@ -47,6 +47,10 @@ struct OutputTypeTests {
         let anyCSVGenerator = try OutputType.csv.outputGenerator(packages: [], project: project, options: options)
         let csvGenerator = try #require(anyCSVGenerator as? CSVGenerator)
         #expect(csvGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("package-list.csv")))
+
+        let anyTableGenerator = try OutputType.table.outputGenerator(packages: [], project: project, options: options)
+        let tableGenerator = try #require(anyTableGenerator as? TableGenerator)
+        #expect(tableGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("package-table.txt")))
     }
 
     @Test func customOutputURL() throws {
@@ -85,6 +89,10 @@ struct OutputTypeTests {
         let anyCSVGenerator = try OutputType.csv.outputGenerator(packages: [], project: project, options: options)
         let csvGenerator = try #require(anyCSVGenerator as? CSVGenerator)
         #expect(csvGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.csv")))
+
+        let anyTableGenerator = try OutputType.table.outputGenerator(packages: [], project: project, options: options)
+        let tableGenerator = try #require(anyTableGenerator as? TableGenerator)
+        #expect(tableGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.txt")))
     }
 
     @Test func standardOutput() throws {
@@ -109,5 +117,9 @@ struct OutputTypeTests {
         let anyCSVGenerator = try OutputType.csv.outputGenerator(packages: [], project: project)
         let csvGenerator = try #require(anyCSVGenerator as? CSVGenerator)
         #expect(csvGenerator.outputDestination == .stdout)
+
+        let anyTableGenerator = try OutputType.table.outputGenerator(packages: [], project: project)
+        let tableGenerator = try #require(anyTableGenerator as? TableGenerator)
+        #expect(tableGenerator.outputDestination == .stdout)
     }
 }
