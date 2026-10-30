@@ -230,7 +230,7 @@ Once created and added to the project, it can be easily accessed from the applic
 ```swift
 import SwiftPackageList
 
-let url = Bundle.main.acknowledgmentsURL
+let url = Bundle.main.acknowledgmentsURL(format: .pdf)
 ```
 You can then use [QuickLook](https://developer.apple.com/documentation/quicklook), [NSWorkspace.open(\_:)](https://developer.apple.com/documentation/appkit/nsworkspace/1533463-open) or any other method to display the PDF.
 

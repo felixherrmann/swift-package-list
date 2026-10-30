@@ -8,13 +8,53 @@
 import Foundation
 
 extension Bundle {
+    /// The format of a generated acknowledgments document.
+    public enum AcknowledgmentsFormat: Sendable {
+
+        /// A PDF document.
+        case pdf
+
+        /// An HTML document.
+        case html
+    }
+
+    /// Returns the file URL of the acknowledgments document in the given format.
+    /// - Parameter format: The document format.
+    /// - Returns: The URL of 'Acknowledgments.pdf' or 'Acknowledgments.html', or `nil` if it is not in the bundle.
+    public func acknowledgmentsURL(format: AcknowledgmentsFormat) -> URL? {
+        switch format {
+        case .pdf:
+            return url(forResource: "Acknowledgments", withExtension: "pdf")
+        case .html:
+            return url(forResource: "Acknowledgments", withExtension: "html")
+        }
+    }
+
+    /// Returns the full pathname of the acknowledgments document in the given format.
+    /// - Parameter format: The document format.
+    /// - Returns: The path of 'Acknowledgments.pdf' or 'Acknowledgments.html', or `nil` if it is not in the bundle.
+    public func acknowledgmentsPath(format: AcknowledgmentsFormat) -> String? {
+        switch format {
+        case .pdf:
+            return path(forResource: "Acknowledgments", ofType: "pdf")
+        case .html:
+            return path(forResource: "Acknowledgments", ofType: "html")
+        }
+    }
+}
+
+// MARK: - Deprecations
+
+extension Bundle {
     /// The file URL of the 'Acknowledgments.pdf' file.
+    @available(*, deprecated, message: "Use acknowledgmentsURL(format:) instead.")
     public var acknowledgmentsURL: URL? {
-        return url(forResource: "Acknowledgments", withExtension: "pdf")
+        return acknowledgmentsURL(format: .pdf)
     }
 
     /// The full pathname of the 'Acknowledgments.pdf' file.
+    @available(*, deprecated, message: "Use acknowledgmentsPath(format:) instead.")
     public var acknowledgmentsPath: String? {
-        return path(forResource: "Acknowledgments", ofType: "pdf")
+        return acknowledgmentsPath(format: .pdf)
     }
 }
