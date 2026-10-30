@@ -250,6 +250,15 @@ Use `--output-type csv` to generate a `package-list.csv` table.
 
 The columns are `kind`, `identity`, `name`, `version`, `branch`, `revision`, `location` and `hasLicense`.
 
+#### Table
+
+The default `--output-type table` displays a compact dependency summary:
+
+```text
+PACKAGE                VERSION/REF  LICENSE
+swift-argument-parser  1.5.0        Found
+```
+
 ### Custom Packages
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
