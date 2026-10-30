@@ -13,7 +13,7 @@ import SwiftUI
 @available(tvOS 13.0, *)
 internal struct _TVOSTextView: UIViewRepresentable {
     internal var _text: String
-    
+
     internal func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isSelectable = true
@@ -25,7 +25,7 @@ internal struct _TVOSTextView: UIViewRepresentable {
         textView.textAlignment = .center
         return textView
     }
-    
+
     internal func updateUIView(_ uiView: UITextView, context: Context) {
         uiView.text = _text
     }

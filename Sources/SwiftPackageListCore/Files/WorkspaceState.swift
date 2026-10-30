@@ -13,7 +13,7 @@ import Foundation
 struct WorkspaceState: VersionedFile {
     let url: URL
     let storage: Storage
-    
+
     init(url: URL) throws {
         self.url = url
         self.storage = try Storage(url: url)
@@ -35,12 +35,12 @@ extension WorkspaceState.Storage: VersionedFileStorage {
     private struct Version: Decodable {
         let version: Int
     }
-    
+
     init(url: URL) throws {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         let version = try decoder.decode(Version.self, from: data)
-        
+
         switch version.version {
         case 1, 2, 3, 4:
             let v4 = try decoder.decode(V4.self, from: data)
@@ -68,20 +68,20 @@ extension WorkspaceState.Storage {
             struct Artifact: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct Dependency: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct PackageRef: Decodable {
                 let identity: String
                 let name: String
             }
-            
+
             let artifacts: [Artifact]
             let dependencies: [Dependency]
         }
-        
+
         let object: Object
         let version: Int
     }
@@ -95,20 +95,20 @@ extension WorkspaceState.Storage {
             struct Artifact: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct Dependency: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct PackageRef: Decodable {
                 let identity: String
                 let name: String
             }
-            
+
             let artifacts: [Artifact]
             let dependencies: [Dependency]
         }
-        
+
         let object: Object
         let version: Int
     }
@@ -122,20 +122,20 @@ extension WorkspaceState.Storage {
             struct Artifact: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct Dependency: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct PackageRef: Decodable {
                 let identity: String
                 let name: String
             }
-            
+
             let artifacts: [Artifact]
             let dependencies: [Dependency]
         }
-        
+
         let object: Object
         let version: Int
     }
@@ -149,20 +149,20 @@ extension WorkspaceState.Storage {
             struct Artifact: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct Dependency: Decodable {
                 let packageRef: PackageRef
             }
-            
+
             struct PackageRef: Decodable {
                 let identity: String
                 let name: String
             }
-            
+
             let artifacts: [Artifact]
             let dependencies: [Dependency]
         }
-        
+
         let object: Object
         let version: Int
     }

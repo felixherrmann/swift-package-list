@@ -18,13 +18,13 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
         let directoryURL = unwrappedURL.deletingLastPathComponent().deletingLastPathComponent()
-        
+
         XCTAssertEqual(try contents.projectURLs, [
             directoryURL.appendingPathComponent("Pods/Pods.xcodeproj"),
             directoryURL.appendingPathComponent("Workspace.xcodeproj"),
         ])
     }
-    
+
     func testNestedGroups() throws {
         let url = Bundle.module.url(
             forResource: "nested_groups",
@@ -34,14 +34,14 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
         let directoryURL = unwrappedURL.deletingLastPathComponent().deletingLastPathComponent()
-        
+
         XCTAssertEqual(try contents.projectURLs, [
             directoryURL.appendingPathComponent("Projects/Apps/App.xcodeproj"),
             directoryURL.appendingPathComponent("Projects/Library.xcodeproj"),
             directoryURL.appendingPathComponent("Other.xcodeproj"),
         ])
     }
-    
+
     func testContainerLocations() throws {
         let url = Bundle.module.url(
             forResource: "container",
@@ -51,13 +51,13 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
         let directoryURL = unwrappedURL.deletingLastPathComponent().deletingLastPathComponent()
-        
+
         XCTAssertEqual(try contents.projectURLs, [
             directoryURL.appendingPathComponent("App.xcodeproj"),
             directoryURL.appendingPathComponent("Library.xcodeproj"),
         ])
     }
-    
+
     func testAbsoluteLocations() throws {
         let url = Bundle.module.url(
             forResource: "absolute",
@@ -66,13 +66,13 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
-        
+
         XCTAssertEqual(try contents.projectURLs, [
             URL(fileURLWithPath: "/Users/example/Projects/App.xcodeproj"),
             URL(fileURLWithPath: "/Users/example/Projects/Libraries/Library.xcodeproj"),
         ])
     }
-    
+
     func testEscapedProjectName() throws {
         let url = Bundle.module.url(
             forResource: "escaped_name",
@@ -82,10 +82,10 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
         let directoryURL = unwrappedURL.deletingLastPathComponent().deletingLastPathComponent()
-        
+
         XCTAssertEqual(try contents.projectURLs, [directoryURL.appendingPathComponent("App & Tools.xcodeproj")])
     }
-    
+
     func testSelfReference() throws {
         let url = Bundle.module.url(
             forResource: "contents",
@@ -95,10 +95,10 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
         let projectURL = unwrappedURL.deletingLastPathComponent().deletingLastPathComponent()
-        
+
         XCTAssertEqual(try contents.projectURLs, [projectURL])
     }
-    
+
     func testEmptyWorkspace() throws {
         let url = Bundle.module.url(
             forResource: "empty",
@@ -107,7 +107,7 @@ final class ContentsXcworkspacedataTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let contents = ContentsXcworkspacedata(url: unwrappedURL)
-        
+
         XCTAssertTrue(try contents.projectURLs.isEmpty)
     }
 }

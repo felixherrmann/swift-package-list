@@ -17,7 +17,7 @@ final class XcodeWorkspaceTests: XCTestCase {
         )
         let unwrappedURL = try XCTUnwrap(url)
         let workspace = XcodeWorkspace(fileURL: unwrappedURL, options: ProjectOptions())
-        
+
         XCTAssertEqual(workspace.organizationName, "SwiftPackageList")
     }
 }

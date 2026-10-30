@@ -18,7 +18,7 @@ final class CustomPackagesTests: XCTestCase {
         let unwrappedURL = try XCTUnwrap(url)
         let customPackages = CustomPackages(url: unwrappedURL)
         let package = try XCTUnwrap(try customPackages.packages().first)
-        
+
         XCTAssertEqual(package.branch, "branch-test")
         XCTAssertEqual(package.identity, "identity-test")
         XCTAssertEqual(package.kind, .remoteSourceControl)

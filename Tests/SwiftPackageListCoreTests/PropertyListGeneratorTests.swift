@@ -10,12 +10,12 @@ import SwiftPackageList
 @testable import SwiftPackageListCore
 
 final class PropertyListGeneratorTests: XCTestCase {
-    
+
     private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list.plist")
-    
+
     override func setUpWithError() throws {
         try super.setUpWithError()
-        
+
         let package = Package(
             kind: .remoteSourceControl,
             identity: "test",
@@ -26,16 +26,16 @@ final class PropertyListGeneratorTests: XCTestCase {
             location: "https://github.com/test/test",
             license: "MIT"
         )
-        
+
         let propertyListGenerator = PropertyListGenerator(outputURL: outputURL, packages: [package])
         try propertyListGenerator.generateOutput()
     }
-    
+
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         try FileManager.default.removeItem(at: outputURL)
     }
-    
+
     func testOutput() throws {
         let output = try String(contentsOf: outputURL)
         // swiftlint:disable indentation_width
@@ -62,7 +62,7 @@ final class PropertyListGeneratorTests: XCTestCase {
         	</dict>
         </array>
         </plist>
-        
+
         """
         // tabs and line breaks are important here
         // swiftlint:enable indentation_width

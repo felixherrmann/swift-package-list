@@ -17,7 +17,7 @@ internal struct NavigationBarTitleDisplayModeModifier: ViewModifier {
         case automatic
         case inline
         case large
-        
+
         @available(iOS 14.0, watchOS 8.0, visionOS 1.0, *)
         internal var displayMode: NavigationBarItem.TitleDisplayMode {
             switch self {
@@ -30,9 +30,9 @@ internal struct NavigationBarTitleDisplayModeModifier: ViewModifier {
             }
         }
     }
-    
+
     internal let displayMode: TitleDisplayMode
-    
+
     internal func body(content: Content) -> some View {
         if #available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 8.0, visionOS 1.0, *) {
             content.navigationBarTitleDisplayMode(displayMode.displayMode)

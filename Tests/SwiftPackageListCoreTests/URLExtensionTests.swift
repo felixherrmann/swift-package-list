@@ -15,21 +15,21 @@ final class URLExtensionTests: XCTestCase {
             .absoluteString
         XCTAssertEqual(url, "https://github.com/test/test")
     }
-    
+
     func testDeletingGitExtensionGitExtension() throws {
         let url = try XCTUnwrap(URL(string: "https://github.com/test/test.git"))
             .deletingGitExtension()
             .absoluteString
         XCTAssertEqual(url, "https://github.com/test/test")
     }
-    
+
     func testDeletingGitExtensionOtherExtension() throws {
         let url = try XCTUnwrap(URL(string: "https://github.com/test/Test.swift"))
             .deletingGitExtension()
             .absoluteString
         XCTAssertEqual(url, "https://github.com/test/Test.swift")
     }
-    
+
     func testDeletingGitExtensionMixedExtensions() throws {
         let url = try XCTUnwrap(URL(string: "https://github.com/test/Test.swift.git"))
             .deletingGitExtension()

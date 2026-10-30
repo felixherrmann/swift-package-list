@@ -10,12 +10,12 @@ import SwiftPackageList
 @testable import SwiftPackageListCore
 
 final class JSONGeneratorTests: XCTestCase {
-    
+
     private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list.json")
-    
+
     override func setUpWithError() throws {
         try super.setUpWithError()
-        
+
         let package = Package(
             kind: .remoteSourceControl,
             identity: "test",
@@ -26,16 +26,16 @@ final class JSONGeneratorTests: XCTestCase {
             location: "https://github.com/test/test",
             license: "MIT"
         )
-        
+
         let jsonGenerator = JSONGenerator(outputURL: outputURL, packages: [package])
         try jsonGenerator.generateOutput()
     }
-    
+
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         try FileManager.default.removeItem(at: outputURL)
     }
-    
+
     func testOutput() throws {
         let output = try String(contentsOf: outputURL)
         // swiftlint:disable indentation_width

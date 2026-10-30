@@ -10,7 +10,7 @@ import SwiftPackageList
 
 public struct CustomPackages: File {
     public let url: URL
-    
+
     public init(url: URL) {
         self.url = url
     }

@@ -16,13 +16,13 @@ extension SwiftPackageList {
             completion: .file(extensions: ["xcodeproj", "xcworkspace", "swift"])
         )
         var projectPath: String
-        
+
         @Option(help: "A custom path to your DerivedData-folder.", completion: .directory)
         var customDerivedDataPath: String?
-        
+
         @Option(help: "A custom path to the SourcePackages-folder.", completion: .directory)
         var customSourcePackagesPath: String?
-        
+
         @Option(
             name: .customLong("custom-packages-file-path"),
             help: "A path to a file containing custom packages in the same format as the JSON-output. (This option may be repeated multiple times)", // swiftlint:disable:this line_length

@@ -7,7 +7,7 @@
 
 /// A type that provides ``Package``s from some arbitrary source.
 public protocol PackageProvider: Sendable {
-    
+
     /// Provides the array of packages.
     /// - Returns: An array of ``Package`` objects.
     /// - Throws: This method can throw if something went wrong during the process.

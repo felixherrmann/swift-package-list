@@ -1,4 +1,4 @@
 opt_in_rules:
-    - explicit_acl
-    - fatal_error_message
-    - missing_docs
+  - explicit_acl
+  - fatal_error_message
+  - missing_docs

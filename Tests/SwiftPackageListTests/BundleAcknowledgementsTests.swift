@@ -15,16 +15,16 @@ final class BundleAcknowledgementsTests: XCTestCase {
             .appendingPathComponent("Resources")
             .appendingPathComponent("Acknowledgements")
             .appendingPathExtension("pdf")
-        
+
         XCTAssertEqual(Bundle.module.acknowledgementsURL, expectedURL)
     }
-    
+
     func testPath() {
         let expectedPath = Bundle.module.bundlePath
             .appending("/Contents")
             .appending("/Resources")
             .appending("/Acknowledgements.pdf")
-        
+
         XCTAssertEqual(Bundle.module.acknowledgementsPath, expectedPath)
     }
 }

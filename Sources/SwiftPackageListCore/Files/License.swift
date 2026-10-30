@@ -18,7 +18,7 @@ extension License {
         "copying",
         "unlicense",
     ]
-    
+
     init?(uncheckedURL url: URL) {
         let fileName = url
             .deletingPathExtension()

@@ -21,22 +21,22 @@ struct SwiftPackageListPlugin: Plugin {
         let outputPath = pluginWorkDirectory
         let packageOrder = targetConfiguration?.packageOrder ?? .source
         let requiresLicense = targetConfiguration?.requiresLicense ?? true
-        
+
         let ignorePackageArguments: [String] = targetConfiguration?.ignorePackages?.flatMap { identity in
             return ["--ignore-package", identity]
         } ?? []
-        
+
         let customPackagesFilePathArguments: [String] = targetConfiguration?.customPackagesFilePaths?.flatMap { filePath in
             return ["--custom-packages-file-path", filePath]
         } ?? []
-        
+
         let outputFiles: [Path]
         if let fileName = outputType.fileName {
             outputFiles = [outputPath.appending(fileName)]
         } else {
             outputFiles = []
         }
-        
+
         return [
             .buildCommand(
                 displayName: "SwiftPackageListPlugin",
@@ -53,7 +53,7 @@ struct SwiftPackageListPlugin: Plugin {
             )
         ]
     }
-    
+
     private func sourcePackagesDirectory(pluginWorkDirectory: Path) throws -> Path {
         var path = pluginWorkDirectory
         while path.string != "/" {

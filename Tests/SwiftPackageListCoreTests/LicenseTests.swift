@@ -12,7 +12,7 @@ final class LicenseTests: XCTestCase {
     func testInitUncheckedURLDisallowed() {
         XCTAssertNil(License(uncheckedURL: URL(fileURLWithPath: "/test/TEST")))
     }
-    
+
     func testInitUncheckedURLAllowed() {
         XCTAssertNotNil(License(uncheckedURL: URL(fileURLWithPath: "/test/LICENSE")))
         XCTAssertNotNil(License(uncheckedURL: URL(fileURLWithPath: "/test/Licence")))
