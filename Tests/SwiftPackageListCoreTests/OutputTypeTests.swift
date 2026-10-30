@@ -70,4 +70,20 @@ struct OutputTypeTests {
         let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
         #expect(htmlGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.html")))
     }
+
+    @Test func standardOutput() throws {
+        let project = XcodeProject(fileURL: URL(fileURLWithPath: ""), options: ProjectOptions())
+
+        let anyJSONGenerator = try OutputType.json.outputGenerator(packages: [], project: project)
+        let jsonGenerator = try #require(anyJSONGenerator as? JSONGenerator)
+        #expect(jsonGenerator.outputDestination == .stdout)
+
+        let anyPlistGenerator = try OutputType.plist.outputGenerator(packages: [], project: project)
+        let plistGenerator = try #require(anyPlistGenerator as? PropertyListGenerator)
+        #expect(plistGenerator.outputDestination == .stdout)
+
+        let anyHTMLGenerator = try OutputType.html.outputGenerator(packages: [], project: project)
+        let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
+        #expect(htmlGenerator.outputDestination == .stdout)
+    }
 }
