@@ -26,7 +26,7 @@ final class JSONGeneratorTests {
             license: "MIT"
         )
 
-        let jsonGenerator = JSONGenerator(outputURL: outputURL, packages: [package])
+        let jsonGenerator = JSONGenerator(outputDestination: .file(url: outputURL), packages: [package])
         try jsonGenerator.generateOutput()
     }
 

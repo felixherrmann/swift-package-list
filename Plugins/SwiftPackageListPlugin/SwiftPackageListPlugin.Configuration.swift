@@ -11,35 +11,44 @@ import Foundation
 
 extension SwiftPackageListPlugin {
     struct Configuration {
-        private static let fileName = "swift-package-list-config.json"
-
         let url: URL
         let storage: Storage
+    }
+}
 
-        init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
-            let url = directory.appending(path: Self.fileName)
-            guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
+// MARK: - Loading
 
-            let data: Data
-            do {
-                data = try Data(contentsOf: url)
-            } catch {
-                throw .configurationUnavailable(url: url, underlyingError: error)
-            }
+extension SwiftPackageListPlugin.Configuration {
+    private static let filenames = [
+        ".swift-package-list.json",
+        "swift-package-list-config.json",
+    ]
 
-            let decoder = JSONDecoder()
-            decoder.allowsJSON5 = true
+    init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
+        let url = Self.filenames
+            .map { directory.appending(path: $0) }
+            .first { FileManager.default.fileExists(atPath: $0.path(percentEncoded: false)) }
+        guard let url else { return nil }
 
-            let storage: Storage
-            do {
-                storage = try decoder.decode(Storage.self, from: data)
-            } catch {
-                throw .configurationInvalid(url: url, underlyingError: error)
-            }
-
-            self.url = url
-            self.storage = storage
+        let data: Data
+        do {
+            data = try Data(contentsOf: url)
+        } catch {
+            throw .configurationUnavailable(url: url, underlyingError: error)
         }
+
+        let decoder = JSONDecoder()
+        decoder.allowsJSON5 = true
+
+        let storage: Storage
+        do {
+            storage = try decoder.decode(Storage.self, from: data)
+        } catch {
+            throw .configurationInvalid(url: url, underlyingError: error)
+        }
+
+        self.url = url
+        self.storage = storage
     }
 }
 
@@ -48,6 +57,7 @@ extension SwiftPackageListPlugin {
 extension SwiftPackageListPlugin.Configuration {
     enum Storage {
         case v1(V1)
+        case v2(V2)
     }
 }
 
@@ -63,6 +73,8 @@ extension SwiftPackageListPlugin.Configuration.Storage: Decodable {
         switch version {
         case 1:
             self = .v1(try V1(from: decoder))
+        case 2:
+            self = .v2(try V2(from: decoder))
         case let version:
             throw DecodingError.dataCorruptedError(
                 forKey: .version,
@@ -83,7 +95,17 @@ extension SwiftPackageListPlugin.Configuration.Storage {
     }
 }
 
-// MARK: - TargetOptions
+// MARK: - V2
+
+extension SwiftPackageListPlugin.Configuration.Storage {
+    struct V2: Decodable {
+        let projectPath: String?
+        let targets: [String: SwiftPackageListPlugin.Configuration.TargetOptions]?
+        let environments: [String: SwiftPackageListPlugin.Configuration.EnvironmentOptions]?
+    }
+}
+
+// MARK: - Options
 
 extension SwiftPackageListPlugin.Configuration {
     struct TargetOptions: Decodable {
@@ -93,15 +115,22 @@ extension SwiftPackageListPlugin.Configuration {
         let ignorePackages: [String]?
         let customPackagesFilePaths: [String]?
     }
+
+    struct EnvironmentOptions: Decodable {
+        let customSourcePackagesPath: String?
+    }
 }
 
 extension SwiftPackageListPlugin.Configuration {
     enum OutputType: String, Decodable {
-        case stdout
+        case table
+        case csv
         case json
         case plist
-        case settingsBundle = "settings-bundle"
+        case markdown
+        case html
         case pdf
+        case settingsBundle = "settings-bundle"
     }
 
     enum PackageOrder: String, Decodable {
@@ -114,18 +143,24 @@ extension SwiftPackageListPlugin.Configuration {
 }
 
 extension SwiftPackageListPlugin.Configuration.OutputType {
-    var fileName: String? {
+    var filename: String {
         switch self {
-        case .stdout:
-            return nil
+        case .table:
+            return "package-table.txt"
+        case .csv:
+            return "package-list.csv"
         case .json:
             return "package-list.json"
         case .plist:
             return "package-list.plist"
+        case .markdown:
+            return "Acknowledgments.md"
+        case .html:
+            return "Acknowledgments.html"
+        case .pdf:
+            return "Acknowledgments.pdf"
         case .settingsBundle:
             return "Settings.bundle"
-        case .pdf:
-            return "Acknowledgements.pdf"
         }
     }
 }
@@ -137,13 +172,26 @@ extension SwiftPackageListPlugin.Configuration {
         switch storage {
         case .v1(let v1):
             return v1.projectPath
+        case .v2(let v2):
+            return v2.projectPath
         }
     }
 
-    func targetOptions(for targetName: String) -> TargetOptions? {
+    func targetOptions(for name: String) -> TargetOptions? {
         switch storage {
         case .v1(let v1):
-            return v1.targets?[targetName] ?? v1.project
+            return v1.targets?[name] ?? v1.project
+        case .v2(let v2):
+            return v2.targets?[name] ?? v2.targets?["*"]
+        }
+    }
+
+    func environmentOptions(for name: String) -> EnvironmentOptions? {
+        switch storage {
+        case .v1(_):
+            return nil
+        case .v2(let v2):
+            return v2.environments?[name]
         }
     }
 }

@@ -1,0 +1,91 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/plugin.v2.schema.json",
+    "title": "Swift Package List Plugin Configuration v2",
+    "description": "Configuration for SwiftPackageListPlugin. Relative paths are resolved against the project directory.",
+    "type": "object",
+    "required": ["version"],
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "The JSON Schema used by editors to validate this configuration."
+        },
+        "version": {
+            "type": "integer",
+            "const": 2,
+            "description": "The configuration format version. Must be 2."
+        },
+        "projectPath": {
+            "type": ["string", "null"],
+            "description": "Path to the project or workspace. Defaults to Package.swift for Swift packages or the current .xcodeproj for Xcode projects."
+        },
+        "targets": {
+            "type": ["object", "null"],
+            "description": "Options keyed by target name (displayName in Xcode). The '*' entry applies to targets without an explicit entry. Explicit entries do not inherit options from '*'; omitted or null options use the plugin defaults.",
+            "additionalProperties": {
+                "$ref": "#/$defs/targetOptions"
+            }
+        },
+        "environments": {
+            "type": ["object", "null"],
+            "description": "Options keyed by environment name. Select an entry by setting SWIFT_PACKAGE_LIST_PLUGIN_ENVIRONMENT to its exact name.",
+            "additionalProperties": {
+                "$ref": "#/$defs/environmentOptions"
+            }
+        }
+    },
+    "$defs": {
+        "targetOptions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "outputType": {
+                    "type": ["string", "null"],
+                    "enum": ["table", "csv", "json", "plist", "markdown", "html", "pdf", "settings-bundle", null],
+                    "default": "json",
+                    "description": "Format of the output generated in the plugin work directory."
+                },
+                "packageOrder": {
+                    "type": ["string", "null"],
+                    "enum": ["source", "name-ascending", "name-descending", "identity-ascending", "identity-descending", null],
+                    "default": "source",
+                    "description": "The order of packages in the generated output."
+                },
+                "requiresLicense": {
+                    "type": ["boolean", "null"],
+                    "default": true,
+                    "description": "Include only packages with a license."
+                },
+                "ignorePackages": {
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "default": [],
+                    "description": "Package identity patterns to exclude from the output. Glob patterns are supported."
+                },
+                "customPackagesFilePaths": {
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "Paths to custom package files to include in the output."
+                }
+            }
+        },
+        "environmentOptions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "customSourcePackagesPath": {
+                    "type": ["string", "null"],
+                    "description": "Path to the SourcePackages directory. When omitted or null, the plugin searches for SourcePackages in the plugin work directory and its ancestors."
+                }
+            }
+        }
+    }
+}

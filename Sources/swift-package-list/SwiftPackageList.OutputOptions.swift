@@ -13,10 +13,10 @@ import SwiftPackageListCore
 extension SwiftPackageList {
     struct OutputOptions: ParsableArguments {
         @Option(help: "The type of output for the package-list.")
-        var outputType: OutputType = .stdout
+        var outputType: OutputType = .table
 
         @Option(
-            help: "The path where the package-list file will be stored. (Not required for stdout output-type)",
+            help: "The path where the file will be written. If omitted, the content is sent to stdout.",
             completion: .directory
         )
         var outputPath: String?
@@ -33,11 +33,11 @@ extension SwiftPackageList {
         @Option(
             name: .customLong("ignore-package"),
             help: ArgumentHelp(
-                "Will skip a package with the specified identity. (This option may be repeated multiple times)",
-                valueName: "package-identity"
+                "Will skip a package with the specified identity; glob patterns are supported. (This option may be repeated multiple times)", // swiftlint:disable:this line_length
+                valueName: "package-identity-pattern"
             )
         )
-        var ignoredPackageIdentities: [String] = []
+        var ignoredPackageIdentities: [Pattern] = []
     }
 }
 
@@ -54,14 +54,14 @@ extension SwiftPackageList.OutputOptions {
 extension SwiftPackageList.OutputOptions {
     var outputGeneratorOptions: OutputGeneratorOptions {
         let outputURL = outputPath.map { URL(fileURLWithPath: $0) }
-        return OutputGeneratorOptions(outputURL: outputURL, customFileName: customFileName)
+        return OutputGeneratorOptions(outputURL: outputURL, customFilename: customFileName)
     }
 }
 
 extension SwiftPackageList.OutputOptions {
     func filter(package: Package) -> Bool {
         if requiresLicense && !package.hasLicense { return false }
-        return !ignoredPackageIdentities.contains(package.identity)
+        return !ignoredPackageIdentities.contains { $0.matches(package.identity) }
     }
 
     func sort(lhs: Package, rhs: Package) -> Bool {

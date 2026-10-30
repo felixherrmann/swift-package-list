@@ -25,7 +25,7 @@ extension SwiftPackageList {
 
         @Option(
             name: .customLong("custom-packages-file-path"),
-            help: "A path to a file containing custom packages in the same format as the JSON-output. (This option may be repeated multiple times)", // swiftlint:disable:this line_length
+            help: "A path to a JSON file containing custom packages. (This option may be repeated multiple times)",
             completion: .file(extensions: ["json"])
         )
         var customPackagesFilePaths: [String] = []

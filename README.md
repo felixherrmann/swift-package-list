@@ -6,7 +6,7 @@
 A command-line tool to get all used Swift Package dependencies.
 
 The output includes all the `Package.resolved` informations and the license from the checkouts.
-You can also generate a JSON, PLIST, Settings.bundle or PDF file.
+You can also generate a JSON, PLIST, Settings.bundle, PDF, HTML, Markdown or CSV file.
 
 Additionally there is a Swift Package to read the generated package-list file from the application's bundle or to use pre-build UI for SwiftUI and UIKit.
 
@@ -49,13 +49,13 @@ In addition to that you can specify the following options:
 | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | --custom-derived-data-path \<custom-derived-data-path\>       | A custom path to your DerivedData-folder.                                                                                                                   |
 | --custom-source-packages-path \<custom-source-packages-path\> | A custom path to the SourcePackages-folder.                                                                                                                 |
-| --custom-packages-file-path \<custom-packages-file-path\>     | A path to a file containing custom packages in the same format as the JSON-output. (This option may be repeated multiple times)                             |
-| --output-type \<output-type\>                                 | The type of output for the package-list. (values: stdout, json, plist, settings-bundle, pdf; default: stdout)                                               |
-| --output-path \<output-path\>                                 | The path where the package-list file will be stored. (Not required for stdout output-type)                                                                  |
+| --custom-packages-file-path \<custom-packages-file-path\>     | A path to a JSON file containing custom packages. (This option may be repeated multiple times)                                                              |
+| --output-type \<output-type\>                                 | The type of output for the package-list. (values: table, csv, json, plist, markdown, html, pdf, settings-bundle; default: table)                            |
+| --output-path \<output-path\>                                 | The path where the file will be written. If omitted, the content is sent to stdout.                                                                         |
 | --custom-file-name \<custom-file-name\>                       | A custom filename to be used instead of the default ones.                                                                                                   |
 | --package-order \<package-order\>                             | The order in which the packages will be listed. (values: source, name-ascending, name-descending, identity-ascending, identity-descending; default: source) |
 | --requires-license                                            | Will skip the packages without a license-file.                                                                                                              |
-| --ignore-package \<package-identity\>                         | Will skip a package with the specified identity. (This option may be repeated multiple times)                                                               |
+| --ignore-package \<package-identity-pattern\>                 | Will skip a package with the specified identity; glob patterns are supported. (This option may be repeated multiple times)                                  |
 | --version                                                     | Show the version.                                                                                                                                           |
 | -h, --help                                                    | Show help information.                                                                                                                                      |
 
@@ -65,19 +65,23 @@ The easiest way to add this tool to your project is using the provided build-too
 
 For Xcode projects simply add it under the `Run Build Tool Plug-ins` section in the Target's Build Phases tab after you have added this package to the project's Package Dependencies; for Swift packages configure it in the `Package.swift` manifest, as described [here](https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/enablebuildplugin).
 
-By default this will use the JSON output with `--requires-license` but you can create a `swift-package-list-config.json` in your project's root to configure that behavior, both project and target specific (target configs have precedence over the project one). Everything in the configuration is optional and has the following format:
+By default the plugin uses JSON output with `--requires-license`. To configure it, create a `.swift-package-list.json` file in your project's root directory.
+
+Configuration files support JSON and JSON5, including comments, unquoted keys and trailing commas; paths are resolved relative to the project directory. Use `version: 2` for the following format; all other fields are optional:
+
 ```json5
 // Swift Package List configuration file
 // Check out https://github.com/felixherrmann/swift-package-list#build-tool-plugin for all possible configuration options.
 
 {
-    version: 1,
+    $schema: "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/plugin.v2.schema.json",
+    version: 2,
     projectPath: "Project.xcworkspace",
-    project: {
-        outputType: "plist",
-        requiresLicense: false,
-    },
     targets: {
+        "*": {
+            outputType: "plist",
+            requiresLicense: false,
+        },
         "Target 1": {
             outputType: "settings-bundle",
             packageOrder: "name-ascending",
@@ -89,14 +93,22 @@ By default this will use the JSON output with `--requires-license` but you can c
             ignorePackages: [
                 "swift-package-list",
                 "swift-argument-parser",
+                "swift-openapi-*",
             ],
             customPackagesFilePaths: [
                 "custom-packages.json",
             ],
         },
     },
+    environments: {
+        "ci": {
+            customSourcePackagesPath: "SourcePackages",
+        },
+    },
 }
 ```
+
+The `targets` keys are target names (`displayName` in Xcode). The `"*"` entry supplies options for targets without an explicit entry; omitted options use the plugin defaults.
 
 Once added and configured the file(s) will get generated during every build process and are available in the App's bundle.
 You can then open them manually or use the various options in the included [Swift Package](#swift-package).
@@ -104,6 +116,20 @@ You can then open them manually or use the various options in the included [Swif
 > [!NOTE]
 > When using Xcode Cloud add `defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES`
 > to `ci_post_clone.sh` which disables the plugin validation.
+
+#### Environment
+
+Select an environment by setting `SWIFT_PACKAGE_LIST_PLUGIN_ENVIRONMENT` in the process that starts the build. Its value must exactly match a key in the configuration's `environments` section.
+
+For example, a CI build can use `-clonedSourcePackagesDirPath` to store package sources in a custom directory. Run the following from the project root to select the `ci` entry above and use its matching `SourcePackages` path:
+
+```shell
+export SWIFT_PACKAGE_LIST_PLUGIN_ENVIRONMENT=ci
+xcodebuild -workspace Project.xcworkspace \
+    -scheme "Target 1" \
+    -clonedSourcePackagesDirPath SourcePackages \
+    build
+```
 
 ### Run Script Phase
 
@@ -172,21 +198,21 @@ This tool supports the following [Tuist external dependency](https://docs.tuist.
 
 ### Settings Bundle
 
-You can also generate a `Settings.bundle` file to show the acknowledgements in the Settings app. This works slightly different
+You can also generate a `Settings.bundle` file to show the acknowledgments in the Settings app. This works slightly different
 than the other file types, because a Settings Bundle is a collection of several files and might already exist in your app. 
 Just specify `--output-type settings-bundle` on the command execution.
 
 **Important:** The `Root.plist` and `Root.strings` files will (unlike the other files) only be created if they not already exists,
-otherwise it would remove existing configurations. Make sure you set up the `Acknowledgements.plist` correctly as a Child Pane as shown below:
+otherwise it would remove existing configurations. Make sure you set up the `Acknowledgments.plist` correctly as a Child Pane as shown below:
 
 ```xml
 <dict>
     <key>Type</key>
     <string>PSChildPaneSpecifier</string>
     <key>Title</key>
-    <string>Acknowledgements</string>
+    <string>SPL_ACKNOWLEDGMENTS_TITLE</string>
     <key>File</key>
-    <string>Acknowledgements</string>
+    <string>Acknowledgments</string>
 </dict>
 ```
 
@@ -204,30 +230,68 @@ Once created and added to the project, it can be easily accessed from the applic
 ```swift
 import SwiftPackageList
 
-let url = Bundle.main.acknowledgementsURL
+let url = Bundle.main.acknowledgmentsURL(format: .pdf)
 ```
 You can then use [QuickLook](https://developer.apple.com/documentation/quicklook), [NSWorkspace.open(\_:)](https://developer.apple.com/documentation/appkit/nsworkspace/1533463-open) or any other method to display the PDF.
+
+### Other Formats
+
+#### HTML
+
+Use `--output-type html` to generate a standalone `Acknowledgments.html` page that preserves license formatting. Project metadata works as described in the [PDF section](#pdf).
+
+#### Markdown
+
+Use `--output-type markdown` to generate an `Acknowledgments.md` document that preserves license formatting. Project metadata works as described in the [PDF section](#pdf).
+
+#### CSV
+
+Use `--output-type csv` to generate a `package-list.csv` table.
+
+The columns are `kind`, `identity`, `name`, `version`, `branch`, `revision`, `location` and `hasLicense`.
+
+#### Table
+
+The default `--output-type table` displays a compact dependency summary:
+
+```text
+PACKAGE                VERSION/REF  LICENSE
+swift-argument-parser  1.5.0        Found
+```
 
 ### Custom Packages
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
 
 ```json5
-[
-    {
-        branch: null,
-        identity: "custom-package-example",
-        kind: "custom",
-        license: null,
-        location: "",
-        name: "CustomPackageExample",
-        revision: null,
-        version: null,
-    },
-]
+{
+    $schema: "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/custom-packages.v2.schema.json",
+    version: 2,
+    packages: [
+        {
+            identity: "custom-package-example",
+            name: "CustomPackageExample",
+            version: null,
+            license: { raw: "The license text" },
+        },
+        {
+            identity: "another-custom-package",
+            name: "AnotherCustomPackage",
+            location: "https://example.com/another-custom-package",
+            license: { file: "Licenses/another-custom-package.txt" },
+        },
+        {
+            identity: "vendored-library",
+            name: "VendoredLibrary",
+            license: { directory: "Vendor/SomeLibrary" },
+        },
+    ],
+}
 ```
 
-All optional fields have null values in this example and can be left out, the other ones are required.
+The `identity` and `name` fields are required, all other ones can be omitted or set to null. A license must contain exactly one of `raw` (inline license text), `file` (a UTF-8 license file) or `directory` (a directory to detect a license in). Relative file and directory paths are resolved from the custom packages file's directory; absolute paths are also supported.
+
+Custom packages are subject to the same filtering and ordering as discovered packages, so entries without a license are skipped when `--requires-license` is enabled.
 
 
 ## Swift Package
@@ -239,10 +303,10 @@ Load the generated package-list file from the bundle or use some pre-build UI co
 
 ### Requirements
 
-- macOS 10.15
-- iOS 13.0
-- tvOS 13.0
-- watchOS 6.0
+- macOS 11.0
+- iOS 15.0
+- tvOS 15.0
+- watchOS 8.0
 - visionOS 1.0
 
 ### Usage
@@ -295,18 +359,29 @@ The Settings Bundle and the UI-components are currently localized in the followi
 | Arabic               | ar      |
 | Chinese, Simplified  | zh-Hans |
 | Chinese, Traditional | zh-Hant |
+| Czech                | cs      |
+| Danish               | da      |
+| Dutch                | nl      |
 | English              | en      |
+| English, British     | en-GB   |
+| Finnish              | fi      |
 | French               | fr      |
 | German               | de      |
 | Hindi                | hi      |
+| Indonesian           | id      |
 | Italian              | it      |
 | Japanese             | ja      |
+| Korean               | ko      |
+| Norwegian Bokmål     | nb      |
 | Polish               | pl      |
 | Portuguese           | pt      |
 | Russian              | ru      |
 | Spanish              | es      |
+| Swedish              | sv      |
+| Thai                 | th      |
 | Turkish              | tr      |
 | Ukrainian            | uk      |
+| Vietnamese           | vi      |
 
 > If a language has mistakes or is missing, feel free to create an issue or open a pull request.
 

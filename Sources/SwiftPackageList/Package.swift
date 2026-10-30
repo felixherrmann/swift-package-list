@@ -68,7 +68,8 @@ public struct Package: Sendable, Hashable, Codable {
 extension Package {
     /// A boolean indicating if the package has a license.
     public var hasLicense: Bool {
-        return license != nil
+        guard let license, !license.isEmpty else { return false }
+        return true
     }
 }
 

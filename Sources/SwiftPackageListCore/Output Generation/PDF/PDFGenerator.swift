@@ -67,7 +67,7 @@ struct PDFGenerator: OutputGenerator {
         return [
             kCGPDFContextTitle: "\(projectName)_Acks_File_\(creationDate)",
             kCGPDFContextAuthor: organizationName,
-            kCGPDFContextSubject: "\(projectName) Acknowledgements",
+            kCGPDFContextSubject: "\(projectName) Acknowledgments",
             kCGPDFContextCreator: "swift-package-list",
         ] as CFDictionary
     }
@@ -82,7 +82,7 @@ struct PDFGenerator: OutputGenerator {
 
         let attributedString = NSMutableAttributedString()
 
-        let headerTitle = NSAttributedString(string: "Acknowledgements", attributes: [.font: boldFont])
+        let headerTitle = NSAttributedString(string: "Acknowledgments", attributes: [.font: boldFont])
         attributedString.append(headerTitle)
         attributedString.append(NSAttributedString(string: "\n", attributes: [.font: defaultFont]))
 

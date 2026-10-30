@@ -9,10 +9,10 @@ import Foundation
 
 public struct OutputGeneratorOptions {
     public var outputURL: URL?
-    public var customFileName: String?
+    public var customFilename: String?
 
-    public init(outputURL: URL? = nil, customFileName: String? = nil) {
+    public init(outputURL: URL? = nil, customFilename: String? = nil) {
         self.outputURL = outputURL
-        self.customFileName = customFileName
+        self.customFilename = customFilename
     }
 }

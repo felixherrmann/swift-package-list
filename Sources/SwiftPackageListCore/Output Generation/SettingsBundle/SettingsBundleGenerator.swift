@@ -26,7 +26,7 @@ struct SettingsBundleGenerator: OutputGenerator {
     func generateOutput() throws {
         try fileManager.createDirectory(at: outputURL, withIntermediateDirectories: true)
         try createRootPlist()
-        try createAcknowledgementsPlist()
+        try createAcknowledgmentsPlist()
         try createPackagesDirectory()
 
         for package in packages {
@@ -43,19 +43,19 @@ struct SettingsBundleGenerator: OutputGenerator {
     private func createRootPlist() throws {
         let rootURL = outputURL.appendingPathComponent("Root.plist")
         guard !fileManager.fileExists(atPath: rootURL.path) else { return }
-        let rootSpecifiers: [Specifier] = [.childPane(title: "Acknowledgements", file: "Acknowledgements")]
+        let rootSpecifiers: [Specifier] = [.childPane(title: "SPL_ACKNOWLEDGMENTS_TITLE", file: "Acknowledgments")]
         let rootPlist = PropertyList(stringsTable: "Root", preferenceSpecifiers: rootSpecifiers)
         let encodedRoot = try encoder.encode(rootPlist)
         try encodedRoot.write(to: rootURL)
     }
 
-    private func createAcknowledgementsPlist() throws {
+    private func createAcknowledgmentsPlist() throws {
         let packageChildPanes: [Specifier] = packages.map { .childPane(title: $0.name, file: "Packages/\($0.name)") }
-        let preferenceSpecifiers: [Specifier] = [.group(title: "Licenses")] + packageChildPanes
-        let acknowledgementsPlist = PropertyList(stringsTable: "Acknowledgements", preferenceSpecifiers: preferenceSpecifiers)
-        let encodedAcknowledgements = try encoder.encode(acknowledgementsPlist)
-        let acknowledgementsURL = outputURL.appendingPathComponent("Acknowledgements.plist")
-        try encodedAcknowledgements.write(to: acknowledgementsURL)
+        let preferenceSpecifiers: [Specifier] = [.group(title: "SPL_ACKNOWLEDGMENTS_SECTION_TITLE")] + packageChildPanes
+        let acknowledgmentsPlist = PropertyList(stringsTable: "Acknowledgments", preferenceSpecifiers: preferenceSpecifiers)
+        let encodedAcknowledgments = try encoder.encode(acknowledgmentsPlist)
+        let acknowledgmentsURL = outputURL.appendingPathComponent("Acknowledgments.plist")
+        try encodedAcknowledgments.write(to: acknowledgmentsURL)
     }
 
     private func createPackagesDirectory() throws {
@@ -80,7 +80,7 @@ struct SettingsBundleGenerator: OutputGenerator {
             try language.rootFileData.write(to: rootStringsURL)
         }
 
-        let acknowledgementsStringsURL = languageURL.appendingPathComponent("Acknowledgements.strings")
-        try language.acknowledgementsFileData.write(to: acknowledgementsStringsURL)
+        let acknowledgmentsStringsURL = languageURL.appendingPathComponent("Acknowledgments.strings")
+        try language.acknowledgmentsFileData.write(to: acknowledgmentsStringsURL)
     }
 }

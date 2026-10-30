@@ -21,6 +21,11 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
 
     // MARK: - Properties
 
+    private let _logger = Logger(
+        subsystem: "com.felixherrmann.swift-package-list",
+        category: "SPLAcknowledgmentsTableViewController"
+    )
+
     /// The package provider object used as the source of data.
     open var packageProvider: Provider
 
@@ -61,15 +66,7 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
         do {
             _packages = try packageProvider.packages()
         } catch {
-            os_log(
-                "Error: %@",
-                log: OSLog(
-                    subsystem: "com.felixherrmann.swift-package-list",
-                    category: "SPLAcknowledgmentsTableViewController"
-                ),
-                type: .error,
-                String(describing: error)
-            )
+            _logger.error("Failed to load packages: \(String(describing: error))")
         }
     }
 
@@ -77,7 +74,7 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
 
     private func _setupNavigationBar() {
         let title = NSLocalizedString(
-            "acknowledgments.title",
+            "SPL_ACKNOWLEDGMENTS_TITLE",
             bundle: .module,
             value: "Acknowledgments",
             comment: "Navigation bar title of the license list"
@@ -102,7 +99,7 @@ open class SPLAcknowledgmentsTableViewController<Provider: PackageProvider>: UIT
 
     override open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return NSLocalizedString(
-            "acknowledgments.section-title",
+            "SPL_ACKNOWLEDGMENTS_SECTION_TITLE",
             bundle: .module,
             value: "Licenses",
             comment: "Section title for the license list"

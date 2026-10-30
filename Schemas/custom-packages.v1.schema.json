@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/custom-packages.v1.schema.json",
+    "title": "Swift Package List Custom Packages v1",
+    "description": "Legacy custom packages format: an array of package objects without a version field. Associate this schema through editor settings because an array cannot contain a top-level $schema property.",
+    "type": "array",
+    "items": {
+        "$ref": "#/$defs/package"
+    },
+    "$defs": {
+        "package": {
+            "type": "object",
+            "required": ["kind", "identity", "name", "location"],
+            "additionalProperties": false,
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "description": "The package kind. Known values are localSourceControl, remoteSourceControl, registry and custom; other strings are also supported."
+                },
+                "identity": {
+                    "type": "string",
+                    "description": "The package identity used for filtering and ordering."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The display name of the package."
+                },
+                "version": {
+                    "type": ["string", "null"],
+                    "description": "The package version."
+                },
+                "branch": {
+                    "type": ["string", "null"],
+                    "description": "The source control branch."
+                },
+                "revision": {
+                    "type": ["string", "null"],
+                    "description": "The source control revision or commit."
+                },
+                "location": {
+                    "type": "string",
+                    "description": "The package location, such as a local path or repository URL. May be empty for registry packages."
+                },
+                "license": {
+                    "type": ["string", "null"],
+                    "description": "The inline license text."
+                }
+            }
+        }
+    }
+}

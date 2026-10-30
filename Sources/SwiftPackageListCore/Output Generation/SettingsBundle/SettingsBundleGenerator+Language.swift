@@ -9,163 +9,260 @@ import Foundation
 
 extension SettingsBundleGenerator {
     enum Language: String, CaseIterable {
-        // swiftlint:disable identifier_name
-        case ar
-        case de
-        case en
-        case es
-        case fr
-        case hi
-        case it
-        case ja
-        case pl
-        case pt
-        case ru
-        case tr
-        case uk
-        case zhHans = "zh-hans"
-        case zhHant = "zh-hant"
-        // swiftlint:enable identifier_name
+        case arabic = "ar"
+        case chineseSimplified = "zh-Hans"
+        case chineseTraditional = "zh-Hant"
+        case czech = "cs"
+        case danish = "da"
+        case dutch = "nl"
+        case english = "en"
+        case englishBritish = "en-GB"
+        case finnish = "fi"
+        case french = "fr"
+        case german = "de"
+        case hindi = "hi"
+        case indonesian = "id"
+        case italian = "it"
+        case japanese = "ja"
+        case korean = "ko"
+        case norwegianBokmal = "nb"
+        case polish = "pl"
+        case portuguese = "pt"
+        case russian = "ru"
+        case spanish = "es"
+        case swedish = "sv"
+        case thai = "th"
+        case turkish = "tr"
+        case ukrainian = "uk"
+        case vietnamese = "vi"
     }
 }
 
 extension SettingsBundleGenerator.Language {
     private enum RootStringsKey: String {
-        case acknowledgements = "Acknowledgements"
+        case acknowledgmentsTitle = "SPL_ACKNOWLEDGMENTS_TITLE"
     }
 
     private var rootStrings: [RootStringsKey: String] {
         switch self {
-        case .ar:
+        case .arabic:
             return [
-                .acknowledgements: "إقرارات",
+                .acknowledgmentsTitle: "إقرارات",
             ]
-        case .de:
+        case .chineseSimplified:
             return [
-                .acknowledgements: "Danksagungen",
+                .acknowledgmentsTitle: "致谢",
             ]
-        case .en:
+        case .chineseTraditional:
             return [
-                .acknowledgements: "Acknowledgements",
+                .acknowledgmentsTitle: "致謝",
             ]
-        case .es:
+        case .czech:
             return [
-                .acknowledgements: "Expresiones de gratitud",
+                .acknowledgmentsTitle: "Poděkování",
             ]
-        case .fr:
+        case .danish:
             return [
-                .acknowledgements: "Remerciements",
+                .acknowledgmentsTitle: "Tak",
             ]
-        case .hi:
+        case .dutch:
             return [
-                .acknowledgements: "स्वीकृतियाँ",
+                .acknowledgmentsTitle: "Dankbetuigingen",
             ]
-        case .it:
+        case .english:
             return [
-                .acknowledgements: "Ringraziamenti",
+                .acknowledgmentsTitle: "Acknowledgments",
             ]
-        case .ja:
+        case .englishBritish:
             return [
-                .acknowledgements: "謝辞"
+                .acknowledgmentsTitle: "Acknowledgements",
             ]
-        case .pl:
+        case .finnish:
             return [
-                .acknowledgements: "Podziękowania",
+                .acknowledgmentsTitle: "Kiitokset",
             ]
-        case .pt:
+        case .french:
             return [
-                .acknowledgements: "Agradecimentos",
+                .acknowledgmentsTitle: "Remerciements",
             ]
-        case .ru:
+        case .german:
             return [
-                .acknowledgements: "Благодарности",
+                .acknowledgmentsTitle: "Danksagungen",
             ]
-        case .tr:
+        case .hindi:
             return [
-                .acknowledgements: "Teşekkürler",
+                .acknowledgmentsTitle: "आभार",
             ]
-        case .uk:
+        case .indonesian:
             return [
-                .acknowledgements: "Подяки",
+                .acknowledgmentsTitle: "Ucapan Terima Kasih",
             ]
-        case .zhHans:
+        case .italian:
             return [
-                .acknowledgements: "致谢",
+                .acknowledgmentsTitle: "Ringraziamenti",
             ]
-        case .zhHant:
+        case .japanese:
             return [
-                .acknowledgements: "致謝",
+                .acknowledgmentsTitle: "謝辞"
+            ]
+        case .korean:
+            return [
+                .acknowledgmentsTitle: "감사의 말",
+            ]
+        case .norwegianBokmal:
+            return [
+                .acknowledgmentsTitle: "Takk",
+            ]
+        case .polish:
+            return [
+                .acknowledgmentsTitle: "Podziękowania",
+            ]
+        case .portuguese:
+            return [
+                .acknowledgmentsTitle: "Agradecimentos",
+            ]
+        case .russian:
+            return [
+                .acknowledgmentsTitle: "Благодарности",
+            ]
+        case .spanish:
+            return [
+                .acknowledgmentsTitle: "Agradecimientos",
+            ]
+        case .swedish:
+            return [
+                .acknowledgmentsTitle: "Tack",
+            ]
+        case .thai:
+            return [
+                .acknowledgmentsTitle: "กิตติกรรมประกาศ",
+            ]
+        case .turkish:
+            return [
+                .acknowledgmentsTitle: "Teşekkürler",
+            ]
+        case .ukrainian:
+            return [
+                .acknowledgmentsTitle: "Подяки",
+            ]
+        case .vietnamese:
+            return [
+                .acknowledgmentsTitle: "Lời cảm ơn",
             ]
         }
     }
 }
 
 extension SettingsBundleGenerator.Language {
-    private enum AcknowledgementsStringsKey: String {
-        case licenses = "Licenses"
+    private enum AcknowledgmentsStringsKey: String {
+        case acknowledgmentsSectionTitle = "SPL_ACKNOWLEDGMENTS_SECTION_TITLE"
     }
 
-    private var acknowledgementsStrings: [AcknowledgementsStringsKey: String] {
+    private var acknowledgmentsStrings: [AcknowledgmentsStringsKey: String] {
         switch self {
-        case .ar:
+        case .arabic:
             return [
-                .licenses: "التراخيص",
+                .acknowledgmentsSectionTitle: "التراخيص",
             ]
-        case .de:
+        case .chineseSimplified:
             return [
-                .licenses: "Lizenzen",
+                .acknowledgmentsSectionTitle: "许可证",
             ]
-        case .en:
+        case .chineseTraditional:
             return [
-                .licenses: "Licenses",
+                .acknowledgmentsSectionTitle: "許可證",
             ]
-        case .es:
+        case .czech:
             return [
-                .licenses: "Licencias",
+                .acknowledgmentsSectionTitle: "Licence",
             ]
-        case .fr:
+        case .danish:
             return [
-                .licenses: "Licences",
+                .acknowledgmentsSectionTitle: "Licenser",
             ]
-        case .hi:
+        case .dutch:
             return [
-                .licenses: "लाइसेंस",
+                .acknowledgmentsSectionTitle: "Licenties",
             ]
-        case .it:
+        case .english:
             return [
-                .licenses: "Licenze",
+                .acknowledgmentsSectionTitle: "Licenses",
             ]
-        case .ja:
+        case .englishBritish:
             return [
-                .licenses: "ライセンス"
+                .acknowledgmentsSectionTitle: "Licences",
             ]
-        case .pl:
+        case .finnish:
             return [
-                .licenses: "Licencje",
+                .acknowledgmentsSectionTitle: "Lisenssit",
             ]
-        case .pt:
+        case .french:
             return [
-                .licenses: "Licenças",
+                .acknowledgmentsSectionTitle: "Licences",
             ]
-        case .ru:
+        case .german:
             return [
-                .licenses: "Лицензии",
+                .acknowledgmentsSectionTitle: "Lizenzen",
             ]
-        case .tr:
+        case .hindi:
             return [
-                .licenses: "Lisanslar",
+                .acknowledgmentsSectionTitle: "लाइसेंस",
             ]
-        case .uk:
+        case .indonesian:
             return [
-                .licenses: "Ліцензії",
+                .acknowledgmentsSectionTitle: "Lisensi",
             ]
-        case .zhHans:
+        case .italian:
             return [
-                .licenses: "许可证",
+                .acknowledgmentsSectionTitle: "Licenze",
             ]
-        case .zhHant:
+        case .japanese:
             return [
-                .licenses: "許可證",
+                .acknowledgmentsSectionTitle: "ライセンス"
+            ]
+        case .korean:
+            return [
+                .acknowledgmentsSectionTitle: "라이선스",
+            ]
+        case .norwegianBokmal:
+            return [
+                .acknowledgmentsSectionTitle: "Lisenser",
+            ]
+        case .polish:
+            return [
+                .acknowledgmentsSectionTitle: "Licencje",
+            ]
+        case .portuguese:
+            return [
+                .acknowledgmentsSectionTitle: "Licenças",
+            ]
+        case .russian:
+            return [
+                .acknowledgmentsSectionTitle: "Лицензии",
+            ]
+        case .spanish:
+            return [
+                .acknowledgmentsSectionTitle: "Licencias",
+            ]
+        case .swedish:
+            return [
+                .acknowledgmentsSectionTitle: "Licenser",
+            ]
+        case .thai:
+            return [
+                .acknowledgmentsSectionTitle: "ใบอนุญาต",
+            ]
+        case .turkish:
+            return [
+                .acknowledgmentsSectionTitle: "Lisanslar",
+            ]
+        case .ukrainian:
+            return [
+                .acknowledgmentsSectionTitle: "Ліцензії",
+            ]
+        case .vietnamese:
+            return [
+                .acknowledgmentsSectionTitle: "Giấy phép",
             ]
         }
     }
@@ -180,8 +277,8 @@ extension SettingsBundleGenerator.Language {
         return Data(fileString.utf8)
     }
 
-    var acknowledgementsFileData: Data {
-        let fileString = acknowledgementsStrings
+    var acknowledgmentsFileData: Data {
+        let fileString = acknowledgmentsStrings
             .map { "\"\($0.key.rawValue)\" = \"\($0.value)\"" }
             .joined(separator: ";\n")
             .appending(";")

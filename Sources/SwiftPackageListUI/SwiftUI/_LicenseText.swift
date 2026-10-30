@@ -17,7 +17,7 @@ internal struct _LicenseText: View {
         ZStack {
 #if os(iOS)
             Color(.systemGroupedBackground)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
 #endif
 #if os(tvOS)
             _TVOSTextView(_text: _package.license ?? "")
@@ -31,14 +31,9 @@ internal struct _LicenseText: View {
             }
 #endif
         }
-#if os(visionOS)
         .navigationTitle(Text(_package.name))
-        .navigationBarTitleDisplayMode(.inline)
-#else
-        .backport.navigationTitle(Text(_package.name))
 #if os(iOS) || os(watchOS) || os(visionOS)
-        .backport.navigationBarTitleDisplayMode(.inline)
-#endif
+        .navigationBarTitleDisplayMode(.inline)
 #endif
     }
 }
