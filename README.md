@@ -234,6 +234,12 @@ let url = Bundle.main.acknowledgmentsURL(format: .pdf)
 ```
 You can then use [QuickLook](https://developer.apple.com/documentation/quicklook), [NSWorkspace.open(\_:)](https://developer.apple.com/documentation/appkit/nsworkspace/1533463-open) or any other method to display the PDF.
 
+### Other Formats
+
+#### HTML
+
+Use `--output-type html` to generate a standalone `Acknowledgments.html` page that preserves license formatting. Project metadata works as described in the [PDF section](#pdf).
+
 ### Custom Packages
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
