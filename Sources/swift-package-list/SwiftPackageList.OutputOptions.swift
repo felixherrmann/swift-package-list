@@ -54,7 +54,7 @@ extension SwiftPackageList.OutputOptions {
 extension SwiftPackageList.OutputOptions {
     var outputGeneratorOptions: OutputGeneratorOptions {
         let outputURL = outputPath.map { URL(fileURLWithPath: $0) }
-        return OutputGeneratorOptions(outputURL: outputURL, customFileName: customFileName)
+        return OutputGeneratorOptions(outputURL: outputURL, customFilename: customFileName)
     }
 }
 

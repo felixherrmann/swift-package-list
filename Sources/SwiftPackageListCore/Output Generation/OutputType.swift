@@ -23,32 +23,32 @@ extension OutputType {
     ) throws -> any OutputGenerator {
         switch self {
         case .json:
-            let outputDestination = outputDestination(fileName: "package-list", extension: "json", options: options)
+            let outputDestination = outputDestination(filename: "package-list", extension: "json", options: options)
             return JSONGenerator(outputDestination: outputDestination, packages: packages)
         case .plist:
-            let outputDestination = outputDestination(fileName: "package-list", extension: "plist", options: options)
+            let outputDestination = outputDestination(filename: "package-list", extension: "plist", options: options)
             return PropertyListGenerator(outputDestination: outputDestination, packages: packages)
         case .settingsBundle:
-            let outputURL = try outputURL(fileName: "Settings", extension: "bundle", options: options)
+            let outputURL = try outputURL(filename: "Settings", extension: "bundle", options: options)
             return SettingsBundleGenerator(outputURL: outputURL, packages: packages)
         case .pdf:
-            let outputURL = try outputURL(fileName: "Acknowledgments", extension: "pdf", options: options)
+            let outputURL = try outputURL(filename: "Acknowledgments", extension: "pdf", options: options)
             return PDFGenerator(outputURL: outputURL, packages: packages, project: project)
         }
     }
 
-    private func outputURL(fileName: String, extension: String, options: OutputGeneratorOptions) throws -> URL {
+    private func outputURL(filename: String, extension: String, options: OutputGeneratorOptions) throws -> URL {
         guard let outputURL = options.outputURL else {
             throw RuntimeError("Output path is required for output type '\(rawValue)'")
         }
-        let fileName = options.customFileName ?? fileName
-        return outputURL.appendingPathComponent(fileName).appendingPathExtension(`extension`)
+        let filename = options.customFilename ?? filename
+        return outputURL.appendingPathComponent(filename).appendingPathExtension(`extension`)
     }
 
-    private func outputDestination(fileName: String, extension: String, options: OutputGeneratorOptions) -> OutputDestination {
+    private func outputDestination(filename: String, extension: String, options: OutputGeneratorOptions) -> OutputDestination {
         if let outputURL = options.outputURL {
-            let fileName = options.customFileName ?? fileName
-            let url = outputURL.appendingPathComponent(fileName).appendingPathExtension(`extension`)
+            let filename = options.customFilename ?? filename
+            let url = outputURL.appendingPathComponent(filename).appendingPathExtension(`extension`)
             return .file(url: url)
         } else {
             return .stdout

@@ -19,13 +19,13 @@ extension SwiftPackageListPlugin {
 // MARK: - Loading
 
 extension SwiftPackageListPlugin.Configuration {
-    private static let fileNames = [
+    private static let filenames = [
         ".swift-package-list.json",
         "swift-package-list-config.json",
     ]
 
     init?(in directory: URL) throws(SwiftPackageListPlugin.Error) {
-        let url = Self.fileNames
+        let url = Self.filenames
             .map { directory.appending(path: $0) }
             .first { FileManager.default.fileExists(atPath: $0.path(percentEncoded: false)) }
         guard let url else { return nil }
@@ -139,7 +139,7 @@ extension SwiftPackageListPlugin.Configuration {
 }
 
 extension SwiftPackageListPlugin.Configuration.OutputType {
-    var fileName: String {
+    var filename: String {
         switch self {
         case .json:
             return "package-list.json"

@@ -56,7 +56,7 @@ struct SwiftPackageListPlugin: Plugin {
                     requiresLicense ? "--requires-license" : "",
                 ] + ignorePackageArguments + customPackagesFilePathArguments,
                 outputFiles: [
-                    outputURL.appending(path: outputType.fileName),
+                    outputURL.appending(path: outputType.filename),
                 ]
             )
         ]

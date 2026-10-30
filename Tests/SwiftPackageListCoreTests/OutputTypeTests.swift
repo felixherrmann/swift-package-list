@@ -40,7 +40,7 @@ struct OutputTypeTests {
     @Test func customOutputURL() throws {
         let project = XcodeProject(fileURL: URL(fileURLWithPath: ""), options: ProjectOptions())
         let outputURL = URL(fileURLWithPath: "/User/test/Desktop")
-        let options = OutputGeneratorOptions(outputURL: outputURL, customFileName: "test")
+        let options = OutputGeneratorOptions(outputURL: outputURL, customFilename: "test")
 
         let anyJSONGenerator = try OutputType.json.outputGenerator(packages: [], project: project, options: options)
         let jsonGenerator = try #require(anyJSONGenerator as? JSONGenerator)
