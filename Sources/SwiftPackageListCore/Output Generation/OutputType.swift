@@ -16,21 +16,6 @@ public enum OutputType: String, CaseIterable {
 }
 
 extension OutputType {
-    private func outputURL(
-        fileName: String,
-        fileExtension: String,
-        options: OutputGeneratorOptions
-    ) throws -> URL {
-        guard let outputURL = options.outputURL else {
-            throw RuntimeError("Output-path is required for output-type \(rawValue)")
-        }
-
-        let fileName = options.customFileName ?? fileName
-        return outputURL
-            .appendingPathComponent(fileName)
-            .appendingPathExtension(fileExtension)
-    }
-
     public func outputGenerator(
         packages: [Package],
         project: some Project,
@@ -38,17 +23,35 @@ extension OutputType {
     ) throws -> any OutputGenerator {
         switch self {
         case .json:
-            let outputURL = try outputURL(fileName: "package-list", fileExtension: "json", options: options)
-            return JSONGenerator(outputURL: outputURL, packages: packages)
+            let outputDestination = outputDestination(fileName: "package-list", extension: "json", options: options)
+            return JSONGenerator(outputDestination: outputDestination, packages: packages)
         case .plist:
-            let outputURL = try outputURL(fileName: "package-list", fileExtension: "plist", options: options)
-            return PropertyListGenerator(outputURL: outputURL, packages: packages)
+            let outputDestination = outputDestination(fileName: "package-list", extension: "plist", options: options)
+            return PropertyListGenerator(outputDestination: outputDestination, packages: packages)
         case .settingsBundle:
-            let outputURL = try outputURL(fileName: "Settings", fileExtension: "bundle", options: options)
+            let outputURL = try outputURL(fileName: "Settings", extension: "bundle", options: options)
             return SettingsBundleGenerator(outputURL: outputURL, packages: packages)
         case .pdf:
-            let outputURL = try outputURL(fileName: "Acknowledgments", fileExtension: "pdf", options: options)
+            let outputURL = try outputURL(fileName: "Acknowledgments", extension: "pdf", options: options)
             return PDFGenerator(outputURL: outputURL, packages: packages, project: project)
+        }
+    }
+
+    private func outputURL(fileName: String, extension: String, options: OutputGeneratorOptions) throws -> URL {
+        guard let outputURL = options.outputURL else {
+            throw RuntimeError("Output path is required for output type '\(rawValue)'")
+        }
+        let fileName = options.customFileName ?? fileName
+        return outputURL.appendingPathComponent(fileName).appendingPathExtension(`extension`)
+    }
+
+    private func outputDestination(fileName: String, extension: String, options: OutputGeneratorOptions) -> OutputDestination {
+        if let outputURL = options.outputURL {
+            let fileName = options.customFileName ?? fileName
+            let url = outputURL.appendingPathComponent(fileName).appendingPathExtension(`extension`)
+            return .file(url: url)
+        } else {
+            return .stdout
         }
     }
 }

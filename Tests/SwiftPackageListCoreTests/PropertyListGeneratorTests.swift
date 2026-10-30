@@ -26,7 +26,7 @@ final class PropertyListGeneratorTests {
             license: "MIT"
         )
 
-        let propertyListGenerator = PropertyListGenerator(outputURL: outputURL, packages: [package])
+        let propertyListGenerator = PropertyListGenerator(outputDestination: .file(url: outputURL), packages: [package])
         try propertyListGenerator.generateOutput()
     }
 

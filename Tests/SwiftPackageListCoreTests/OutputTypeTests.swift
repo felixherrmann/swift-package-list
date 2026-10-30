@@ -13,15 +13,16 @@ import Testing
 struct OutputTypeTests {
     @Test func outputURL() throws {
         let project = XcodeProject(fileURL: URL(fileURLWithPath: ""), options: ProjectOptions())
-        let options = OutputGeneratorOptions(outputURL: URL(fileURLWithPath: "/User/test/Desktop"))
+        let outputURL = URL(fileURLWithPath: "/User/test/Desktop")
+        let options = OutputGeneratorOptions(outputURL: outputURL)
 
         let anyJSONGenerator = try OutputType.json.outputGenerator(packages: [], project: project, options: options)
         let jsonGenerator = try #require(anyJSONGenerator as? JSONGenerator)
-        #expect(jsonGenerator.outputURL.path == "/User/test/Desktop/package-list.json")
+        #expect(jsonGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("package-list.json")))
 
         let anyPlistGenerator = try OutputType.plist.outputGenerator(packages: [], project: project, options: options)
         let plistGenerator = try #require(anyPlistGenerator as? PropertyListGenerator)
-        #expect(plistGenerator.outputURL.path == "/User/test/Desktop/package-list.plist")
+        #expect(plistGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("package-list.plist")))
 
         let anySettingsBundleGenerator = try OutputType.settingsBundle.outputGenerator(
             packages: [],
@@ -38,15 +39,16 @@ struct OutputTypeTests {
 
     @Test func customOutputURL() throws {
         let project = XcodeProject(fileURL: URL(fileURLWithPath: ""), options: ProjectOptions())
-        let options = OutputGeneratorOptions(outputURL: URL(fileURLWithPath: "/User/test/Desktop"), customFileName: "test")
+        let outputURL = URL(fileURLWithPath: "/User/test/Desktop")
+        let options = OutputGeneratorOptions(outputURL: outputURL, customFileName: "test")
 
         let anyJSONGenerator = try OutputType.json.outputGenerator(packages: [], project: project, options: options)
         let jsonGenerator = try #require(anyJSONGenerator as? JSONGenerator)
-        #expect(jsonGenerator.outputURL.path == "/User/test/Desktop/test.json")
+        #expect(jsonGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.json")))
 
         let anyPlistGenerator = try OutputType.plist.outputGenerator(packages: [], project: project, options: options)
         let plistGenerator = try #require(anyPlistGenerator as? PropertyListGenerator)
-        #expect(plistGenerator.outputURL.path == "/User/test/Desktop/test.plist")
+        #expect(plistGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.plist")))
 
         let anySettingsBundleGenerator = try OutputType.settingsBundle.outputGenerator(
             packages: [],

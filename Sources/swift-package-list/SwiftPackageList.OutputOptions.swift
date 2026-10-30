@@ -16,7 +16,7 @@ extension SwiftPackageList {
         var outputType: OutputType = .json
 
         @Option(
-            help: "The path where the file will be written.",
+            help: "The path where the file will be written. If omitted, the content is sent to stdout.",
             completion: .directory
         )
         var outputPath: String?
