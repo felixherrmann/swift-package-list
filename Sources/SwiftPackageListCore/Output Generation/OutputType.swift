@@ -9,7 +9,6 @@ import Foundation
 import SwiftPackageList
 
 public enum OutputType: String, CaseIterable {
-    case stdout
     case json
     case plist
     case settingsBundle = "settings-bundle"
@@ -38,8 +37,6 @@ extension OutputType {
         options: OutputGeneratorOptions = OutputGeneratorOptions()
     ) throws -> any OutputGenerator {
         switch self {
-        case .stdout:
-            return StandardOutputGenerator(packages: packages)
         case .json:
             let outputURL = try outputURL(fileName: "package-list", fileExtension: "json", options: options)
             return JSONGenerator(outputURL: outputURL, packages: packages)

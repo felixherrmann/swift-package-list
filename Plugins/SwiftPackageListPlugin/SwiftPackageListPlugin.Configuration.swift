@@ -123,7 +123,6 @@ extension SwiftPackageListPlugin.Configuration {
 
 extension SwiftPackageListPlugin.Configuration {
     enum OutputType: String, Decodable {
-        case stdout
         case json
         case plist
         case settingsBundle = "settings-bundle"
@@ -140,10 +139,8 @@ extension SwiftPackageListPlugin.Configuration {
 }
 
 extension SwiftPackageListPlugin.Configuration.OutputType {
-    var fileName: String? {
+    var fileName: String {
         switch self {
-        case .stdout:
-            return nil
         case .json:
             return "package-list.json"
         case .plist:

@@ -43,9 +43,9 @@
             "properties": {
                 "outputType": {
                     "type": ["string", "null"],
-                    "enum": ["stdout", "json", "plist", "settings-bundle", "pdf", null],
+                    "enum": ["json", "plist", "settings-bundle", "pdf", null],
                     "default": "json",
-                    "description": "Output format. stdout prints to the build log; other formats generate a file in the plugin work directory."
+                    "description": "Format of the output generated in the plugin work directory."
                 },
                 "packageOrder": {
                     "type": ["string", "null"],

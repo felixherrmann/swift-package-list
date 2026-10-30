@@ -43,13 +43,6 @@ struct SwiftPackageListPlugin: Plugin {
             return ["--custom-packages-file-path", url.path(percentEncoded: false)]
         } ?? []
 
-        let outputFiles: [URL]
-        if let fileName = outputType.fileName {
-            outputFiles = [outputURL.appending(path: fileName)]
-        } else {
-            outputFiles = []
-        }
-
         return [
             .buildCommand(
                 displayName: "SwiftPackageListPlugin",
@@ -62,7 +55,9 @@ struct SwiftPackageListPlugin: Plugin {
                     "--package-order", packageOrder.rawValue,
                     requiresLicense ? "--requires-license" : "",
                 ] + ignorePackageArguments + customPackagesFilePathArguments,
-                outputFiles: outputFiles
+                outputFiles: [
+                    outputURL.appending(path: outputType.fileName),
+                ]
             )
         ]
     }
