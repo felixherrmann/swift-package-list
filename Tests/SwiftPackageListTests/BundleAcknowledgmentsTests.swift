@@ -14,6 +14,7 @@ struct BundleAcknowledgmentsTests {
     @Test(arguments: [
         (Bundle.AcknowledgmentsFormat.pdf, "Acknowledgments.pdf"),
         (.html, "Acknowledgments.html"),
+        (.markdown, "Acknowledgments.md"),
     ])
     func url(format: Bundle.AcknowledgmentsFormat, filename: String) {
         let expectedURL = Bundle.module.bundleURL
@@ -27,6 +28,7 @@ struct BundleAcknowledgmentsTests {
     @Test(arguments: [
         (Bundle.AcknowledgmentsFormat.pdf, "Acknowledgments.pdf"),
         (.html, "Acknowledgments.html"),
+        (.markdown, "Acknowledgments.md"),
     ])
     func path(format: Bundle.AcknowledgmentsFormat, filename: String) {
         let expectedPath = Bundle.module.bundlePath
