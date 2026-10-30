@@ -244,6 +244,12 @@ Use `--output-type html` to generate a standalone `Acknowledgments.html` page th
 
 Use `--output-type markdown` to generate an `Acknowledgments.md` document that preserves license formatting. Project metadata works as described in the [PDF section](#pdf).
 
+#### CSV
+
+Use `--output-type csv` to generate a `package-list.csv` table.
+
+The columns are `kind`, `identity`, `name`, `version`, `branch`, `revision`, `location` and `hasLicense`.
+
 ### Custom Packages
 
 To provide custom packages or other items with licenses, you can use the `--custom-packages-file-path` option with a JSON file in the following format:
