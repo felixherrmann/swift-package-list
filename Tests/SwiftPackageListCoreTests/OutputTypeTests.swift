@@ -35,6 +35,10 @@ struct OutputTypeTests {
         let anyPDFGenerator = try OutputType.pdf.outputGenerator(packages: [], project: project, options: options)
         let pdfGenerator = try #require(anyPDFGenerator as? PDFGenerator)
         #expect(pdfGenerator.outputURL.path == "/User/test/Desktop/Acknowledgments.pdf")
+
+        let anyHTMLGenerator = try OutputType.html.outputGenerator(packages: [], project: project, options: options)
+        let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
+        #expect(htmlGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("Acknowledgments.html")))
     }
 
     @Test func customOutputURL() throws {
@@ -61,5 +65,9 @@ struct OutputTypeTests {
         let anyPDFGenerator = try OutputType.pdf.outputGenerator(packages: [], project: project, options: options)
         let pdfGenerator = try #require(anyPDFGenerator as? PDFGenerator)
         #expect(pdfGenerator.outputURL.path == "/User/test/Desktop/test.pdf")
+
+        let anyHTMLGenerator = try OutputType.html.outputGenerator(packages: [], project: project, options: options)
+        let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
+        #expect(htmlGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.html")))
     }
 }
