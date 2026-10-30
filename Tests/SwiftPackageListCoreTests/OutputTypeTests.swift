@@ -39,6 +39,10 @@ struct OutputTypeTests {
         let anyHTMLGenerator = try OutputType.html.outputGenerator(packages: [], project: project, options: options)
         let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
         #expect(htmlGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("Acknowledgments.html")))
+
+        let anyMarkdownGenerator = try OutputType.markdown.outputGenerator(packages: [], project: project, options: options)
+        let markdownGenerator = try #require(anyMarkdownGenerator as? MarkdownGenerator)
+        #expect(markdownGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("Acknowledgments.md")))
     }
 
     @Test func customOutputURL() throws {
@@ -69,6 +73,10 @@ struct OutputTypeTests {
         let anyHTMLGenerator = try OutputType.html.outputGenerator(packages: [], project: project, options: options)
         let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
         #expect(htmlGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.html")))
+
+        let anyMarkdownGenerator = try OutputType.markdown.outputGenerator(packages: [], project: project, options: options)
+        let markdownGenerator = try #require(anyMarkdownGenerator as? MarkdownGenerator)
+        #expect(markdownGenerator.outputDestination == .file(url: outputURL.appendingPathComponent("test.md")))
     }
 
     @Test func standardOutput() throws {
@@ -85,5 +93,9 @@ struct OutputTypeTests {
         let anyHTMLGenerator = try OutputType.html.outputGenerator(packages: [], project: project)
         let htmlGenerator = try #require(anyHTMLGenerator as? HTMLGenerator)
         #expect(htmlGenerator.outputDestination == .stdout)
+
+        let anyMarkdownGenerator = try OutputType.markdown.outputGenerator(packages: [], project: project)
+        let markdownGenerator = try #require(anyMarkdownGenerator as? MarkdownGenerator)
+        #expect(markdownGenerator.outputDestination == .stdout)
     }
 }

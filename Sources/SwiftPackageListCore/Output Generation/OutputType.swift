@@ -14,6 +14,7 @@ public enum OutputType: String, CaseIterable {
     case settingsBundle = "settings-bundle"
     case pdf
     case html
+    case markdown
 }
 
 extension OutputType {
@@ -38,6 +39,9 @@ extension OutputType {
         case .html:
             let outputDestination = outputDestination(filename: "Acknowledgments", extension: "html", options: options)
             return HTMLGenerator(outputDestination: outputDestination, packages: packages, project: project)
+        case .markdown:
+            let outputDestination = outputDestination(filename: "Acknowledgments", extension: "md", options: options)
+            return MarkdownGenerator(outputDestination: outputDestination, packages: packages, project: project)
         }
     }
 
