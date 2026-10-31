@@ -24,7 +24,7 @@ jobs:
           --arch x86_64
       - name: Generate man page
         run: swift package plugin generate-manual --configuration release
-      - name: Archive executable
+      - name: Archive executable and man page
         run: |
           BIN_PATH=$(swift build \
           --configuration release \
@@ -33,8 +33,9 @@ jobs:
           --show-bin-path)
           tar -c -v -z \
           -f swift-package-list.tar.gz \
-          -C "$BIN_PATH" swift-package-list
-      - name: Upload archived executable to release
+          -C "$BIN_PATH" swift-package-list \
+          -C "$GITHUB_WORKSPACE/.build/plugins/GenerateManual/outputs/swift-package-list" swift-package-list.1
+      - name: Upload archive to release
         run: |
           gh release upload ${{ env.TAG }} swift-package-list.tar.gz
       - name: Create SHA256
