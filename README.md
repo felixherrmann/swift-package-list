@@ -3,7 +3,7 @@
 [![Xcode Build](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/xcodebuild.yml)
 [![SwiftLint](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/felixherrmann/swift-package-list/actions/workflows/swiftlint.yml)
 
-A command-line tool to get all used Swift Package dependencies.
+A command-line tool to list Swift package dependencies and generate acknowledgments.
 
 The output includes all the `Package.resolved` informations and the license from the checkouts.
 You can also generate a JSON, PLIST, Settings.bundle, PDF, HTML, Markdown or CSV file.
