@@ -18,6 +18,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-executable:
+    name: Build Executable
+    runs-on: macos-26
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1.7.0
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v7.0.1
+      - name: Build Executable
+        run: |
+          xcodebuild \
+          -scheme swift-package-list \
+          -destination 'platform=macOS' \
+          build
+
   build-libraries:
     name: Build Libraries
     strategy:
@@ -46,7 +61,7 @@ jobs:
 
   test:
     name: Test
-    needs: build-libraries
+    needs: [build-executable, build-libraries]
     runs-on: macos-26
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
