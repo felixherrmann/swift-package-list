@@ -21,7 +21,7 @@ let package = Package(
         .library(name: "SwiftPackageListUI", targets: ["SwiftPackageListUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.1"),
     ],
     targets: [
         .executableTarget(
