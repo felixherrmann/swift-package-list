@@ -27,7 +27,7 @@ jobs:
     strategy:
       matrix:
         xcode:
-          - version: '26.0.1'
+          - version: '26.2'
             runner: macos-26
           - version: latest-stable
             runner: xcode-27
@@ -49,7 +49,7 @@ jobs:
     strategy:
       matrix:
         xcode:
-          - version: '26.0.1'
+          - version: '26.2'
             runner: macos-26
           - version: latest-stable
             runner: xcode-27
@@ -81,7 +81,7 @@ jobs:
     strategy:
       matrix:
         xcode:
-          - version: '26.0.1'
+          - version: '26.2'
             runner: macos-26
           - version: latest-stable
             runner: xcode-27
