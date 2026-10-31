@@ -5,16 +5,26 @@ on:
     branches:
       - master
       - 'release/**'
-    paths-ignore:
-      - 'README.md'
-      - 'Documentation/**'
+    paths:
+      - 'Package.swift'
+      - 'Package.resolved'
+      - 'Sources/**'
+      - 'Plugins/**'
+      - 'Tests/**'
+      - '.swiftpm/xcode/**'
+      - '.github/workflows/xcodebuild.yml'
   pull_request:
     branches:
       - master
       - 'release/**'
-    paths-ignore:
-      - 'README.md'
-      - 'Documentation/**'
+    paths:
+      - 'Package.swift'
+      - 'Package.resolved'
+      - 'Sources/**'
+      - 'Plugins/**'
+      - 'Tests/**'
+      - '.swiftpm/xcode/**'
+      - '.github/workflows/xcodebuild.yml'
   workflow_dispatch:
 
 concurrency:
