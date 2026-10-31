@@ -18,8 +18,7 @@ Additionally there is a Swift Package to read the generated package-list file fr
 #### Using [Homebrew](https://brew.sh)
 
 ```shell
-brew tap felixherrmann/tap
-brew install swift-package-list
+brew install felixherrmann/tap/swift-package-list
 ```
 
 #### Using [Mint](https://github.com/yonaskolb/mint):
