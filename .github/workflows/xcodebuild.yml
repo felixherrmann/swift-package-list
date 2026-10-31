@@ -45,7 +45,7 @@ jobs:
           build
 
   build-libraries:
-    name: Build ${{ matrix.scheme }} (${{ matrix.destination }}, Xcode ${{ matrix.xcode.version }})
+    name: Build Libraries (${{ matrix.destination }}, Xcode ${{ matrix.xcode.version }})
     strategy:
       matrix:
         xcode:
@@ -53,9 +53,6 @@ jobs:
             runner: macos-26
           - version: latest-stable
             runner: xcode-27
-        scheme:
-          - SwiftPackageList
-          - SwiftPackageListUI
         destination:
           - generic/platform=macOS
           - generic/platform=macOS,variant=Mac Catalyst
@@ -69,10 +66,15 @@ jobs:
         with:
           xcode-version: ${{ matrix.xcode.version }}
       - uses: actions/checkout@v7.0.1
-      - name: Build Scheme
+      - name: Build SwiftPackageList
         run: |
           xcodebuild \
-          -scheme ${{ matrix.scheme }} \
+          -scheme SwiftPackageList \
+          -destination '${{ matrix.destination }}'
+      - name: Build SwiftPackageListUI
+        run: |
+          xcodebuild \
+          -scheme SwiftPackageListUI \
           -destination '${{ matrix.destination }}'
 
   test:
