@@ -19,7 +19,7 @@ on:
 
 jobs:
   build-executable:
-    name: Build Executable
+    name: Build Executable (Xcode ${{ matrix.xcode.version }})
     strategy:
       matrix:
         xcode:
@@ -41,7 +41,7 @@ jobs:
           build
 
   build-libraries:
-    name: Build Libraries
+    name: Build ${{ matrix.scheme }} (${{ matrix.destination }}, Xcode ${{ matrix.xcode.version }})
     strategy:
       matrix:
         xcode:
@@ -72,7 +72,7 @@ jobs:
           -destination '${{ matrix.destination }}'
 
   test:
-    name: Test
+    name: Test (Xcode ${{ matrix.xcode.version }})
     needs: [build-executable, build-libraries]
     strategy:
       matrix:
