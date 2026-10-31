@@ -20,11 +20,18 @@ on:
 jobs:
   build-executable:
     name: Build Executable
-    runs-on: macos-26
+    strategy:
+      matrix:
+        xcode:
+          - version: '26.0.1'
+            runner: macos-26
+          - version: latest-stable
+            runner: xcode-27
+    runs-on: ${{ matrix.xcode.runner }}
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ matrix.xcode.version }}
       - uses: actions/checkout@v7.0.1
       - name: Build Executable
         run: |
@@ -37,6 +44,11 @@ jobs:
     name: Build Libraries
     strategy:
       matrix:
+        xcode:
+          - version: '26.0.1'
+            runner: macos-26
+          - version: latest-stable
+            runner: xcode-27
         scheme:
           - SwiftPackageList
           - SwiftPackageListUI
@@ -47,11 +59,11 @@ jobs:
           - generic/platform=tvOS
           - generic/platform=watchOS
           - generic/platform=visionOS
-    runs-on: macos-26
+    runs-on: ${{ matrix.xcode.runner }}
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ matrix.xcode.version }}
       - uses: actions/checkout@v7.0.1
       - name: Build Scheme
         run: |
@@ -62,11 +74,18 @@ jobs:
   test:
     name: Test
     needs: [build-executable, build-libraries]
-    runs-on: macos-26
+    strategy:
+      matrix:
+        xcode:
+          - version: '26.0.1'
+            runner: macos-26
+          - version: latest-stable
+            runner: xcode-27
+    runs-on: ${{ matrix.xcode.runner }}
     steps:
       - uses: maxim-lobanov/setup-xcode@v1.7.0
         with:
-          xcode-version: latest-stable
+          xcode-version: ${{ matrix.xcode.version }}
       - uses: actions/checkout@v7.0.1
       - name: Install Tuist
         run: brew install tuist
