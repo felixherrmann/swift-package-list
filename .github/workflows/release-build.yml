@@ -22,6 +22,8 @@ jobs:
           --product swift-package-list \
           --arch arm64 \
           --arch x86_64
+      - name: Generate man page
+        run: swift package plugin generate-manual --configuration release
       - name: Archive executable
         run: |
           BIN_PATH=$(swift build \
