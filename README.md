@@ -21,7 +21,7 @@ Additionally there is a Swift Package to read the generated package-list file fr
 brew install felixherrmann/tap/swift-package-list
 ```
 
-#### Using [Mint](https://github.com/yonaskolb/mint):
+#### Using [Mint](https://github.com/yonaskolb/mint)
 
 ```shell
 mint install felixherrmann/swift-package-list
