@@ -25,7 +25,6 @@ struct SwiftPackageListPlugin: Plugin {
         let outputType = targetOptions?.outputType ?? .json
         let outputURL = locations.pluginWorkDirectory
         let packageOrder = targetOptions?.packageOrder ?? .source
-        let requiresLicense = targetOptions?.requiresLicense ?? true
 
         let sourcePackagesPath: URL
         if let customSourcePackagesPath = environmentOptions?.customSourcePackagesPath {
@@ -34,34 +33,37 @@ struct SwiftPackageListPlugin: Plugin {
             sourcePackagesPath = try locateSourcePackagesDirectory(from: locations.pluginWorkDirectory)
         }
 
-        let ignorePackageArguments: [String] = targetOptions?.ignorePackages?.flatMap { identity in
-            return ["--ignore-package", identity]
-        } ?? []
+        var arguments = [
+            locations.project.path(percentEncoded: false),
+            "--custom-source-packages-path", sourcePackagesPath.path(percentEncoded: false),
+            "--output-type", outputType.rawValue,
+            "--output-path", outputURL.path(percentEncoded: false),
+            "--package-order", packageOrder.rawValue,
+        ]
 
-        let includePackageArguments: [String] = targetOptions?.includePackages?.flatMap { identity in
-            return ["--include-package", identity]
-        } ?? []
+        if targetOptions?.requiresLicense ?? true {
+            arguments.append("--requires-license")
+        }
 
-        let customPackagesFilePathArguments: [String] = targetOptions?.customPackagesFilePaths?.flatMap { filePath in
+        for identity in targetOptions?.ignorePackages ?? [] {
+            arguments.append(contentsOf: ["--ignore-package", identity])
+        }
+
+        for identity in targetOptions?.includePackages ?? [] {
+            arguments.append(contentsOf: ["--include-package", identity])
+        }
+
+        for filePath in targetOptions?.customPackagesFilePaths ?? [] {
             let url = URL(filePath: filePath, relativeTo: locations.projectDirectory)
-            return ["--custom-packages-file-path", url.path(percentEncoded: false)]
-        } ?? []
+            arguments.append(contentsOf: ["--custom-packages-file-path", url.path(percentEncoded: false)])
+        }
 
         return [
             .buildCommand(
                 displayName: "SwiftPackageListPlugin",
                 executable: locations.executable,
-                arguments: [
-                    locations.project.path(percentEncoded: false),
-                    "--custom-source-packages-path", sourcePackagesPath.path(percentEncoded: false),
-                    "--output-type", outputType.rawValue,
-                    "--output-path", outputURL.path(percentEncoded: false),
-                    "--package-order", packageOrder.rawValue,
-                    requiresLicense ? "--requires-license" : "",
-                ] + ignorePackageArguments + includePackageArguments + customPackagesFilePathArguments,
-                outputFiles: [
-                    outputURL.appending(path: outputType.filename),
-                ]
+                arguments: arguments,
+                outputFiles: [outputURL.appending(path: outputType.filename)]
             )
         ]
     }
