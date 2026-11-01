@@ -67,6 +67,15 @@
                     "default": [],
                     "description": "Package identity patterns to exclude from the output. Glob patterns are supported."
                 },
+                "includePackages": {
+                    "type": ["array", "null"],
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "default": [],
+                    "description": "Package identity patterns to include even when matched by ignorePackages. Glob patterns are supported. Packages must still have a license when requiresLicense is true. Unmatched packages are unaffected."
+                },
                 "customPackagesFilePaths": {
                     "type": ["array", "null"],
                     "items": {
