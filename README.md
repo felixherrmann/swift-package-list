@@ -59,6 +59,13 @@ In addition to that you can specify the following options:
 | --version                                                     | Show the version.                                                                                                                                            |
 | -h, --help                                                    | Show help information.                                                                                                                                       |
 
+#### Filtering
+
+The provided package filters work in the following order: `--requires-license` -> `--include-package` -> `--ignore-package`.
+Package identity values support glob patterns.
+
+For example, to achieve an include-only setup ignore everything first: `--ignore-package '*' --include-package 'swift-argument-parser'`
+
 ### Build Tool Plugin
 
 The easiest way to add this tool to your project is using the provided build-tool plugin, available for both Xcode projects and Swift packages.
