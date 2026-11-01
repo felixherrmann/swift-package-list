@@ -1,0 +1,60 @@
+name: Version Bump
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Semver component to bump
+        required: true
+        type: choice
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version-bump:
+    name: Version Bump
+    runs-on: ubuntu-latest
+    env:
+      VERSION_FILE: Sources/swift-package-list/SwiftPackageList.swift
+    steps:
+      - name: Validate branch
+        run: test "$GITHUB_REF_TYPE" = branch
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.ref }}
+      - name: Read version
+        id: current-version
+        run: |
+          VERSION=$(sed -nE 's/^[[:blank:]]*version: "([^"]+)"[[:blank:]]*$/\1/p' "$VERSION_FILE")
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo 'Expected exactly one CLI version in MAJOR.MINOR.PATCH format' >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Bump version
+        id: version
+        uses: christian-draeger/increment-semantic-version@1.2.3
+        with:
+          current-version: ${{ steps.current-version.outputs.version }}
+          version-fragment: ${{ inputs.bump }}
+      - name: Update version
+        env:
+          VERSION: ${{ steps.version.outputs.next-version }}
+        run: |
+          sed -i -E "s/^([[:blank:]]*version: \")[^\"]+(\"[[:blank:]]*)$/\1$VERSION\2/" "$VERSION_FILE"
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v7.2.1
+        with:
+          commit_message: Bump version (${{ steps.version.outputs.next-version }})
+          branch: ${{ github.ref_name }}
+          file_pattern: ${{ env.VERSION_FILE }}
