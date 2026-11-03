@@ -1,7 +1,7 @@
 # Swift Package List 4 Migration Guide
 
-This guide eases the transition of the existing apps that use Swift Package List 3.x to the
-latest version of the tool.
+This guide eases the transition of the existing apps that use Swift Package List 3.x to
+version 4 of the tool.
 
 ### Minimum Requirements
 
