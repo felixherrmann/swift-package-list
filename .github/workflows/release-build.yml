@@ -43,30 +43,3 @@ jobs:
         run: |
           SHA256=($(shasum -a 256 swift-package-list.tar.gz))
           echo "sha256=$SHA256" >> "$GITHUB_OUTPUT"
-
-  update-formula:
-    name: Update Formula
-    runs-on: ubuntu-latest
-    needs: release-build
-    env:
-      TAG: ${{ github.ref_name }}
-      SHA256: ${{ needs.release-build.outputs.sha }}
-    steps:
-      - name: Checkout felixherrmann/homebrew-tap
-        uses: actions/checkout@v7.0.1
-        with:
-          repository: 'felixherrmann/homebrew-tap'
-      - name: Update Formula
-        run: |
-          sed -i "s|download\/.*\/swift-package-list|download\/$TAG\/swift-package-list|g" Formula/swift-package-list.rb
-          sed -i "s|sha256 \".*\"|sha256 \"$SHA256\"|g" Formula/swift-package-list.rb
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v8.1.1
-        with:
-          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
-          branch: swift-package-list/${{ env.TAG }}
-          title: Release swift-package-list ${{ env.TAG }}
-          body: This automated PR will update swift-package-list to version ${{ env.TAG }}.
-          commit-message: Bump swift-package-list to ${{ env.TAG }}
-          labels: release, automated pr
-          delete-branch: true
