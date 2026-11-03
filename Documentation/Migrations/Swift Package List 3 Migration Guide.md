@@ -1,6 +1,6 @@
 # Swift Package List 3 Migration Guide
 
-This guide eases the transition of the existing apps that use SwiftPackageList 2.x to
+This guide eases the transition of the existing apps that use Swift Package List 2.x to
 version 3 of the tool.
 
 ### Minimum Requirements
@@ -23,10 +23,10 @@ both scanning and file generation, the existing file-generation behavior moved i
 a separate `generate` subcommand. Add `generate` before the project path:
 
 ```shell
-// SwiftPackageList 2
+// Swift Package List 2
 swift-package-list Test.xcodeproj --file-type json --output-path .
 
-// SwiftPackageList 3
+// Swift Package List 3
 swift-package-list generate Test.xcodeproj --file-type json --output-path .
 ```
 

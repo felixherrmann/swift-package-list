@@ -1,6 +1,6 @@
 # Swift Package List 2 Migration Guide
 
-This guide eases the transition of the existing apps that use SwiftPackageList 1.x to
+This guide eases the transition of the existing apps that use Swift Package List 1.x to
 version 2 of the tool.
 
 ### Minimum Requirements
