@@ -12,6 +12,7 @@ extension SwiftPackageListPlugin {
         case configurationUnavailable(url: URL, underlyingError: Swift.Error)
         case configurationInvalid(url: URL, underlyingError: Swift.Error)
         case sourcePackagesNotFound(pluginWorkDirectoryURL: URL)
+        case legacyOutputRemovalFailed(url: URL, underlyingError: Swift.Error)
     }
 }
 
@@ -26,6 +27,8 @@ extension SwiftPackageListPlugin.Error: CustomStringConvertible {
             return "The configuration at \(url.path(percentEncoded: false)) has an invalid format: \(error)"
         case .sourcePackagesNotFound(pluginWorkDirectoryURL: let url):
             return "SourcePackages directory not found from \(url.path(percentEncoded: false))"
+        case .legacyOutputRemovalFailed(url: let url, underlyingError: let error):
+            return "The legacy output at \(url.path(percentEncoded: false)) could not be removed: \(error)"
         }
     }
 }

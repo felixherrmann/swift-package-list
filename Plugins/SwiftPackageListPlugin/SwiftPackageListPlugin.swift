@@ -33,6 +33,8 @@ struct SwiftPackageListPlugin: Plugin {
             sourcePackagesPath = try locateSourcePackagesDirectory(from: locations.pluginWorkDirectory)
         }
 
+        try removeLegacyOutput(at: outputURL.appending(path: outputType.filename), outputType: outputType)
+
         var arguments = [
             locations.project.path(percentEncoded: false),
             "--custom-source-packages-path", sourcePackagesPath.path(percentEncoded: false),
@@ -78,5 +80,21 @@ struct SwiftPackageListPlugin: Plugin {
             url = url.deletingLastPathComponent()
         }
         throw .sourcePackagesNotFound(pluginWorkDirectoryURL: pluginWorkDirectoryURL)
+    }
+
+    private func removeLegacyOutput(at url: URL, outputType: Configuration.OutputType) throws(SwiftPackageListPlugin.Error) {
+        switch outputType {
+        case .settingsBundle:
+            let legacyAcknowledgementsPath = url.appending(path: "Acknowledgements.plist").path(percentEncoded: false)
+            guard FileManager.default.fileExists(atPath: legacyAcknowledgementsPath) else { return }
+        case _:
+            return
+        }
+
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            throw .legacyOutputRemovalFailed(url: url, underlyingError: error)
+        }
     }
 }
