@@ -9,6 +9,6 @@ import Foundation
 
 protocol File {
     var url: URL { get }
-    
+
     init(url: URL)
 }

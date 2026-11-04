@@ -19,12 +19,16 @@ on:
       - '**.swift'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   swiftlint:
     name: SwiftLint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
       - uses: norio-nomura/action-swiftlint@3.2.1
         with:
           args: --strict

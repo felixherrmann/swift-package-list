@@ -14,7 +14,7 @@ import SwiftPackageList
 struct PackageResolved: VersionedFile {
     let url: URL
     let storage: Storage
-    
+
     init(url: URL) throws {
         self.url = url
         self.storage = try Storage(url: url)
@@ -35,12 +35,12 @@ extension PackageResolved.Storage: VersionedFileStorage {
     private struct Version: Decodable {
         let version: Int
     }
-    
+
     init(url: URL) throws {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         let version = try decoder.decode(Version.self, from: data)
-        
+
         switch version.version {
         case 1:
             let v1 = try decoder.decode(V1.self, from: data)
@@ -68,15 +68,15 @@ extension PackageResolved.Storage {
                     let revision: String
                     let version: String?
                 }
-                
+
                 let package: String
                 let repositoryURL: String
                 let state: State
             }
-            
+
             let pins: [Pin]
         }
-        
+
         let object: Object
         let version: Int
     }
@@ -91,7 +91,7 @@ extension PackageResolved.Storage.V1.Object.Pin {
             return .remoteSourceControl
         }
     }
-    
+
     /// Source: https://github.com/apple/swift-package-manager/blob/d457fa46b396248e46361776faacb9e0020b92d1/Sources/PackageModel/PackageIdentity.swift#L304
     var identity: String {
         let url = URL(string: repositoryURL) ?? URL(fileURLWithPath: repositoryURL)
@@ -112,13 +112,13 @@ extension PackageResolved.Storage {
                 let version: String?
                 let branch: String?
             }
-            
+
             let identity: String
             let kind: Package.Kind
             let location: String
             let state: State
         }
-        
+
         let pins: [Pin]
         let version: Int
     }
@@ -147,17 +147,17 @@ extension PackageResolved {
             return try packages(pins: packageResolved.pins, sourcePackages: sourcePackages, configuration: configuration)
         }
     }
-    
+
     private func packages(
         pins: [PackageResolved.Storage.V1.Object.Pin],
         sourcePackages: SourcePackages
     ) throws -> [Package] {
         let checkouts = sourcePackages.checkouts
-        
+
         return try pins.map { pin -> Package in
             let packageSource = checkouts.packageSource(location: pin.repositoryURL)
             let license = try packageSource?.license?.content
-            
+
             return Package(
                 kind: pin.kind,
                 identity: pin.identity,
@@ -170,7 +170,7 @@ extension PackageResolved {
             )
         }
     }
-    
+
     private func packages(
         pins: [PackageResolved.Storage.V2.Pin],
         sourcePackages: SourcePackages,
@@ -180,11 +180,11 @@ extension PackageResolved {
         let registryDownloads = sourcePackages.registryDownloads
         let workspaceState = try sourcePackages.workspaceState
         let mirrors = try configuration?.mirrors
-        
+
         return try pins.map { pin -> Package in
             let name = workspaceState.packageName(for: pin.identity) ?? pin.identity
             let location = mirrors?.mirror(for: pin.location) ?? pin.location
-            
+
             let packageSource: PackageSource?
             switch pin.kind {
             case .localSourceControl:
@@ -198,7 +198,7 @@ extension PackageResolved {
                 packageSource = nil
             }
             let license = try packageSource?.license?.content
-            
+
             return Package(
                 kind: pin.kind,
                 identity: pin.identity,

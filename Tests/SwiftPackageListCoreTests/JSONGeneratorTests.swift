@@ -5,17 +5,16 @@
 //  Created by Felix Herrmann on 16.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
 import SwiftPackageList
+
 @testable import SwiftPackageListCore
 
-final class JSONGeneratorTests: XCTestCase {
-    
-    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list.json")
-    
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
+final class JSONGeneratorTests {
+    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list-\(UUID()).json")
+
+    init() throws {
         let package = Package(
             kind: .remoteSourceControl,
             identity: "test",
@@ -26,17 +25,16 @@ final class JSONGeneratorTests: XCTestCase {
             location: "https://github.com/test/test",
             license: "MIT"
         )
-        
-        let jsonGenerator = JSONGenerator(outputURL: outputURL, packages: [package])
+
+        let jsonGenerator = JSONGenerator(outputDestination: .file(url: outputURL), packages: [package])
         try jsonGenerator.generateOutput()
     }
-    
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        try FileManager.default.removeItem(at: outputURL)
+
+    deinit {
+        try? FileManager.default.removeItem(at: outputURL)
     }
-    
-    func testOutput() throws {
+
+    @Test func output() throws {
         let output = try String(contentsOf: outputURL)
         // swiftlint:disable indentation_width
         let expectedOutput = """
@@ -53,6 +51,6 @@ final class JSONGeneratorTests: XCTestCase {
         ]
         """
         // swiftlint:enable indentation_width
-        XCTAssertEqual(output, expectedOutput)
+        #expect(output == expectedOutput)
     }
 }

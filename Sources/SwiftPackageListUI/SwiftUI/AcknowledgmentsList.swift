@@ -39,19 +39,21 @@ import SwiftPackageList
 /// - Important: This view must be used inside a `NavigationStack` to function properly.
 public struct AcknowledgmentsList<Provider: PackageProvider>: View {
     private let _packageProvider: Provider
+    private let _logger = Logger(subsystem: "com.felixherrmann.swift-package-list", category: "AcknowledgmentsList")
+
     @State private var _packages: [Package] = []
-    
+
     /// Creates a ``AcknowledgmentsList`` for a package provider.
     /// - Parameters:
     ///   - packageProvider: The package provider object used as the source of data.
     public init(packageProvider: Provider = .json()) {
         self._packageProvider = packageProvider
     }
-    
+
     public var body: some View {
         List {
             Section(
-                header: Text("acknowledgments.section-title", bundle: .module, comment: "Section title for the license list")
+                header: Text("SPL_ACKNOWLEDGMENTS_SECTION_TITLE", bundle: .module, comment: "Section title for the license list")
             ) {
                 ForEach(_packages, id: \.self) { package in
                     NavigationLink(package.name) {
@@ -60,37 +62,28 @@ public struct AcknowledgmentsList<Provider: PackageProvider>: View {
                 }
             }
         }
-#if os(visionOS)
         .navigationTitle(
-            Text("acknowledgments.title", bundle: .module, comment: "Navigation bar title of the license list")
+            Text("SPL_ACKNOWLEDGMENTS_TITLE", bundle: .module, comment: "Navigation bar title of the license list")
         )
+#if os(iOS) || os(watchOS) || os(visionOS)
         .navigationBarTitleDisplayMode(.inline)
-        .task {
+#endif
+#if os(macOS)
+        .backport.task {
             _loadPackages()
         }
 #else
-        .backport.navigationTitle(
-            Text("acknowledgments.title", bundle: .module, comment: "Navigation bar title of the license list")
-        )
-#if os(iOS) || os(watchOS)
-        .backport.navigationBarTitleDisplayMode(.inline)
-#endif
-        .backport.task {
+        .task {
             _loadPackages()
         }
 #endif
     }
-    
+
     private func _loadPackages() {
         do {
             _packages = try _packageProvider.packages()
         } catch {
-            os_log(
-                "Error: %@",
-                log: OSLog(subsystem: "com.felixherrmann.swift-package-list", category: "AcknowledgmentsList"),
-                type: .error,
-                String(describing: error)
-            )
+            _logger.error("Failed to load packages: \(String(describing: error))")
         }
     }
 }

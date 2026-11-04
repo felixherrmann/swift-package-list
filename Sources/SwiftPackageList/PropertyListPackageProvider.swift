@@ -9,17 +9,17 @@ import Foundation
 
 /// A package provider for `.plist` package-lists stored in a `Bundle`.
 public struct PropertyListPackageProvider: PackageProvider {
-    
+
     /// The bundle to read the Property List file from.
     ///
     /// Default value is `Bundle.main`.
     public var bundle: Bundle
-    
+
     /// The name of the Property List file, usually specified with the `--custom-file-name` option.
     ///
     ///  Default value is `"package-list"`.
     public var fileName: String
-    
+
     /// Creates a Property List package provider.
     /// - Parameters:
     ///   - bundle: The bundle to read the Property List file from.
@@ -28,7 +28,7 @@ public struct PropertyListPackageProvider: PackageProvider {
         self.bundle = bundle
         self.fileName = fileName
     }
-    
+
     public func packages() throws -> [Package] {
         guard let path = bundle.path(forResource: fileName, ofType: "plist") else {
             throw CocoaError(.fileNoSuchFile, userInfo: ["file_name": fileName, "file_type": "plist"])

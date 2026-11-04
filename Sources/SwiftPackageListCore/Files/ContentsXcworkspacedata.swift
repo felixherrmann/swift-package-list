@@ -23,11 +23,11 @@ extension ContentsXcworkspacedata {
             }
         }
     }
-    
+
     private var workspaceParentDirectoryURL: URL {
         return url.deletingLastPathComponent().deletingLastPathComponent()
     }
-    
+
     private func locationURL(for element: XMLElement) -> URL? {
         if let location = element.attribute(forName: "location")?.stringValue {
             return resolvedURL(for: location, in: element)
@@ -37,12 +37,12 @@ extension ContentsXcworkspacedata {
             return nil
         }
     }
-    
+
     private func resolvedURL(for location: String, in element: XMLElement) -> URL? {
         let components = location.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
         guard components.count == 2 else { return nil }
         let path = String(components[1])
-        
+
         switch components[0] {
         case "group":
             guard !path.isEmpty else { return parentGroupDirectoryURL(for: element) }
@@ -57,7 +57,7 @@ extension ContentsXcworkspacedata {
             return nil
         }
     }
-    
+
     private func parentGroupDirectoryURL(for element: XMLElement) -> URL? {
         if let parent = element.parent as? XMLElement, parent.name == "Group" {
             return locationURL(for: parent)

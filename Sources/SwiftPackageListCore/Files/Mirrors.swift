@@ -12,7 +12,7 @@ import Foundation
 struct Mirrors: VersionedFile {
     let url: URL
     let storage: Storage
-    
+
     init(url: URL) throws {
         self.url = url
         self.storage = try Storage(url: url)
@@ -31,12 +31,12 @@ extension Mirrors.Storage: VersionedFileStorage {
     private struct Version: Decodable {
         let version: Int
     }
-    
+
     init(url: URL) throws {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         let version = try decoder.decode(Version.self, from: data)
-        
+
         switch version.version {
         case 1:
             let v1 = try decoder.decode(V1.self, from: data)
@@ -55,7 +55,7 @@ extension Mirrors.Storage {
             let mirror: String
             let original: String
         }
-        
+
         let object: [Object]
         let version: Int
     }

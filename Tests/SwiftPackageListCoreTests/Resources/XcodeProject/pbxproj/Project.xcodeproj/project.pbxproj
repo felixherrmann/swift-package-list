@@ -101,7 +101,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
-				ORGANIZATIONNAME = SwiftPackageList;
+				ORGANIZATIONNAME = "Swift Package List";
 				TargetAttributes = {
 					9D2C711728319F4A000D126A = {
 						CreatedOnToolsVersion = 13.3.1;

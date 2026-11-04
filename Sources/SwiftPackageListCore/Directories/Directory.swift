@@ -9,6 +9,6 @@ import Foundation
 
 protocol Directory {
     var url: URL { get }
-    
+
     init(url: URL)
 }

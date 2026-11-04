@@ -2,7 +2,7 @@
     "object": {
         "pins": [
             {
-                "package": "SwiftPackageList",
+                "package": "swift-package-list",
                 "repositoryURL": "/Users/example/swift-package-list",
                 "state": {
                     "branch": null,
@@ -11,7 +11,7 @@
                 }
             },
             {
-                "package": "SwiftPackageList",
+                "package": "swift-package-list",
                 "repositoryURL": "https://github.com/felixherrmann/swift-package-list",
                 "state": {
                     "branch": null,

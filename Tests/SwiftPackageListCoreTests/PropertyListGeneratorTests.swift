@@ -5,17 +5,16 @@
 //  Created by Felix Herrmann on 16.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
 import SwiftPackageList
+
 @testable import SwiftPackageListCore
 
-final class PropertyListGeneratorTests: XCTestCase {
-    
-    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list.plist")
-    
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
+final class PropertyListGeneratorTests {
+    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("package-list-\(UUID()).plist")
+
+    init() throws {
         let package = Package(
             kind: .remoteSourceControl,
             identity: "test",
@@ -26,17 +25,16 @@ final class PropertyListGeneratorTests: XCTestCase {
             location: "https://github.com/test/test",
             license: "MIT"
         )
-        
-        let propertyListGenerator = PropertyListGenerator(outputURL: outputURL, packages: [package])
+
+        let propertyListGenerator = PropertyListGenerator(outputDestination: .file(url: outputURL), packages: [package])
         try propertyListGenerator.generateOutput()
     }
-    
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        try FileManager.default.removeItem(at: outputURL)
+
+    deinit {
+        try? FileManager.default.removeItem(at: outputURL)
     }
-    
-    func testOutput() throws {
+
+    @Test func output() throws {
         let output = try String(contentsOf: outputURL)
         // swiftlint:disable indentation_width
         let expectedOutput = """
@@ -62,10 +60,10 @@ final class PropertyListGeneratorTests: XCTestCase {
         	</dict>
         </array>
         </plist>
-        
+
         """
         // tabs and line breaks are important here
         // swiftlint:enable indentation_width
-        XCTAssertEqual(output, expectedOutput)
+        #expect(output == expectedOutput)
     }
 }

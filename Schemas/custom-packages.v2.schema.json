@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/felixherrmann/swift-package-list/master/Schemas/custom-packages.v2.schema.json",
+    "title": "Swift Package List Custom Packages v2",
+    "description": "Custom packages and licenses for Swift Package List. Relative license paths are resolved against the custom packages file's directory.",
+    "type": "object",
+    "required": ["version", "packages"],
+    "additionalProperties": false,
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "The JSON Schema used by editors to validate this file."
+        },
+        "version": {
+            "type": "integer",
+            "const": 2,
+            "description": "The custom packages format version. Must be 2."
+        },
+        "packages": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/package"
+            },
+            "description": "Custom packages to include in the output. These are subject to the same filtering and ordering as discovered packages."
+        }
+    },
+    "$defs": {
+        "package": {
+            "type": "object",
+            "required": ["identity", "name"],
+            "additionalProperties": false,
+            "properties": {
+                "identity": {
+                    "type": "string",
+                    "description": "The package identity used for filtering and ordering."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The display name of the package."
+                },
+                "version": {
+                    "type": ["string", "null"],
+                    "description": "The package version."
+                },
+                "location": {
+                    "type": ["string", "null"],
+                    "default": "",
+                    "description": "The package location, such as a local path or repository URL. Defaults to an empty string when omitted or null."
+                },
+                "license": {
+                    "$ref": "#/$defs/license"
+                }
+            }
+        },
+        "license": {
+            "type": ["object", "null"],
+            "description": "The license source. Provide exactly one of raw, file or directory, or null for no license.",
+            "minProperties": 1,
+            "maxProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+                "raw": {
+                    "type": "string",
+                    "description": "The inline license text."
+                },
+                "file": {
+                    "type": "string",
+                    "description": "Path to a UTF-8 license file. Absolute paths and paths relative to the custom packages file's directory are supported."
+                },
+                "directory": {
+                    "type": "string",
+                    "description": "Path to a directory to detect a license in. Absolute paths and paths relative to the custom packages file's directory are supported."
+                }
+            }
+        }
+    }
+}

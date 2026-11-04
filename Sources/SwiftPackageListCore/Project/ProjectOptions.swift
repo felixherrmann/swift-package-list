@@ -8,7 +8,7 @@
 public struct ProjectOptions {
     public var customDerivedDataPath: String?
     public var customSourcePackagesPath: String?
-    
+
     public init(
         customDerivedDataPath: String? = nil,
         customSourcePackagesPath: String? = nil

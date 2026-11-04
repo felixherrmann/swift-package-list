@@ -7,30 +7,69 @@
 
 import Foundation
 
-struct License: File {
-    let url: URL
-}
+public struct License: File {
+    public let url: URL
 
-extension License {
-    static let allowedFileNames = [
-        "license",
-        "licence",
-        "copying",
-        "unlicense",
-    ]
-    
-    init?(uncheckedURL url: URL) {
-        let fileName = url
-            .deletingPathExtension()
-            .lastPathComponent
-            .lowercased()
-        guard Self.allowedFileNames.contains(fileName) else { return nil }
-        self.init(url: url)
+    public init(url: URL) {
+        self.url = url
     }
 }
 
 extension License {
-    var content: String {
+    /// Ordered by Licensee's filename preference: https://github.com/licensee/licensee/blob/main/lib/licensee/project_files/license_file.rb
+    private static let filenamePatterns: [String] = {
+        let license = #"(?:un)?licen[sc]e"#
+        let preferredExtension = #"\.(?:md|markdown|txt|html)"#
+        let anyExtension = #"\.([^./]|\.\d)+"#
+        let otherExtension = #"\.(?!xml|sh|go|gemspec)([^./]|\.\d)+"#
+        return [
+            #"\A"# + license + #"\z"#,
+            #"\A"# + license + preferredExtension + #"\z"#,
+            #"\Acopying\z"#,
+            #"\Acopying"# + preferredExtension + #"\z"#,
+            #"\A"# + license + #"\.(?!spdx|header)([^./]|\.\d)+\z"#,
+            #"\Acopying"# + anyExtension + #"\z"#,
+            #"\A"# + license + #"[-_][^.]+(?:"# + otherExtension + #")?\z"#,
+            #"\Acopying[-_][^.]+(?:"# + otherExtension + #")?\z"#,
+            #"\A\w+[-_]"# + license + #"[^.]*(?:"# + otherExtension + #")?\z"#,
+            #"\A\w+[-_]copying[^.]*(?:"# + otherExtension + #")?\z"#,
+            #"\Aofl"# + preferredExtension + #"\z"#,
+            #"\Aofl"# + otherExtension + #"\z"#,
+            #"\Aofl\z"#,
+            #"\Acopyright\z"#,
+            #"\Acopyright"# + preferredExtension + #"\z"#,
+            #"\Acopyright"# + otherExtension + #"\z"#,
+            #"\Acopyright[-_][^.]+(?:"# + otherExtension + #")?\z"#,
+            #"\Apatents\z"#,
+            #"\Apatents"# + otherExtension + #"\z"#,
+        ]
+    }()
+
+    private static func checkFilename(_ filename: String, for pattern: String) -> Bool {
+        return filename.range(of: pattern, options: [.regularExpression, .caseInsensitive]) != nil
+    }
+
+    public init?(uncheckedURL url: URL) {
+        guard Self.filenamePatterns.contains(where: { Self.checkFilename(url.lastPathComponent, for: $0) }) else { return nil }
+        self.init(url: url)
+    }
+}
+
+extension License: Comparable {
+    private var rank: Int {
+        let index = Self.filenamePatterns.firstIndex { Self.checkFilename(url.lastPathComponent, for: $0) }
+        return index ?? Self.filenamePatterns.count
+    }
+
+    public static func < (lhs: License, rhs: License) -> Bool {
+        let lhsValues = (lhs.rank, lhs.url.lastPathComponent.lowercased(), lhs.url.path)
+        let rhsValues = (rhs.rank, rhs.url.lastPathComponent.lowercased(), rhs.url.path)
+        return lhsValues < rhsValues
+    }
+}
+
+extension License {
+    public var content: String {
         get throws {
             return try String(contentsOf: url, encoding: .utf8)
         }

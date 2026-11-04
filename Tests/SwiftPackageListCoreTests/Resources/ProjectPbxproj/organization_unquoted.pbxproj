@@ -4,7 +4,7 @@
 		9D2C711028319F4A000D126A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = SwiftPackageList;
+				ORGANIZATIONNAME = "Swift Package List";
 			};
 		};
 	};

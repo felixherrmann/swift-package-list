@@ -13,7 +13,7 @@ public protocol Project {
     var options: ProjectOptions { get }
     var name: String { get }
     var organizationName: String? { get }
-    
+
     func packages() throws -> [Package]
 }
 

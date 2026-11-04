@@ -5,17 +5,16 @@
 //  Created by Felix Herrmann on 16.05.22.
 //
 
-import XCTest
+import Foundation
+import Testing
 import SwiftPackageList
+
 @testable import SwiftPackageListCore
 
-final class SettingsBundleGeneratorTests: XCTestCase {
-    
-    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Settings.bundle")
-    
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        
+final class SettingsBundleGeneratorTests {
+    private let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("Settings-\(UUID()).bundle")
+
+    init() throws {
         let package = Package(
             kind: .remoteSourceControl,
             identity: "test",
@@ -26,17 +25,16 @@ final class SettingsBundleGeneratorTests: XCTestCase {
             location: "https://github.com/test/test",
             license: "MIT"
         )
-        
+
         let settingsBundleGenerator = SettingsBundleGenerator(outputURL: outputURL, packages: [package])
         try settingsBundleGenerator.generateOutput()
     }
-    
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-        try FileManager.default.removeItem(at: outputURL)
+
+    deinit {
+        try? FileManager.default.removeItem(at: outputURL)
     }
-    
-    func testRootPlistOutput() throws {
+
+    @Test func rootPlistOutput() throws {
         let rootPlist = try String(contentsOf: outputURL.appendingPathComponent("Root.plist"))
         // swiftlint:disable indentation_width
         let expectedRootPlist = """
@@ -48,9 +46,9 @@ final class SettingsBundleGeneratorTests: XCTestCase {
         	<array>
         		<dict>
         			<key>File</key>
-        			<string>Acknowledgements</string>
+        			<string>Acknowledgments</string>
         			<key>Title</key>
-        			<string>Acknowledgements</string>
+        			<string>SPL_ACKNOWLEDGMENTS_TITLE</string>
         			<key>Type</key>
         			<string>PSChildPaneSpecifier</string>
         		</dict>
@@ -59,16 +57,16 @@ final class SettingsBundleGeneratorTests: XCTestCase {
         	<string>Root</string>
         </dict>
         </plist>
-        
+
         """
         // swiftlint:enable indentation_width
-        XCTAssertEqual(rootPlist, expectedRootPlist)
+        #expect(rootPlist == expectedRootPlist)
     }
-    
-    func testAcknowledgementsPlistOutput() throws {
-        let acknowledgementsPlist = try String(contentsOf: outputURL.appendingPathComponent("Acknowledgements.plist"))
+
+    @Test func acknowledgmentsPlistOutput() throws {
+        let acknowledgmentsPlist = try String(contentsOf: outputURL.appendingPathComponent("Acknowledgments.plist"))
         // swiftlint:disable indentation_width
-        let expectedAcknowledgementsPlist = """
+        let expectedAcknowledgmentsPlist = """
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
         <plist version="1.0">
@@ -77,7 +75,7 @@ final class SettingsBundleGeneratorTests: XCTestCase {
         	<array>
         		<dict>
         			<key>Title</key>
-        			<string>Licenses</string>
+        			<string>SPL_ACKNOWLEDGMENTS_SECTION_TITLE</string>
         			<key>Type</key>
         			<string>PSGroupSpecifier</string>
         		</dict>
@@ -91,16 +89,16 @@ final class SettingsBundleGeneratorTests: XCTestCase {
         		</dict>
         	</array>
         	<key>StringsTable</key>
-        	<string>Acknowledgements</string>
+        	<string>Acknowledgments</string>
         </dict>
         </plist>
-        
+
         """
         // swiftlint:enable indentation_width
-        XCTAssertEqual(acknowledgementsPlist, expectedAcknowledgementsPlist)
+        #expect(acknowledgmentsPlist == expectedAcknowledgmentsPlist)
     }
-    
-    func testTestPlistPathOutput() throws {
+
+    @Test func testPlistOutput() throws {
         let testPlistPath = outputURL.appendingPathComponent("Packages").appendingPathComponent("test.plist")
         let testPlist = try String(contentsOf: testPlistPath)
         // swiftlint:disable indentation_width
@@ -120,29 +118,29 @@ final class SettingsBundleGeneratorTests: XCTestCase {
         	</array>
         </dict>
         </plist>
-        
+
         """
         // swiftlint:enable indentation_width
-        XCTAssertEqual(testPlist, expectedTestPlist)
+        #expect(testPlist == expectedTestPlist)
     }
-    
-    func testRootStringsOutput() throws {
+
+    @Test func rootStringsOutput() throws {
         let rootStringsPath = outputURL.appendingPathComponent("de.lproj").appendingPathComponent("Root.strings")
         let rootStrings = try String(contentsOf: rootStringsPath)
         let expectedRootStrings = """
-        "Acknowledgements" = "Danksagungen";
+        "SPL_ACKNOWLEDGMENTS_TITLE" = "Danksagungen";
         """
-        XCTAssertEqual(rootStrings, expectedRootStrings)
+        #expect(rootStrings == expectedRootStrings)
     }
-    
-    func testAcknowledgementsStringsOutput() throws {
-        let acknowledgementsStringsPath = outputURL
+
+    @Test func acknowledgmentsStringsOutput() throws {
+        let acknowledgmentsStringsPath = outputURL
             .appendingPathComponent("de.lproj")
-            .appendingPathComponent("Acknowledgements.strings")
-        let acknowledgementsStrings = try String(contentsOf: acknowledgementsStringsPath)
-        let expectedAcknowledgementsStrings = """
-        "Licenses" = "Lizenzen";
+            .appendingPathComponent("Acknowledgments.strings")
+        let acknowledgmentsStrings = try String(contentsOf: acknowledgmentsStringsPath)
+        let expectedAcknowledgmentsStrings = """
+        "SPL_ACKNOWLEDGMENTS_SECTION_TITLE" = "Lizenzen";
         """
-        XCTAssertEqual(acknowledgementsStrings, expectedAcknowledgementsStrings)
+        #expect(acknowledgmentsStrings == expectedAcknowledgmentsStrings)
     }
 }

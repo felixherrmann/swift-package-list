@@ -24,14 +24,14 @@ extension ProjectPbxproj {
             struct Attributes: Decodable {
                 let ORGANIZATIONNAME: String?
             }
-            
+
             let attributes: Attributes?
         }
-        
+
         let rootObject: String
         let objects: [String: Object]
     }
-    
+
     private var content: Content {
         get throws {
             let decoder = PropertyListDecoder()

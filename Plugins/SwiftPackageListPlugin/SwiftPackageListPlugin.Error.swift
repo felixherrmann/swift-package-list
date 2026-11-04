@@ -5,25 +5,30 @@
 //  Created by Felix Herrmann on 03.02.24.
 //
 
-import PackagePlugin
+import Foundation
 
 extension SwiftPackageListPlugin {
     enum Error: Swift.Error {
-        case configurationUnavailable(path: Path, underlyingError: Swift.Error)
-        case configurationInvalid(path: Path, underlyingError: Swift.Error)
-        case sourcePackagesNotFound(pluginWorkDirectory: Path)
+        case configurationUnavailable(url: URL, underlyingError: Swift.Error)
+        case configurationInvalid(url: URL, underlyingError: Swift.Error)
+        case sourcePackagesNotFound(pluginWorkDirectoryURL: URL)
+        case legacyOutputRemovalFailed(url: URL, underlyingError: Swift.Error)
     }
 }
 
-extension SwiftPackageListPlugin.Error: CustomDebugStringConvertible {
-    var debugDescription: String {
+// MARK: - CustomStringConvertible
+
+extension SwiftPackageListPlugin.Error: CustomStringConvertible {
+    var description: String {
         switch self {
-        case .configurationUnavailable(path: let path, underlyingError: let error):
-            return "The configuration at \(path.string) is unavailable: \(error)"
-        case .configurationInvalid(path: let path, underlyingError: let error):
-            return "The configuration at \(path.string) has an invalid format: \(error)"
-        case .sourcePackagesNotFound(pluginWorkDirectory: let directory):
-            return "SourcePackages directory not found from \(directory.string)"
+        case .configurationUnavailable(url: let url, underlyingError: let error):
+            return "The configuration at \(url.path(percentEncoded: false)) is unavailable: \(error)"
+        case .configurationInvalid(url: let url, underlyingError: let error):
+            return "The configuration at \(url.path(percentEncoded: false)) has an invalid format: \(error)"
+        case .sourcePackagesNotFound(pluginWorkDirectoryURL: let url):
+            return "SourcePackages directory not found from \(url.path(percentEncoded: false))"
+        case .legacyOutputRemovalFailed(url: let url, underlyingError: let error):
+            return "The legacy output at \(url.path(percentEncoded: false)) could not be removed: \(error)"
         }
     }
 }
