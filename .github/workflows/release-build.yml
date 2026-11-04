@@ -4,35 +4,75 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
-  release-build:
-    name: Release Build
+  build-executable:
+    name: Build Executable
     runs-on: macos-26
-    env:
-      TAG: ${{ github.ref_name }}
-      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Build executable
+        id: build
         run: |
           swift build \
           --configuration release \
           --product swift-package-list \
           --arch arm64 \
           --arch x86_64
-      - name: Generate man page
-        run: swift package plugin generate-manual --configuration release
-      - name: Archive executable and man page
-        run: |
           BIN_PATH=$(swift build \
           --configuration release \
           --arch arm64 \
           --arch x86_64 \
           --show-bin-path)
+          echo "bin-path=$BIN_PATH/swift-package-list" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: swift-package-list-executable
+          path: ${{ steps.build.outputs.bin-path }}
+          include-hidden-files: true
+          if-no-files-found: error
+
+  generate-man-page:
+    name: Generate Man Page
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Generate man page
+        id: generate
+        run: |
+          swift package plugin generate-manual --configuration release
+          MAN_PATH="$GITHUB_WORKSPACE/.build/plugins/GenerateManual/outputs/swift-package-list"
+          echo "man-path=$MAN_PATH/swift-package-list.1" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: swift-package-list-man-page
+          path: ${{ steps.generate.outputs.man-path }}
+          include-hidden-files: true
+          if-no-files-found: error
+
+  upload-release-assets:
+    name: Upload Release Assets
+    needs: [build-executable, generate-man-page]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/download-artifact@v8.0.2
+        with:
+          pattern: swift-package-list-*
+          path: artifacts
+          merge-multiple: true
+      - name: Archive executable and man page
+        run: |
+          chmod 755 artifacts/swift-package-list
           tar -c -v -z \
           -f swift-package-list.tar.gz \
-          -C "$BIN_PATH" swift-package-list \
-          -C "$GITHUB_WORKSPACE/.build/plugins/GenerateManual/outputs/swift-package-list" swift-package-list.1
+          -C artifacts swift-package-list swift-package-list.1
       - name: Upload archive to release
         run: |
-          gh release upload ${{ env.TAG }} swift-package-list.tar.gz
+          gh release upload "$TAG" swift-package-list.tar.gz --repo "$GITHUB_REPOSITORY"
