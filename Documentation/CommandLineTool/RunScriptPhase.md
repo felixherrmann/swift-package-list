@@ -16,9 +16,11 @@ You can easily set up a Run Script Phase in your target of your Xcode project to
 
 3. move the Phase above the `Copy Bundle Resources`-phase
 4. optionally you can rename the Phase by double-clicking on the title
-5. build your project (<kbd>cmd</kbd> + <kbd>b</kbd>)
-6. right-click on the targets-folder in the sidebar and select *Add Files to "\<project-name\>"*
-7. select `package-list.json` in the Finder-window
+5. uncheck *Based on dependency analysis* so the script runs on every build
+6. in the target's *Build Settings*, set *User Script Sandboxing* to *No* so the script can read package checkouts and write the generated file
+7. build your project (<kbd>cmd</kbd> + <kbd>b</kbd>)
+8. right-click on the targets-folder in the sidebar and select *Add Files to "\<project-name\>"*
+9. select `package-list.json` in the Finder-window
 
 The package-list file will be updated now on every build and can be opened from the bundle in your app.
 You can do that manually or use the [Swift libraries](../Libraries/README.md) for that.
